@@ -4,14 +4,14 @@ import React from "react";
 const CopyrightFooter = () => {
   return (
     <Box
+      component="footer"
       sx={{
-        width: "full",
+        width: "100%",
         bgcolor: "white",
         height: "115px",
         maxHeight: "115px",
         borderTop: "#CCCCCC 1px solid",
         mt: "auto",
-        mb: "0px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -24,7 +24,7 @@ const CopyrightFooter = () => {
           color: "black",
         }}
       >
-        2024 Darul Huda HR APP.
+        &copy; {new Date().getFullYear()} Darul Huda HR APP.
       </Typography>
     </Box>
   );
