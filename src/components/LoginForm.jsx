@@ -1,7 +1,6 @@
-import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
+import { Box, FormControl, TextField, Typography } from "@mui/material";
 import logo from "../assets/hrLogo.svg";
 import { FilledButton } from "../styled-components/styledButtons";
 
@@ -12,13 +11,13 @@ const validationSchema = yup.object({
     .required("Email is required"),
   password: yup
     .string("Enter your password")
-    .min(8, "Password should be of minimum 8 characters length")
+    // .min(8, "Password should be of minimum 8 characters length")
     .required("Password is required"),
 });
 
 const LoginForm = () => {
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  // const [userEmail, setUserEmail] = useState("");
+  // const [userPassword, setUserPassword] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -27,8 +26,9 @@ const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      setUserEmail(values.email);
-      setUserPassword(values.password);
+      // setUserEmail(values.email);
+      // setUserPassword(values.password);
+      console.log(values);
     },
   });
   return (

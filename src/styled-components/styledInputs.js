@@ -2,14 +2,14 @@ import { Select } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
 const StyledTextField = styled("input")(({ theme }) => ({
-  border: "0.5px solid #CCCCCC",
-  borderRadius: "12px",
+  border: "1px solid #E7EAE9",
+  borderRadius: "5px",
   backgroundColor: "#fff",
-  fontSize: "14px",
+  fontSize: "15px",
   fontWeight: "normal",
-  color: "#ABABAB",
+  color: "#000",
   width: "100%",
-  padding: "6px 16px",
+  padding: "1em",
   outline: "none",
   transition: theme.transitions.create([
     "border-color",
@@ -24,7 +24,7 @@ const StyledTextField = styled("input")(({ theme }) => ({
 
   "&:focus": {
     // boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
-    borderColor: theme.palette.primary.main,
+    borderColor: "#E7EAE9",
   },
 }));
 

@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import React from "react";
 import LoginForm from "./LoginForm";
 import CopyrightFooter from "./copyrightFooter";
 
