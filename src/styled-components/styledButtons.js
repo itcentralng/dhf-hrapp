@@ -38,6 +38,46 @@ const FilledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+const FilledShadowButton = styled(Button)(({ theme }) => ({
+  color: "white",
+  backgroundColor: "#4D90F0",
+  border: "1px solid transparent",
+  padding: " .5em 2em",
+  fontSize: "16px",
+  fontWeight: "400",
+  lineHeight: "24px",
+  textAlign: "center",
+  //   whiteSpace: "nowrap",
+  borderRadius: "10px",
+  minWidth: "10px",
+  //   height: "48px",
+  textTransform: "none",
+  boxShadow: "4px 4px 5px #98D7E4",
+
+  "&:hover": {
+    borderColor: "#4D90F0",
+    color: "#4D90F0",
+    boxShadow: "4px 4px 5px #4D90F0",
+  },
+
+  "&.outlined": {
+    backgroundColor: "#F9F9F9",
+    borderColor: theme.palette.primary.main,
+    color: theme.palette.primary.main,
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+      borderColor: theme.palette.primary.main,
+      color: "#F9F9F9",
+    },
+  },
+
+  "&.white": {
+    backgroundColor: "white",
+    borderColor: "#CDD0D5",
+    color: "#454644",
+  },
+}));
+
 const StyledOvalButton = styled(Button)(({ theme }) => ({
   color: "white",
   backgroundColor: theme.palette.primary.main,
@@ -88,4 +128,9 @@ const StyledLoadingButton = styled("button")(({ theme }) => ({
   },
 }));
 
-export { FilledButton, StyledOvalButton, StyledLoadingButton };
+export {
+  FilledButton,
+  FilledShadowButton,
+  StyledOvalButton,
+  StyledLoadingButton,
+};

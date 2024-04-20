@@ -6,6 +6,7 @@ const theme = createTheme({
   typography: {
     fontFamily: [
       "Urbanist",
+      "DM Sans",
       "Roboto",
       '"Helvetica Neue"',
       "Arial",
