@@ -6,13 +6,12 @@ const LoginPage = () => {
   return (
     <Box
       sx={{
-        height: "1117px",
+        height: "100vh",
         width: "full",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         bgcolor: "#F9F9F9",
-        pt: "250px",
       }}
     >
       <LoginForm />

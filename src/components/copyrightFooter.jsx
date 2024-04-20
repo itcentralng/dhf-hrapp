@@ -7,8 +7,8 @@ const CopyrightFooter = () => {
       sx={{
         width: "100%",
         bgcolor: "white",
-        height: "115px",
-        maxHeight: "115px",
+        height: "10%",
+
         borderTop: "#CCCCCC 1px solid",
         mt: "auto",
         display: "flex",

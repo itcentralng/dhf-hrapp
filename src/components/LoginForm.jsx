@@ -34,20 +34,31 @@ const LoginForm = () => {
   return (
     <Box
       sx={{
-        width: "584px",
-        height: "587px",
+        width: 274,
+        height: 277,
         borderRadius: "4px",
         border: "#CCCCCC 1px solid",
-        px: "72px",
-        py: "66px",
+        px: "37.9px",
+        py: "34.7px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        bgcolor: "white",
+        my: "auto",
       }}
     >
-      <img src={logo} alt="logo" />
+      <img
+        src={logo}
+        alt="logo"
+        style={{ width: "37.9px", height: "37.9px" }}
+      />
       <Typography
-        sx={{ fontWeight: 700, fontSize: "30px", color: "#292929", mt: "26px" }}
+        sx={{
+          fontWeight: 700,
+          fontSize: "16px",
+          color: "#292929",
+          mt: "7.2px",
+        }}
       >
         Welcome Back
       </Typography>
@@ -62,9 +73,9 @@ const LoginForm = () => {
             borderColor: "primary.main",
           },
           "& .MuiInputBase-input": {
-            height: "67px",
+            height: "9.3%",
           },
-          marginTop: "52px",
+          marginTop: "14.3px",
           width: "100%",
           display: "flex",
           flexDirection: "column",
@@ -82,7 +93,7 @@ const LoginForm = () => {
           onBlur={formik.handleBlur}
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
-          sx={{ fontWeight: 500, fontSize: "16px", color: "#0C0C0C" }}
+          sx={{ fontWeight: 500, fontSize: "16px" }}
         />
         <TextField
           fullWidth
@@ -95,11 +106,11 @@ const LoginForm = () => {
           onBlur={formik.handleBlur}
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
-          sx={{ mt: "16px", height: "67px" }}
+          sx={{ height: "77px", mt: "10px" }}
         />
         <FilledButton
           type="submit"
-          sx={{ width: "312px", height: "62px", mt: "100px" }}
+          sx={{ width: "170px", height: "44px", mt: "0px" }}
         >
           Log in
         </FilledButton>
