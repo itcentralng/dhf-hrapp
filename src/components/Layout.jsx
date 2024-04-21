@@ -8,7 +8,6 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   Drawer,
@@ -16,19 +15,19 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
 } from "@mui/material";
 import hrLogo from "../assets/hrLogo.svg";
 import {
   ChatBubbleOutline,
   FolderOutlined,
   InsertDriveFileOutlined,
-  NotificationsNoneOutlined,
   PeopleAltOutlined,
 } from "@mui/icons-material";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import CopyrightFooter from "./copyrightFooter";
-import { StyledTextField } from "../styled-components/styledInputs";
+import profileImg from "../assets/profileImg.svg";
+import CustomSearchBox from "./CustomSearchBox";
+import CustomNotificationIcon from "./CustomNotificationIcon";
 
 const drawerWidth = 240;
 
@@ -119,62 +118,128 @@ const Layout = () => {
   );
 
   const drawer = (
-    <div
-      style={{
+    <Box
+      sx={{
         backgroundColor: "#4D90F0",
         height: "100vh",
         padding: "0 1em",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          padding: ".7em 0",
-          alignItems: "center",
-          gap: 2,
-        }}
-      >
-        <Box sx={{ width: "3em" }}>
-          <img src={hrLogo} alt="" style={{ width: "100%" }} />
-        </Box>
-        <Typography
-          variant="h4"
-          sx={{ color: "#fff", fontSize: "1rem", fontWeight: 700 }}
+      <Box>
+        <Box
+          sx={{
+            display: "flex",
+            padding: ".7em 0",
+            alignItems: "center",
+            gap: 2,
+          }}
         >
-          HR App
-        </Typography>
-      </Box>
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item.id} disablePadding sx={{ margin: ".5em 0" }}>
-            <ListItemButton
-              disableRipple
-              onClick={() => navigate(item.link)}
-              sx={{
-                backgroundColor:
-                  location.pathname === item.link ? "#F9F9F9" : "#4D90F0",
-                color: location.pathname === item.link ? "#4D90F0" : "#FFFFFF",
-                borderRadius: "4px",
-                "&:hover": {
+          <Box sx={{ width: "3em" }}>
+            <img src={hrLogo} alt="" style={{ width: "100%" }} />
+          </Box>
+          <Typography
+            variant="h4"
+            sx={{ color: "#fff", fontSize: "1rem", fontWeight: 700 }}
+          >
+            HR App
+          </Typography>
+        </Box>
+        <List>
+          {navItems.map((item) => (
+            <ListItem key={item.id} disablePadding sx={{ margin: ".5em 0" }}>
+              <ListItemButton
+                disableRipple
+                onClick={() => navigate(item.link)}
+                sx={{
                   backgroundColor:
                     location.pathname === item.link ? "#F9F9F9" : "#4D90F0",
-                },
-              }}
-            >
-              <ListItemIcon
-                sx={{
                   color:
                     location.pathname === item.link ? "#4D90F0" : "#FFFFFF",
+                  borderRadius: "4px",
+                  gap: 1,
+                  "&:hover": {
+                    backgroundColor: "#ffffff3d",
+                    color: "#fff",
+                  },
                 }}
               >
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </div>
+                <ListItemIcon
+                  sx={{
+                    color: "inherit",
+                    fontSize: ".8rem",
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: ".9rem", textAlign: "left" }}
+                >
+                  {item.name}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "#fff",
+                    textAlign: "center",
+                    backgroundColor: "#F95252",
+                    borderRadius: "30px",
+                    fontWeight: 700,
+                    width: "3em",
+                    marginLeft: "2em",
+                    display: item.newNotification <= 0 ? "none" : "block",
+                  }}
+                >
+                  {item.newNotification}
+                </Typography>
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+      <Box
+        sx={{
+          backgroundColor: "#DFECEB",
+          borderRadius: "12px",
+          padding: ".4em .7em",
+          marginBottom: "1em",
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+        }}
+      >
+        <Box sx={{ width: "2em" }}>
+          <img src={profileImg} alt="" style={{ width: "100%" }} />
+        </Box>
+        <Box>
+          <Typography
+            variant="body2"
+            sx={{
+              fontSize: ".8em",
+              fontWeight: 500,
+              fontFamily: "DM Sans",
+              lineHeight: "1em",
+            }}
+          >
+            Elon Rust
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              fontSize: ".7em",
+              fontWeight: 400,
+              fontFamily: "DM Sans",
+              color: "#2586F8",
+            }}
+          >
+            Admin
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
   );
 
   return (
@@ -200,49 +265,9 @@ const Layout = () => {
             <MenuIcon sx={{ color: "#000" }} />
           </IconButton>
 
-          <Box
-            sx={{
-              width: "100%",
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <StyledTextField
-              placeholder="Search…"
-              sx={{
-                width: "100%",
-                backgroundColor: "#fff",
-                border: "1px solid #E7EAE9",
-              }}
-            />
-            <IconButton
-              sx={{
-                color: "#000",
-                position: "absolute",
-                left: { xs: "82%", sm: "87%", md: "94%", lg: "96%" },
-                borderRadius: "4px",
-              }}
-              disableRipple
-            >
-              <SearchIcon />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <IconButton
-              size="large"
-              color="inherit"
-              sx={{
-                backgroundColor: "#fff",
-                borderRadius: "6px",
-                border: "1px solid #E7EAE9",
-              }}
-            >
-              <Badge badgeContent={2} color="error">
-                <NotificationsNoneOutlined sx={{ color: "#000" }} />
-              </Badge>
-            </IconButton>
-          </Box>
+          <CustomSearchBox />
+
+          <CustomNotificationIcon notificationNumber={2} />
         </Toolbar>
       </AppBar>
       <Box
@@ -315,6 +340,7 @@ const navItems = [
     name: "Inbox",
     link: "/",
     icon: <FolderOutlined />,
+    newNotification: 4,
   },
   {
     id: 3,

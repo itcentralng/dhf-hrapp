@@ -7,9 +7,10 @@ const CopyrightFooter = () => {
       sx={{
         width: "100%",
         bgcolor: "white",
-        height: "10%",
+        height: "5em",
 
         borderTop: "#CCCCCC 1px solid",
+        borderBottom: "#CCCCCC 1px solid",
         mt: "auto",
         display: "flex",
         alignItems: "center",
@@ -20,10 +21,10 @@ const CopyrightFooter = () => {
         sx={{
           fontSize: "16px",
           fontWeight: 400,
-          color: "black",
+          color: "#747B8B",
         }}
       >
-        &copy; {new Date().getFullYear()} Darul Huda HR APP.
+        &copy; {new Date().getFullYear()} Darul Huda HR APP
       </Typography>
     </Box>
   );
