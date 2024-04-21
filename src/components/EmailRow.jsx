@@ -55,7 +55,7 @@ const EmailRow = ({ recipient, label, title, text }) => {
     <Stack
       direction="row"
       sx={{
-        width: "100%",
+        width: "99%",
         height: "82px",
         borderTop: "#EDEFF1 2px solid",
         px: "17px",
@@ -94,7 +94,7 @@ const EmailRow = ({ recipient, label, title, text }) => {
       <AttachmentIcon
         sx={{ color: "rgba(0, 0, 0, 0.54)", mx: "3%", cursor: "pointer" }}
       />
-      <StyledText>{currentTime}</StyledText>
+      <StyledText sx={{ fontFamily: "DM sans" }}>{currentTime}</StyledText>
     </Stack>
   );
 };
