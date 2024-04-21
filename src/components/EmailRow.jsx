@@ -3,15 +3,12 @@ import React, { useEffect, useState } from "react";
 import EmailLabel from "./EmailLabel";
 import AttachmentIcon from "@mui/icons-material/Attachment";
 
-const text =
-  "Non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia . Non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia . ";
-
 const StyledText = styled("Typography")({
   fontSize: "14px",
   fontWeight: 400,
 });
 
-const EmailRow = () => {
+const EmailRow = ({ recipient, label, title, text }) => {
   const [substring, setSubstring] = useState("");
   const [currentTime, setCurrentTime] = useState("");
   const [isChecked, setIsChecked] = useState(false);
@@ -74,9 +71,9 @@ const EmailRow = () => {
         style={{ width: "16.5px", height: "16.5px" }}
       />
       <Typography sx={{ fontWeight: 400, ml: "1%", mr: "5%", minWidth: "10%" }}>
-        Admin Office
+        {recipient}
       </Typography>
-      <EmailLabel emailType={"Leave Request"} />
+      <EmailLabel emailType={label} />
       <Typography
         sx={{
           fontWeight: 500,
@@ -85,7 +82,7 @@ const EmailRow = () => {
           ml: "0.5%",
         }}
       >
-        Your account with us
+        {title}
       </Typography>
       <StyledText
         sx={{
