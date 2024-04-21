@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
+import EmailRow from "../../components/EmailRow";
 
 const Inbox = () => {
   return (
     <Box>
-      <Box>Inbox</Box>
+      <EmailRow />
     </Box>
   );
 };
