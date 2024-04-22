@@ -56,8 +56,9 @@ const FilledShadowButton = styled(Button)(({ theme }) => ({
 
   "&:hover": {
     borderColor: "#4D90F0",
-    color: "#4D90F0",
+    color: "#fff",
     boxShadow: "4px 4px 5px #4D90F0",
+    backgroundColor: "#407bcd",
   },
 
   "&.outlined": {
