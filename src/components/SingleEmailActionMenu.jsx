@@ -13,7 +13,7 @@ const SingleEmailActionMenu = () => {
       sx={{
         justifyContent: "space-between",
         alignItems: "center",
-        width: "100%",
+        width: "99%",
         height: "62px",
         px: "19px",
       }}
