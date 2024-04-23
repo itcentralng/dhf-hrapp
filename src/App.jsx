@@ -6,15 +6,24 @@ import Inbox from "./pages/inbox/Inbox";
 import Sent from "./pages/sent/Sent";
 import Users from "./pages/users/Users";
 import Reports from "./pages/reports/Reports";
+import ViewMessage from "./components/ViewMessage";
 
 const routes = [
   {
-    path: "/",
+    path: "/inbox",
     element: <Inbox />,
+  },
+  {
+    path: "/inbox/message/:id",
+    element: <ViewMessage />,
   },
   {
     path: "/sent",
     element: <Sent />,
+  },
+  {
+    path: "/sent/message/:id",
+    element: <ViewMessage />,
   },
   {
     path: "/users",
