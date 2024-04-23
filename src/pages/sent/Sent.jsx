@@ -1,13 +1,17 @@
 import { Box } from "@mui/material";
 import EmailRow from "../../components/EmailRow";
-import sentMailInfo from "../../data/sentMailInfo";
+import mailInfo from "../../data/mailInfo";
 
 const Sent = () => {
   return (
     <Box>
-      {sentMailInfo.map((item, id) => (
-        <EmailRow key={id} {...item} />
-      ))}
+      {mailInfo
+        .filter((item) => item.type === "sent")
+        .map((item) => (
+          <Box key={item.id}>
+            <EmailRow {...item} />
+          </Box>
+        ))}
     </Box>
   );
 };

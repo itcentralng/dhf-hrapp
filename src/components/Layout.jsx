@@ -33,6 +33,7 @@ import profileImg from "../assets/profileImg.svg";
 import CustomSearchBox from "./CustomSearchBox";
 import CustomNotificationIcon from "./CustomNotificationIcon";
 import { FilledShadowButton } from "../styled-components/styledButtons";
+import { Navigate } from "react-router-dom/dist";
 
 const drawerWidth = 240;
 
@@ -105,6 +106,10 @@ const Layout = () => {
     </Menu>
   );
 
+  if (location.pathname === "/") {
+    return <Navigate to="/inbox" />;
+  }
+
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -172,10 +177,12 @@ const Layout = () => {
                 disableRipple
                 onClick={() => navigate(item.link)}
                 sx={{
-                  backgroundColor:
-                    location.pathname === item.link ? "#F9F9F9" : "#4D90F0",
-                  color:
-                    location.pathname === item.link ? "#4D90F0" : "#FFFFFF",
+                  backgroundColor: location.pathname.includes(item.link)
+                    ? "#F9F9F9"
+                    : "#4D90F0",
+                  color: location.pathname.includes(item.link)
+                    ? "#4D90F0"
+                    : "#FFFFFF",
                   borderRadius: "4px",
                   gap: 1,
                   "&:hover": {
@@ -336,7 +343,7 @@ const Layout = () => {
           component="main"
           sx={{
             flexGrow: 1,
-            py: 3,
+            paddingTop: "2em",
             backgroundColor: "#F9F9F9",
             position: "relative",
           }}
@@ -349,6 +356,10 @@ const Layout = () => {
               borderBottom: "1px solid #EDEFF1",
               marginTop: "1em",
               padding: ".2em",
+              display:
+                location.pathname === "/inbox" || location.pathname === "/sent"
+                  ? "block"
+                  : "none",
             }}
           >
             <Box>
@@ -367,7 +378,17 @@ const Layout = () => {
           </Box>
           <Outlet />
         </Box>
-        <Box sx={{ position: "fixed", bottom: 18, right: 16 }}>
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: 18,
+            right: 16,
+            display:
+              location.pathname === "/inbox" || location.pathname === "/sent"
+                ? "block"
+                : "none",
+          }}
+        >
           <FilledShadowButton sx={{ gap: 1 }} onClick={() => navigate("#")}>
             {/* Will navigate it later on to the create templates page */}
             <CreateOutlined />
@@ -392,7 +413,7 @@ const navItems = [
   {
     id: 2,
     name: "Inbox",
-    link: "/",
+    link: "/inbox",
     icon: <FolderOutlined />,
     newNotification: 4,
   },

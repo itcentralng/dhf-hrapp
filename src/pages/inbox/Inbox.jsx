@@ -5,9 +5,13 @@ import mailInfo from "../../data/mailInfo";
 const Inbox = () => {
   return (
     <Box>
-      {mailInfo.map((item, id) => (
-        <EmailRow key={id} {...item} />
-      ))}
+      {mailInfo
+        .filter((item) => item.type === "inbox")
+        .map((item) => (
+          <Box key={item.id}>
+            <EmailRow {...item} />
+          </Box>
+        ))}
     </Box>
   );
 };
