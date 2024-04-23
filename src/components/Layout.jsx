@@ -10,6 +10,7 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
+  Checkbox,
   Drawer,
   List,
   ListItem,
@@ -19,21 +20,30 @@ import {
 import hrLogo from "../assets/hrLogo.svg";
 import {
   ChatBubbleOutline,
+  CreateOutlined,
   FolderOutlined,
   InsertDriveFileOutlined,
+  MoreVertOutlined,
   PeopleAltOutlined,
+  RefreshOutlined,
 } from "@mui/icons-material";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import CopyrightFooter from "./copyrightFooter";
 import profileImg from "../assets/profileImg.svg";
 import CustomSearchBox from "./CustomSearchBox";
 import CustomNotificationIcon from "./CustomNotificationIcon";
+import { FilledShadowButton } from "../styled-components/styledButtons";
 
 const drawerWidth = 240;
 
 const Layout = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [checked, setChecked] = React.useState(false);
+  const [refreshLoading, setRefreshLoading] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [isClosing, setIsClosing] = React.useState(false);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -49,9 +59,6 @@ const Layout = () => {
     handleMobileMenuClose();
   };
 
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [isClosing, setIsClosing] = React.useState(false);
-
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
@@ -65,6 +72,17 @@ const Layout = () => {
     if (!isClosing) {
       setMobileOpen(!mobileOpen);
     }
+  };
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
+  const handleRefresh = () => {
+    setRefreshLoading(true);
+    setTimeout(() => {
+      setRefreshLoading(false);
+    }, 2000);
   };
 
   const renderMenu = (
@@ -270,6 +288,7 @@ const Layout = () => {
           <CustomNotificationIcon notificationNumber={2} />
         </Toolbar>
       </AppBar>
+
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -308,17 +327,52 @@ const Layout = () => {
           {drawer}
         </Drawer>
       </Box>
-      <Box sx={{ width: { xs: "100%", sm: `calc(100% - ${drawerWidth}px)` } }}>
+      <Box
+        sx={{
+          width: { xs: "100%", sm: `calc(100% - ${drawerWidth}px)` },
+        }}
+      >
         <Box
           component="main"
           sx={{
             flexGrow: 1,
-            p: 3,
+            py: 3,
             backgroundColor: "#F9F9F9",
+            position: "relative",
           }}
         >
           <Toolbar />
+
+          <Box
+            sx={{
+              backgroundColor: "#FFFFFF",
+              borderBottom: "1px solid #EDEFF1",
+              marginTop: "1em",
+              padding: ".2em",
+            }}
+          >
+            <Box>
+              <Checkbox checked={checked} onChange={handleChange} />
+              <IconButton
+                onClick={handleRefresh}
+                disabled={refreshLoading}
+                sx={{ marginLeft: ".2em" }}
+              >
+                <RefreshOutlined />
+              </IconButton>
+              <IconButton sx={{ marginLeft: ".2em" }}>
+                <MoreVertOutlined />
+              </IconButton>
+            </Box>
+          </Box>
           <Outlet />
+        </Box>
+        <Box sx={{ position: "fixed", bottom: 18, right: 16 }}>
+          <FilledShadowButton sx={{ gap: 1 }} onClick={() => navigate("#")}>
+            {/* Will navigate it later on to the create templates page */}
+            <CreateOutlined />
+            Create
+          </FilledShadowButton>
         </Box>
         <CopyrightFooter />
       </Box>

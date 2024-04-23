@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { Stack, Typography, styled } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import EmailLabel from "./EmailLabel";
 import AttachmentIcon from "@mui/icons-material/Attachment";
 
-const StyledText = styled("Typography")({
+const StyledText = styled(Typography)({
   fontSize: "14px",
   fontWeight: 400,
 });
@@ -55,7 +56,6 @@ const EmailRow = ({ recipient, label, title, text }) => {
     <Stack
       direction="row"
       sx={{
-        width: "99%",
         height: "82px",
         borderTop: "#EDEFF1 2px solid",
         px: "17px",
