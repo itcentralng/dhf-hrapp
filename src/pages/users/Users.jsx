@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
+import UserListView from "../../components/UserListView";
 
 const Users = () => {
   return (
     <Box>
-      <Box>Users</Box>
+      <UserListView />
     </Box>
   );
 };

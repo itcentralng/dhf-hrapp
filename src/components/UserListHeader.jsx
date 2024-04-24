@@ -1,12 +1,14 @@
 import React from "react";
 import sortAscending from "../assets/Sort ascending.svg";
-import { Checkbox, Stack, styled } from "@mui/material";
+import { Box, Checkbox, Stack, styled } from "@mui/material";
 
 const TableHeadText = styled("Typography")({
   fontFamily: "DM sans",
   fontWeight: 400,
   fontSize: "14px",
   color: "black",
+  textAlign: "center",
+  minWidth: "50px",
 });
 
 const UserListHeader = () => {
@@ -27,17 +29,17 @@ const UserListHeader = () => {
         direction="row"
         sx={{
           justifyContent: "space-between",
-          width: "50%",
+          width: "53%",
           alignItems: "center",
         }}
       >
         <Checkbox checked={checked} onChange={handleChange} />
-        <TableHeadText>
-          Staff Name{" "}
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+          <TableHeadText>Staff Name </TableHeadText>
           <span>
             <img src={sortAscending} alt="" />
           </span>
-        </TableHeadText>
+        </Box>
         <TableHeadText>Title</TableHeadText>
         <TableHeadText>Role</TableHeadText>
         <TableHeadText>Staff Id</TableHeadText>
