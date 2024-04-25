@@ -44,6 +44,7 @@ const DownloadDocumentArea = ({ file /*sender*/ }) => {
         border: "#CCCCCC 0.5px solid",
         width: "350px",
         height: "60px",
+        bgcolor: "white",
       }}
     >
       <div>{renderFileIcon()}</div>
@@ -66,7 +67,7 @@ const DownloadDocumentArea = ({ file /*sender*/ }) => {
             fontSize: "11px",
           }}
         >
-          Alameen Muhammad{/*sender*/}
+          Mustapha Yakubu{/*sender*/}
         </Typography>
       </Stack>
       <Typography
