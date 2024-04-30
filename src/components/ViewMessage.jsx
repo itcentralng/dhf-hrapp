@@ -24,7 +24,40 @@ const ViewMessage = () => {
   const pathName = location.pathname;
   const pathParts = pathName.split("/");
   const pathId = parseInt(pathParts[pathParts.length - 1]);
-  console.log(pathId);
+
+  const handleNextMessage = (type, id) => {
+    const currentIndex = mailInfo.findIndex((item) => item.id === id);
+
+    if (currentIndex === -1) {
+      alert("Page does not exist");
+      return;
+    }
+
+    const nextIndex = currentIndex + 1;
+    if (nextIndex >= 0 && nextIndex < mailInfo.length) {
+      const nextMessage = mailInfo[nextIndex];
+      navigate(`/${type}/message/${nextMessage.id}`);
+    } else {
+      alert("No more messages available");
+    }
+  };
+
+  const handlePrevMessage = (type, id) => {
+    const currentIndex = mailInfo.findIndex((item) => item.id === id);
+
+    if (currentIndex === -1) {
+      alert("Page does not exist");
+      return;
+    }
+
+    const prevIndex = currentIndex - 1;
+    if (prevIndex >= 0 && prevIndex < mailInfo.length) {
+      const prevMessage = mailInfo[prevIndex];
+      navigate(`/${type}/message/${prevMessage.id}`);
+    } else {
+      alert("No previous messages available");
+    }
+  };
 
   return (
     <Box sx={{ minHeight: "75vh" }}>
@@ -61,11 +94,13 @@ const ViewMessage = () => {
                 <IconButton>
                   <KeyboardArrowLeft
                     sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
+                    onClick={() => handlePrevMessage(item.type, item.id)}
                   />
                 </IconButton>
                 <IconButton>
                   <KeyboardArrowRight
                     sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
+                    onClick={() => handleNextMessage(item.type, item.id)}
                   />
                 </IconButton>
               </Box>
