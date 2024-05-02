@@ -75,9 +75,7 @@ const RegisterStaffForm = () => {
         mx: "auto",
       }}
     >
-      <HeadingText sx={{ marginBottom: "100px" }}>
-        Register New Staff
-      </HeadingText>
+      <HeadingText>Register New Staff</HeadingText>
       <br />
       <SubHeadingText>
         Please fill out the form below to register a new staff in your school

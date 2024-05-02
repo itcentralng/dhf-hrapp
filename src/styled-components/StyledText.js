@@ -12,7 +12,6 @@ const SubHeadingText = styled(Typography)({
   fontWeight: 400,
   fontSize: "16px",
   color: "#4B5563",
-  mt: "90px",
 });
 
 export { HeadingText, SubHeadingText };
