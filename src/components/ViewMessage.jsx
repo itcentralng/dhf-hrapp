@@ -25,8 +25,15 @@ const ViewMessage = () => {
   const pathParts = pathName.split("/");
   const pathId = parseInt(pathParts[pathParts.length - 1]);
 
+  const newArray = [...mailInfo];
+  const deleteMessage = (type, id) => {
+    const array = newArray.filter((item) => item.id !== id);
+    mailInfo.splice(0, mailInfo.length, ...array);
+    handleNextMessage(type, id);
+  };
+
   const handleNextMessage = (type, id) => {
-    const currentIndex = mailInfo.findIndex((item) => item.id === id);
+    const currentIndex = newArray.findIndex((item) => item.id === id);
 
     if (currentIndex === -1) {
       alert("Page does not exist");
@@ -34,8 +41,8 @@ const ViewMessage = () => {
     }
 
     const nextIndex = currentIndex + 1;
-    if (nextIndex >= 0 && nextIndex < mailInfo.length) {
-      const nextMessage = mailInfo[nextIndex];
+    if (nextIndex >= 0 && nextIndex < newArray.length) {
+      const nextMessage = newArray[nextIndex];
       navigate(`/${type}/message/${nextMessage.id}`);
     } else {
       alert("No more messages available");
@@ -43,7 +50,7 @@ const ViewMessage = () => {
   };
 
   const handlePrevMessage = (type, id) => {
-    const currentIndex = mailInfo.findIndex((item) => item.id === id);
+    const currentIndex = newArray.findIndex((item) => item.id === id);
 
     if (currentIndex === -1) {
       alert("Page does not exist");
@@ -51,8 +58,8 @@ const ViewMessage = () => {
     }
 
     const prevIndex = currentIndex - 1;
-    if (prevIndex >= 0 && prevIndex < mailInfo.length) {
-      const prevMessage = mailInfo[prevIndex];
+    if (prevIndex >= 0 && prevIndex < newArray.length) {
+      const prevMessage = newArray[prevIndex];
       navigate(`/${type}/message/${prevMessage.id}`);
     } else {
       alert("No previous messages available");
@@ -61,7 +68,7 @@ const ViewMessage = () => {
 
   return (
     <Box sx={{ minHeight: "75vh" }}>
-      {mailInfo
+      {newArray
         .filter((item) => item.id === pathId)
         .map((item) => (
           <Box key={item.id}>
@@ -83,7 +90,7 @@ const ViewMessage = () => {
                     sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
                   />
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={() => deleteMessage(item.type, item.id)}>
                   <DeleteOutline
                     sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
                   />
