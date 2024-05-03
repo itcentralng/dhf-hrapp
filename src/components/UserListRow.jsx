@@ -1,5 +1,5 @@
 import { Box, Checkbox, IconButton, Stack, styled } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DeleteOutline } from "@mui/icons-material";
 import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
@@ -12,10 +12,19 @@ const TableBodyText = styled("Typography")({
   minWidth: "60px",
 });
 
-const UserListRow = ({ name, title, role, staffId }) => {
-  const [checked, setChecked] = React.useState(false);
+const UserListRow = ({ name, title, role, staffId, checked }) => {
+  const [singleChecked, setSingleChecked] = React.useState(false);
+
+  useEffect(() => {
+    if (checked) {
+      setSingleChecked(true);
+    } else {
+      setSingleChecked(false);
+    }
+  }, [checked]);
+
   const handleChange = (event) => {
-    setChecked(event.target.checked);
+    setSingleChecked(event.target.checked);
   };
   return (
     <Stack
@@ -33,7 +42,7 @@ const UserListRow = ({ name, title, role, staffId }) => {
           alignItems: "center",
         }}
       >
-        <Checkbox checked={checked} onChange={handleChange} />
+        <Checkbox checked={singleChecked} onChange={handleChange} />
         <TableBodyText>{name}</TableBodyText>
         <TableBodyText>{title}</TableBodyText>
         <TableBodyText>{role}</TableBodyText>

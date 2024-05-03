@@ -11,11 +11,7 @@ const TableHeadText = styled("Typography")({
   minWidth: "50px",
 });
 
-const UserListHeader = () => {
-  const [checked, setChecked] = React.useState(false);
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
+const UserListHeader = ({ checked, handleChange }) => {
   return (
     <Stack
       direction="row"
