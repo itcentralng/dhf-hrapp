@@ -46,7 +46,13 @@ const UserListRow = ({ name, title, role, staffId, checked }) => {
         <TableBodyText>{name}</TableBodyText>
         <TableBodyText>{title}</TableBodyText>
         <TableBodyText>{role}</TableBodyText>
-        <Box>
+        <Box
+          onClick={() => {
+            alert("ID copied to clipboard");
+            navigator.clipboard.writeText(staffId);
+          }}
+          sx={{ cursor: "pointer" }}
+        >
           <TableBodyText sx={{ width: "40px" }}>{staffId}</TableBodyText>
           <ContentCopyRoundedIcon
             sx={{ width: "12px", height: "12px", color: "#6E7079", ml: "10px" }}
