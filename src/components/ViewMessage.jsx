@@ -14,8 +14,6 @@ import EmailLabel from "./EmailLabel";
 import DownloadDocumentArea from "./DownloadDocumentArea";
 import CommentsArea from "./CommentsArea";
 import pdf from "../assets/Background.pdf";
-import { FilledShadowButton } from "../styled-components/styledButtons";
-import TurnLeftIcon from "@mui/icons-material/TurnLeft";
 
 const ViewMessage = () => {
   const navigate = useNavigate();
@@ -217,19 +215,6 @@ const ViewMessage = () => {
       >
         <DownloadDocumentArea file={pdf} />
         <CommentsArea />
-        <FilledShadowButton
-          sx={{
-            width: "187px",
-            height: "56px",
-            fontWeight: 500,
-            fontSize: "16px",
-          }}
-        >
-          <TurnLeftIcon
-            sx={{ width: "35px", height: "25px", ml: "-30px", mb: "3px" }}
-          />
-          Reply
-        </FilledShadowButton>
       </Stack>
     </Box>
   );
