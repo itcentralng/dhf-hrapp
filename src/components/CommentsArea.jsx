@@ -21,7 +21,14 @@ const CommentsArea = () => {
   };
   const handleCommentReply = (event) => {
     event.preventDefault();
-    setShowSuccessPopUp(true);
+    try {
+      if (commentData == "") {
+        throw new Error("Please type a reply.");
+      }
+      setShowSuccessPopUp(true);
+    } catch (err) {
+      alert(err);
+    }
     setCommentData("");
   };
 
