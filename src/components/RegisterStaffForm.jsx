@@ -110,13 +110,13 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
     }
   };
 
-  const handleFileChange = (event) => {
-    const { name, value } = event.target.files[0];
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  // const handleFileChange = (event) => {
+  //   const { name, value } = event.target.files[0];
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();

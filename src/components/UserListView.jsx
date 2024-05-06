@@ -4,8 +4,9 @@ import UserListHeader from "./UserListHeader";
 import { Box } from "@mui/material";
 import UserListRow from "./UserListRow";
 import { useUserList } from "./UserListContext";
-const UserListView = () => {
-  const { usersList } = useUserList();
+
+const UserListView = ({ usersList }) => {
+  // const { usersList } = useUserList();
   const [checked, setChecked] = React.useState(false);
   const handleChange = (event) => {
     setChecked(event.target.checked);
