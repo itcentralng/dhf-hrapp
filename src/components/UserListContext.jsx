@@ -46,18 +46,17 @@ export const UserListProvider = ({ children }) => {
   };
 
   const editUser = (staffId) => {
-    const userToEdit = usersList.filter((user) => user.staffId == staffId);
-    console.log(userToEdit);
+    const userToEdit = usersList.find((user) => user.staffId == staffId);
     setFormData({
       name: userToEdit.name,
-      department: userToEdit.department,
+      department: "",
       title: userToEdit.title,
       phoneNumber: userToEdit.phoneNumber,
-      role: userToEdit.role,
+      role: "",
       email: userToEdit.email,
       clockIn: userToEdit.clockIn,
       clockOut: userToEdit.clockOut,
-      gender: userToEdit.gender,
+      gender: "",
       passport: userToEdit.passport,
       resume: userToEdit.resume,
       signature: userToEdit.signature,

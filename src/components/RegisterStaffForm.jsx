@@ -100,7 +100,6 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const newStaff = { ...formData };
-    console.log(newStaff);
     updateUsersList((prevList) => [...prevList, newStaff]);
 
     setFormData({});
