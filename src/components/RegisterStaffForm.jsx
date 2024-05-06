@@ -44,11 +44,18 @@ const InputLabel = styled(Typography)({
 });
 
 const RegisterStaffForm = ({ setRegisterStaff }) => {
-  const { updateUsersList, formData, setFormData } = useUserList();
+  const {
+    updateUsersList,
+    formData,
+    setFormData,
+    passport,
+    signature,
+    resume,
+    setPassport,
+    setSignature,
+    setResume,
+  } = useUserList();
   const [expanded, setExpanded] = useState(false);
-  const [passport, setPassport] = useState(null);
-  const [resume, setResume] = useState(null);
-  const [signature, setSignature] = useState(null);
 
   // const [formData, setFormData] = useState({
   //   name: "",
@@ -87,6 +94,20 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const handleFileTypeChange = (fileType, file) => {
+    switch (fileType) {
+      case "passport":
+        setPassport(file);
+        break;
+      case "resume":
+        setResume(file);
+        break;
+      case "signature":
+        setSignature(file);
+        break;
+    }
   };
 
   const handleFileChange = (event) => {
@@ -295,7 +316,9 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
                   name="passport"
                   value={formData.passport}
                   id="passport-upload"
-                  onChange={(e) => handleFileChange(e)}
+                  onChange={(e) =>
+                    handleFileTypeChange("passport", e.target.files[0])
+                  }
                   style={{ display: "none" }}
                 />
                 <label htmlFor="passport-upload">
@@ -316,7 +339,9 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
                   name="resume"
                   value={formData.resume}
                   id="resume-upload"
-                  onChange={(e) => handleFileChange(e)}
+                  onChange={(e) =>
+                    handleFileTypeChange("resume", e.target.files[0])
+                  }
                   style={{ display: "none" }}
                 />
                 <label htmlFor="resume-upload">
@@ -338,7 +363,9 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
                   name="signature"
                   value={formData.signature}
                   id="signature-upload"
-                  onChange={(e) => handleFileChange(e)}
+                  onChange={(e) =>
+                    handleFileTypeChange("signature", e.target.files[0])
+                  }
                   style={{ display: "none" }}
                 />
                 <label htmlFor="signature-upload">

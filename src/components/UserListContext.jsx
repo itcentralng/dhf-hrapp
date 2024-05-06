@@ -1,4 +1,3 @@
-// UserListContext.js
 import React, { createContext, useContext, useState } from "react";
 import usersListData from "../data/usersList";
 const UserListContext = createContext();
@@ -9,6 +8,9 @@ export const UserListProvider = ({ children }) => {
   const [usersList, setUsersList] = useState([usersListData]);
   //we defined registerStaff here cos we need to display the form when editUser is triggered from UserListRow
   const [registerStaff, setRegisterStaff] = useState(false);
+  const [passport, setPassport] = useState(null);
+  const [resume, setResume] = useState(null);
+  const [signature, setSignature] = useState(null);
 
   function generateRandomID() {
     const numbers = "1234567890";
@@ -33,9 +35,9 @@ export const UserListProvider = ({ children }) => {
     clockIn: "",
     clockOut: "",
     gender: "",
-    passport: null,
-    resume: null,
-    signature: null,
+    passport: passport,
+    resume: signature,
+    signature: resume,
     homeAddress: "",
     additionalNotes: "",
     staffId: generateRandomID(),
@@ -82,6 +84,12 @@ export const UserListProvider = ({ children }) => {
         setRegisterStaff,
         formData,
         setFormData,
+        passport,
+        setPassport,
+        resume,
+        setResume,
+        signature,
+        setSignature,
       }}
     >
       {children}
