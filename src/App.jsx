@@ -7,7 +7,7 @@ import Sent from "./pages/sent/Sent";
 import Users from "./pages/users/Users";
 import Reports from "./pages/reports/Reports";
 import ViewMessage from "./components/ViewMessage";
-
+import { UserListProvider } from "./components/UserListContext";
 const routes = [
   {
     path: "/inbox",
@@ -39,16 +39,18 @@ function App() {
   return (
     <Box>
       <BrowserRouter>
-        <Box>
-          <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            {routes.map((route) => (
-              <Route path="/" element={<Layout />} key={route.path}>
-                <Route path={route.path} element={route.element} />
-              </Route>
-            ))}
-          </Routes>
-        </Box>
+        <UserListProvider>
+          <Box>
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              {routes.map((route) => (
+                <Route path="/" element={<Layout />} key={route.path}>
+                  <Route path={route.path} element={route.element} />
+                </Route>
+              ))}
+            </Routes>
+          </Box>
+        </UserListProvider>
       </BrowserRouter>
     </Box>
   );

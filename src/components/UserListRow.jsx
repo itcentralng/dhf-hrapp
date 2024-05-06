@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DeleteOutline } from "@mui/icons-material";
 import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
+import { useUserList } from "./UserListContext";
 const TableBodyText = styled("Typography")({
   fontFamily: "inter",
   fontWeight: 400,
@@ -14,6 +15,7 @@ const TableBodyText = styled("Typography")({
 
 const UserListRow = ({ name, title, role, staffId, checked }) => {
   const [singleChecked, setSingleChecked] = React.useState(false);
+  const { editUser, deleteUser } = useUserList();
 
   useEffect(() => {
     if (checked) {
@@ -67,10 +69,10 @@ const UserListRow = ({ name, title, role, staffId, checked }) => {
           alignItems: "center",
         }}
       >
-        <IconButton>
+        <IconButton onClick={() => editUser(staffId)}>
           <EditOutlinedIcon sx={{ color: "rgba(85, 85, 85, 0.6)" }} />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => deleteUser(staffId)}>
           <DeleteOutline sx={{ color: "rgba(85, 85, 85, 0.6)" }} />
         </IconButton>
       </Stack>

@@ -9,12 +9,15 @@ import {
   Button,
   TextareaAutosize,
   styled,
+  Stack,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HeadingText, SubHeadingText } from "../styled-components/StyledText";
 import { FilledButton } from "../styled-components/styledButtons";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
+// import usersList from "../data/usersList";
+import { useUserList } from "./UserListContext";
+import CloseIcon from "@mui/icons-material/Close";
 const FileUploadContainer = styled(Box)({
   display: "flex",
   flexDirection: "row",
@@ -40,44 +43,95 @@ const InputLabel = styled(Typography)({
   color: "black",
 });
 
-const RegisterStaffForm = () => {
+const RegisterStaffForm = ({ setRegisterStaff }) => {
+  const { updateUsersList, formData, setFormData } = useUserList();
   const [expanded, setExpanded] = useState(false);
   const [passport, setPassport] = useState(null);
   const [resume, setResume] = useState(null);
   const [signature, setSignature] = useState(null);
-  const handlePassportChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setPassport(selectedFile);
+
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   department: "",
+  //   title: "",
+  //   phoneNumber: "",
+  //   role: "",
+  //   email: "",
+  //   clockIn: "",
+  //   clockOut: "",
+  //   gender: "",
+  //   passport: null,
+  //   resume: null,
+  //   signature: null,
+  //   homeAddress: "",
+  //   additionalNotes: "",
+  //   staffId: generateRandomID(),
+  // });
+
+  // function generateRandomID() {
+  //   const numbers = "1234567890";
+  //   const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  //   let id = "";
+  //   for (let i = 0; i < 4; i++) {
+  //     id += numbers.charAt(Math.floor(Math.random() * numbers.length));
+  //   }
+  //   for (let i = 0; i < 2; i++) {
+  //     id += letters.charAt(Math.floor(Math.random() * letters.length));
+  //   }
+  //   return id;
+  // }
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handleResumeChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setResume(selectedFile);
+  const handleFileChange = (event) => {
+    const { name, value } = event.target.files[0];
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handleSignatureChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setSignature(selectedFile);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const newStaff = { ...formData };
+    console.log(newStaff);
+    updateUsersList((prevList) => [...prevList, newStaff]);
+
+    setFormData({});
   };
 
   const handleToggleExpand = () => {
     setExpanded((prevExpanded) => !prevExpanded);
   };
+
   return (
     <Box
       sx={{
         borderRadius: "4px",
-        width: "700px",
-        minHeight: "500px",
-        padding: "50px 40px",
+        width: "600px",
+        minHeight: "300px",
+        padding: "15px 30px",
         fontFamily: "DM sans",
         bgcolor: "white",
-        mx: "auto",
+        // mx: "auto",
+        ml: "-300px",
+        mt: expanded ? "-300px" : "100px",
       }}
     >
-      <HeadingText>Register New Staff</HeadingText>
+      <Stack direction="row" sx={{ justifyContent: "space-between" }}>
+        <HeadingText>Register New Staff</HeadingText>
+        <IconButton onClick={() => setRegisterStaff(false)}>
+          <CloseIcon />
+        </IconButton>
+      </Stack>
       <br />
-      <SubHeadingText>
+      <SubHeadingText sx={{ mt: "-25px" }}>
         Please fill out the form below to register a new staff in your school
       </SubHeadingText>
       <FormControl
@@ -91,10 +145,17 @@ const RegisterStaffForm = () => {
           },
         }}
       >
-        <Grid container spacing={2} sx={{ mt: "5px" }}>
+        <Grid container spacing={1} sx={{ mt: "0px" }}>
           <Grid item xs={6}>
             <InputLabel variant="subtitle1">Name</InputLabel>
-            <TextField fullWidth variant="outlined" placeholder="Name" />
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
           </Grid>
           <Grid item xs={6}>
             <InputLabel variant="subtitle1">Department</InputLabel>
@@ -103,6 +164,9 @@ const RegisterStaffForm = () => {
               fullWidth
               variant="outlined"
               placeholder="Department"
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
             >
               <MenuItem value="option1">Option 1</MenuItem>
               <MenuItem value="option2">Option 2</MenuItem>
@@ -113,7 +177,14 @@ const RegisterStaffForm = () => {
           {/* Second Row */}
           <Grid item xs={6}>
             <InputLabel variant="subtitle1">Title</InputLabel>
-            <TextField fullWidth variant="outlined" placeholder="Title" />
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+            />
           </Grid>
           <Grid item xs={6}>
             <InputLabel variant="subtitle1">Phone Number</InputLabel>
@@ -121,21 +192,39 @@ const RegisterStaffForm = () => {
               fullWidth
               variant="outlined"
               placeholder="Phone Number"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
             />
           </Grid>
 
           {/* Third Row */}
           <Grid item xs={6}>
             <InputLabel variant="subtitle1">Role</InputLabel>
-            <TextField select fullWidth variant="outlined" placeholder="Role">
-              <MenuItem value="option1">Teacher</MenuItem>
-              <MenuItem value="option2">Admin</MenuItem>
-              <MenuItem value="option3">Head Of Section</MenuItem>
+            <TextField
+              select
+              fullWidth
+              variant="outlined"
+              placeholder="Role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+            >
+              <MenuItem value="Staff">Staff</MenuItem>
+              <MenuItem value="Admin">Admin</MenuItem>
+              <MenuItem value="Head Of Section">Head Of Section</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={6}>
             <InputLabel variant="subtitle1">Email</InputLabel>
-            <TextField fullWidth variant="outlined" placeholder="Email" />
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
           </Grid>
 
           {/* Fourth Row */}
@@ -147,6 +236,9 @@ const RegisterStaffForm = () => {
                   variant="outlined"
                   placeholder="Clock In"
                   fullWidth
+                  name="clockIn"
+                  value={formData.clockIn}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -154,6 +246,9 @@ const RegisterStaffForm = () => {
                   variant="outlined"
                   placeholder="Clock Out"
                   fullWidth
+                  name="clockOut"
+                  value={formData.clockOut}
+                  onChange={handleChange}
                 />
               </Grid>
             </Grid>
@@ -166,6 +261,9 @@ const RegisterStaffForm = () => {
               variant="outlined"
               Upload
               placeHolder="Gender"
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
               sx={{
                 borderColor: "purple",
                 "& .MuiSelect-icon": {
@@ -173,8 +271,8 @@ const RegisterStaffForm = () => {
                 },
               }}
             >
-              <MenuItem value="option1">Male</MenuItem>
-              <MenuItem value="option2">Female</MenuItem>
+              <MenuItem value="male">Male</MenuItem>
+              <MenuItem value="female">Female</MenuItem>
             </TextField>
           </Grid>
         </Grid>
@@ -189,14 +287,16 @@ const RegisterStaffForm = () => {
           </Grid>
         </Grid>
         {expanded && (
-          <Grid container spacing={2} sx={{ marginTop: 2 }}>
+          <Grid container spacing={1} sx={{ marginTop: 2 }}>
             <Grid item xs={6} sx={{ padding: "10px" }}>
               <InputLabel>Passport</InputLabel>
               <FileUploadContainer>
                 <input
                   type="file"
+                  name="passport"
+                  value={formData.passport}
                   id="passport-upload"
-                  onChange={handlePassportChange}
+                  onChange={(e) => handleFileChange(e)}
                   style={{ display: "none" }}
                 />
                 <label htmlFor="passport-upload">
@@ -214,8 +314,10 @@ const RegisterStaffForm = () => {
               <FileUploadContainer>
                 <input
                   type="file"
+                  name="resume"
+                  value={formData.resume}
                   id="resume-upload"
-                  onChange={handleResumeChange}
+                  onChange={(e) => handleFileChange(e)}
                   style={{ display: "none" }}
                 />
                 <label htmlFor="resume-upload">
@@ -234,8 +336,10 @@ const RegisterStaffForm = () => {
               <FileUploadContainer>
                 <input
                   type="file"
+                  name="signature"
+                  value={formData.signature}
                   id="signature-upload"
-                  onChange={handleSignatureChange}
+                  onChange={(e) => handleFileChange(e)}
                   style={{ display: "none" }}
                 />
                 <label htmlFor="signature-upload">
@@ -265,6 +369,8 @@ const RegisterStaffForm = () => {
                 fullWidth
                 variant="outlined"
                 placeholder="Home Address"
+                name="homeAddress"
+                value={formData.homeAddress}
               />
             </Grid>
 
@@ -284,9 +390,11 @@ const RegisterStaffForm = () => {
               </InputLabel>
 
               <TextareaAutosize
-                minRows={9}
-                maxRows={10}
+                minRows={4}
+                maxRows={6}
                 placeholder="Start Typing Here..."
+                name="additionalNotes"
+                value={formData.additionalNotes}
                 style={{
                   width: "100%",
                   resize: "vertical",
@@ -300,7 +408,8 @@ const RegisterStaffForm = () => {
         )}
         <FilledButton
           type="submit"
-          sx={{ width: "183px", height: "56px", mx: "auto", mt: "15px" }}
+          onClick={handleSubmit}
+          sx={{ width: "163px", height: "45px", mx: "auto", mt: "5px" }}
         >
           Register Staff
         </FilledButton>

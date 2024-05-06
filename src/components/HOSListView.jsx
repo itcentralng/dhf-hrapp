@@ -4,7 +4,7 @@ import UserListHeader from "./UserListHeader";
 import { Box } from "@mui/material";
 import UserListRow from "./UserListRow";
 import { useUserList } from "./UserListContext";
-const UserListView = () => {
+const HOSListView = () => {
   const { usersList } = useUserList();
   const [checked, setChecked] = React.useState(false);
   const handleChange = (event) => {
@@ -13,13 +13,15 @@ const UserListView = () => {
   return (
     <Box sx={{ bgcolor: "white", padding: "48px 20px", borderRadius: "6px" }}>
       <UserListHeader checked={checked} handleChange={handleChange} />
-      {usersList.map((user, staffId) => (
-        <Box key={staffId}>
-          <UserListRow {...user} checked={checked} />
-        </Box>
-      ))}
+      {usersList
+        .filter((user) => user.role == "Head Of Section")
+        .map((user, staffId) => (
+          <Box key={staffId}>
+            <UserListRow {...user} checked={checked} />
+          </Box>
+        ))}
     </Box>
   );
 };
 
-export default UserListView;
+export default HOSListView;
