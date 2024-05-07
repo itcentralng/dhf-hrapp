@@ -11,9 +11,9 @@ export const UserListProvider = ({ children }) => {
   //we defined registerStaff here cos we need to display the form when editUser is triggered from UserListRow
   const [registerStaff, setRegisterStaff] = useState(false);
   const [editStaffForm, setEditStaffForm] = useState(false);
-  const [passport, setPassport] = useState(null);
-  const [resume, setResume] = useState(null);
-  const [signature, setSignature] = useState(null);
+  // const [passport, setPassport] = useState();
+  // const [resume, setResume] = useState();
+  // const [signature, setSignature] = useState();
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -25,16 +25,15 @@ export const UserListProvider = ({ children }) => {
     clockIn: "",
     clockOut: "",
     gender: "",
-    passport: passport,
-    resume: signature,
-    signature: resume,
+    passport: null,
+    resume: null,
+    signature: null,
     homeAddress: "",
     additionalNotes: "",
     staffId: "",
   });
 
   useEffect(() => {
-    console.log("Saving usersList to localStorage:", usersList);
     localStorage.setItem("usersList", JSON.stringify(usersList));
   }, [usersList]);
 
@@ -44,6 +43,7 @@ export const UserListProvider = ({ children }) => {
 
   const editUser = (staffId) => {
     const userToEdit = usersList.find((user) => user.staffId == staffId);
+    console.log(userToEdit);
     setFormData({
       name: userToEdit.name,
       department: userToEdit.department,
@@ -54,9 +54,15 @@ export const UserListProvider = ({ children }) => {
       clockIn: userToEdit.clockIn,
       clockOut: userToEdit.clockOut,
       gender: userToEdit.gender,
-      passport: userToEdit.passport,
-      resume: userToEdit.resume,
-      signature: userToEdit.signature,
+      /**issue: HTML specs in this case passport, resume, and signature,
+       * won't allow you to set a value on file inputs.
+       * Only the user can select a file to upload by clicking on
+       * the file button, and selecting the file location on their computer.
+       * Meaning we cant set user files to the form file inputs while trying to edit as we need
+       * for the other regular inputs*/
+      passport: null,
+      resume: null,
+      signature: null,
       homeAddress: userToEdit.homeAddress,
       additionalNotes: userToEdit.additionalNotes,
       staffId: userToEdit.staffId,
@@ -83,12 +89,12 @@ export const UserListProvider = ({ children }) => {
         setRegisterStaff,
         formData,
         setFormData,
-        passport,
-        setPassport,
-        resume,
-        setResume,
-        signature,
-        setSignature,
+        // passport,
+        // setPassport,
+        // resume,
+        // setResume,
+        // signature,
+        // setSignature,
         editStaffForm,
         setEditStaffForm,
         showDeleteConfirmation,

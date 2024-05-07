@@ -53,17 +53,13 @@ const RegisterStaffForm = ({
     updateUsersList,
     formData,
     setFormData,
-    passport,
-    signature,
-    resume,
-    setPassport,
-    setSignature,
-    setResume,
     removeUserForEdit,
     setEditStaffForm,
   } = useUserList();
   const [expanded, setExpanded] = useState(false);
-
+  const [passport, setPassport] = useState();
+  const [resume, setResume] = useState();
+  const [signature, setSignature] = useState();
   // const [formData, setFormData] = useState({
   //   name: "",
   //   department: "",
@@ -130,6 +126,9 @@ const RegisterStaffForm = ({
     const newStaff = {
       ...formData,
       staffId: generateRandomID(),
+      passport: passport,
+      resume: resume,
+      signature: signature,
     };
     console.log(newStaff);
     updateUsersList((prevList) => [...prevList, newStaff]);
