@@ -43,7 +43,12 @@ const InputLabel = styled(Typography)({
   color: "black",
 });
 
-const RegisterStaffForm = ({ setRegisterStaff }) => {
+const RegisterStaffForm = ({
+  formType,
+  setRegisterStaff,
+  setShowRegConfirmation,
+  setShowEditConfirmation,
+}) => {
   const {
     updateUsersList,
     formData,
@@ -54,6 +59,8 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
     setPassport,
     setSignature,
     setResume,
+    removeUserForEdit,
+    setEditStaffForm,
   } = useUserList();
   const [expanded, setExpanded] = useState(false);
 
@@ -75,18 +82,18 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
   //   staffId: generateRandomID(),
   // });
 
-  // function generateRandomID() {
-  //   const numbers = "1234567890";
-  //   const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  //   let id = "";
-  //   for (let i = 0; i < 4; i++) {
-  //     id += numbers.charAt(Math.floor(Math.random() * numbers.length));
-  //   }
-  //   for (let i = 0; i < 2; i++) {
-  //     id += letters.charAt(Math.floor(Math.random() * letters.length));
-  //   }
-  //   return id;
-  // }
+  function generateRandomID() {
+    const numbers = "1234567890";
+    const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let id = "";
+    for (let i = 0; i < 4; i++) {
+      id += numbers.charAt(Math.floor(Math.random() * numbers.length));
+    }
+    for (let i = 0; i < 2; i++) {
+      id += letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+    return id;
+  }
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -120,10 +127,30 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newStaff = { ...formData };
+    const newStaff = {
+      ...formData,
+      staffId: generateRandomID(),
+    };
+    console.log(newStaff);
     updateUsersList((prevList) => [...prevList, newStaff]);
-
     setFormData({});
+    setShowRegConfirmation(true);
+    setRegisterStaff(false);
+  };
+
+  const handleEdit = (event) => {
+    event.preventDefault();
+    const editedUser = { ...formData };
+    removeUserForEdit(editedUser.staffId);
+    updateUsersList((prevList) => [...prevList, editedUser]);
+    setFormData({});
+    setShowEditConfirmation(true);
+    setEditStaffForm(false);
+  };
+
+  const closeForm = () => {
+    setRegisterStaff(false);
+    setEditStaffForm(false);
   };
 
   const handleToggleExpand = () => {
@@ -145,14 +172,20 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
       }}
     >
       <Stack direction="row" sx={{ justifyContent: "space-between" }}>
-        <HeadingText>Register New Staff</HeadingText>
-        <IconButton onClick={() => setRegisterStaff(false)}>
+        <HeadingText>
+          {formType == "register staff"
+            ? "Register New Staff"
+            : "Edit Existing Staff"}
+        </HeadingText>
+        <IconButton onClick={closeForm}>
           <CloseIcon />
         </IconButton>
       </Stack>
       <br />
       <SubHeadingText sx={{ mt: "-25px" }}>
-        Please fill out the form below to register a new staff in your school
+        {formType == "register staff"
+          ? "Please fill out the form below to register a new staff in your school"
+          : "Modify existing staff data"}
       </SubHeadingText>
       <FormControl
         component="form"
@@ -170,6 +203,7 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
             <InputLabel variant="subtitle1">Name</InputLabel>
             <TextField
               fullWidth
+              required
               variant="outlined"
               placeholder="Name"
               name="name"
@@ -182,6 +216,7 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
             <TextField
               select
               fullWidth
+              required
               variant="outlined"
               placeholder="Department"
               name="department"
@@ -199,6 +234,7 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
             <InputLabel variant="subtitle1">Title</InputLabel>
             <TextField
               fullWidth
+              required
               variant="outlined"
               placeholder="Title"
               name="title"
@@ -210,6 +246,7 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
             <InputLabel variant="subtitle1">Phone Number</InputLabel>
             <TextField
               fullWidth
+              required
               variant="outlined"
               placeholder="Phone Number"
               name="phoneNumber"
@@ -224,6 +261,7 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
             <TextField
               select
               fullWidth
+              required
               variant="outlined"
               placeholder="Role"
               name="role"
@@ -239,6 +277,7 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
             <InputLabel variant="subtitle1">Email</InputLabel>
             <TextField
               fullWidth
+              required
               variant="outlined"
               placeholder="Email"
               name="email"
@@ -256,6 +295,7 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
                   variant="outlined"
                   placeholder="Clock In"
                   fullWidth
+                  required
                   name="clockIn"
                   value={formData.clockIn}
                   onChange={handleChange}
@@ -266,6 +306,7 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
                   variant="outlined"
                   placeholder="Clock Out"
                   fullWidth
+                  required
                   name="clockOut"
                   value={formData.clockOut}
                   onChange={handleChange}
@@ -278,6 +319,7 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
             <TextField
               select
               fullWidth
+              required
               variant="outlined"
               Upload
               placeHolder="Gender"
@@ -397,6 +439,7 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
                 placeholder="Home Address"
                 name="homeAddress"
                 value={formData.homeAddress}
+                onChange={handleChange}
               />
             </Grid>
 
@@ -421,6 +464,7 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
                 placeholder="Start Typing Here..."
                 name="additionalNotes"
                 value={formData.additionalNotes}
+                onChange={handleChange}
                 style={{
                   width: "100%",
                   resize: "vertical",
@@ -432,13 +476,23 @@ const RegisterStaffForm = ({ setRegisterStaff }) => {
             </Grid>
           </Grid>
         )}
-        <FilledButton
-          type="submit"
-          onClick={handleSubmit}
-          sx={{ width: "163px", height: "45px", mx: "auto", mt: "5px" }}
-        >
-          Register Staff
-        </FilledButton>
+        {formType == "register staff" ? (
+          <FilledButton
+            type="submit"
+            onClick={handleSubmit}
+            sx={{ width: "163px", height: "45px", mx: "auto", mt: "5px" }}
+          >
+            Register Staff
+          </FilledButton>
+        ) : (
+          <FilledButton
+            type="submit"
+            onClick={handleEdit}
+            sx={{ width: "163px", height: "45px", mx: "auto", mt: "5px" }}
+          >
+            Edit Staff
+          </FilledButton>
+        )}
       </FormControl>
     </Box>
   );

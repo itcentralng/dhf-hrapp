@@ -109,7 +109,9 @@ const CommentsArea = () => {
           </FilledShadowButton>
         )}
       </Stack>
-      {showSuccessPopUp && <ConfirmationPopup />}
+      {showSuccessPopUp && (
+        <ConfirmationPopup text={"Your message has been sent successfully."} />
+      )}
     </>
   );
 };
