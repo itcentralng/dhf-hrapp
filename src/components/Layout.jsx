@@ -389,7 +389,10 @@ const Layout = () => {
                 : "none",
           }}
         >
-          <FilledShadowButton sx={{ gap: 1 }} onClick={() => navigate("#")}>
+          <FilledShadowButton
+            sx={{ gap: 1 }}
+            onClick={() => navigate("/createdocument")}
+          >
             {/* Will navigate it later on to the create templates page */}
             <CreateOutlined />
             Create
