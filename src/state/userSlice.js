@@ -13,12 +13,12 @@ export const userSlice = createSlice({
       state.isAuth = true;
       state.user = action.payload;
       console.log(action.payload);
-      sessionStorage.setItem("userState", JSON.stringify(state));
+      localStorage.setItem("userState", JSON.stringify(state));
     },
     logout: (state) => {
       state.isAuth = false;
       state.user = null;
-      sessionStorage.removeItem("userState");
+      localStorage.removeItem("userState");
     },
   },
 });

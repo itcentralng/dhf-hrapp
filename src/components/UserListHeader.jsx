@@ -1,8 +1,8 @@
 import React from "react";
 import sortAscending from "../assets/Sort ascending.svg";
-import { Box, Checkbox, Stack, styled } from "@mui/material";
+import { Box, Checkbox, Stack, Typography, styled } from "@mui/material";
 
-const TableHeadText = styled("Typography")({
+const TableHeadText = styled(Typography)({
   fontFamily: "DM sans",
   fontWeight: 400,
   fontSize: "14px",

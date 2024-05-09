@@ -1,10 +1,17 @@
-import { Box, Checkbox, IconButton, Stack, styled } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  IconButton,
+  Stack,
+  Typography,
+  styled,
+} from "@mui/material";
 import React, { useEffect } from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DeleteOutline } from "@mui/icons-material";
 import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
 import { useUserList } from "./UserListContext";
-const TableBodyText = styled("Typography")({
+const TableBodyText = styled(Typography)({
   fontFamily: "inter",
   fontWeight: 400,
   fontSize: "14px",

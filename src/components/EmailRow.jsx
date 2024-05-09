@@ -5,7 +5,7 @@ import EmailLabel from "./EmailLabel";
 import AttachmentIcon from "@mui/icons-material/Attachment";
 import { useNavigate } from "react-router-dom/dist";
 
-const StyledText = styled("Typography")({
+const StyledText = styled(Typography)({
   fontSize: "14px",
   fontWeight: 400,
 });

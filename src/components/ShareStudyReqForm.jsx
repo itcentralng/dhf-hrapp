@@ -2,7 +2,7 @@ import { Box, FormControl, TextField, Typography, styled } from "@mui/material";
 import React from "react";
 import { HeadingText, SubHeadingText } from "../styled-components/StyledText";
 import { FilledButton } from "../styled-components/styledButtons";
-const Text = styled("Typography")({
+const Text = styled(Typography)({
   fontFamily: "DM Sans",
   fontWeight: 400,
   fontSize: "14px",

@@ -34,6 +34,7 @@ import CustomSearchBox from "./CustomSearchBox";
 import CustomNotificationIcon from "./CustomNotificationIcon";
 import { FilledShadowButton } from "../styled-components/styledButtons";
 import { Navigate } from "react-router-dom/dist";
+import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -47,6 +48,8 @@ const Layout = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const user = useSelector((state) => state.user.user);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -185,6 +188,9 @@ const Layout = () => {
                     : "#FFFFFF",
                   borderRadius: "4px",
                   gap: 1,
+                  display: item.role.includes(user.user_details.role)
+                    ? "flex"
+                    : "none",
                   "&:hover": {
                     backgroundColor: "#ffffff3d",
                     color: "#fff",
@@ -247,9 +253,10 @@ const Layout = () => {
               fontWeight: 500,
               fontFamily: "DM Sans",
               lineHeight: "1em",
+              textTransform: "capitalize",
             }}
           >
-            Elon Rust
+            {`${user.user_details.first_name} ${user.user_details.last_name}`}
           </Typography>
           <Typography
             variant="body2"
@@ -258,9 +265,10 @@ const Layout = () => {
               fontWeight: 400,
               fontFamily: "DM Sans",
               color: "#2586F8",
+              textTransform: "capitalize",
             }}
           >
-            Admin
+            {`${user.user_details.role}`}
           </Typography>
         </Box>
       </Box>
@@ -412,6 +420,7 @@ const navItems = [
     name: "Sent",
     link: "/sent",
     icon: <ChatBubbleOutline />,
+    role: "admin, hos, staff",
   },
   {
     id: 2,
@@ -419,18 +428,21 @@ const navItems = [
     link: "/inbox",
     icon: <FolderOutlined />,
     newNotification: 4,
+    role: "admin, hr, hos, staff",
   },
   {
     id: 3,
     name: "Users",
     link: "/users",
     icon: <PeopleAltOutlined />,
+    role: "admin, hr",
   },
   {
     id: 4,
     name: "Reports",
     link: "/reports",
     icon: <InsertDriveFileOutlined />,
+    role: " hr",
   },
 ];
 

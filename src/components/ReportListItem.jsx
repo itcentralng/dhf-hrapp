@@ -1,8 +1,8 @@
-import { Checkbox, IconButton, Stack, styled } from "@mui/material";
+import { Checkbox, IconButton, Stack, Typography, styled } from "@mui/material";
 import React from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-const Text = styled("Typography")({
+const Text = styled(Typography)({
   fontWeight: 400,
   fontSize: "16px",
   color: "#252C32",
