@@ -8,6 +8,8 @@ import Users from "./pages/users/Users";
 import Reports from "./pages/reports/Reports";
 import ViewMessage from "./components/ViewMessage";
 import { UserListProvider } from "./components/UserListContext";
+import CreateDocument from "./pages/documents/CreateDocument";
+import BlankDocument from "./pages/documents/BlankDocument";
 import Auth from "./auth/Auth";
 const routes = [
   {
@@ -33,6 +35,14 @@ const routes = [
   {
     path: "/reports",
     element: <Reports />,
+  },
+  {
+    path: "/createdocument",
+    element: <CreateDocument />,
+  },
+  {
+    path: "/createdocument/blankdocument",
+    element: <BlankDocument />,
   },
 ];
 

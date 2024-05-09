@@ -1,0 +1,17 @@
+/* Custom CSS to remove borders */
+.ql-toolbar {
+    border: none !important; /* Remove border from toolbar */
+margin-top: -155px;
+padding-bottom: 100;
+    background-color: #fff; /* Example: White background */
+    z-index: 1000; /* Adjust z-index as needed */
+    width: 700px;
+    margin-left: -15%;
+}
+
+.ql-editor{
+    margin-top: 100px;
+    max-width: 2480px;
+    border-color: #fff;
+}
+  

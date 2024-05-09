@@ -3,7 +3,7 @@ import confirmationIcon from "../assets/confirmationIcon.svg";
 import { HeadingText, SubHeadingText } from "../styled-components/StyledText";
 import { Box } from "@mui/material";
 
-const ConfirmationPopup = () => {
+const ConfirmationPopup = ({ text }) => {
   return (
     <Box
       sx={{
@@ -32,8 +32,10 @@ const ConfirmationPopup = () => {
       >
         <img src={confirmationIcon} />
         <HeadingText sx={{ fontSize: "20px", my: "30px" }}>Success</HeadingText>
-        <SubHeadingText sx={{ fontSize: "14px", color: "black" }}>
-          Your Message has been sent successfully.
+        <SubHeadingText
+          sx={{ fontSize: "14px", color: "black", textAlign: "center" }}
+        >
+          {text}
         </SubHeadingText>
       </Box>
     </Box>
