@@ -1,26 +1,28 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+const initialState = JSON.parse(sessionStorage.getItem("userState")) || {
+  isAuth: false,
   user: null,
-  isLoading: false,
 };
 
-export const login = createAsyncThunk(
-  "user/login",
-  async (userData, thunkAPI) => {
-    try {
-      const response = await axios.post();
-    } catch (error) {
-      console.error(error);
-      return thunkAPI.rejectWithValue(error.response.data.errors);
-    }
-  }
-);
-
-const userSlice = createSlice({
+export const userSlice = createSlice({
   name: "user",
   initialState,
+  reducers: {
+    login: (state, action) => {
+      state.isAuth = true;
+      state.user = action.payload;
+      console.log(action.payload);
+      sessionStorage.setItem("userState", JSON.stringify(state));
+    },
+    logout: (state) => {
+      state.isAuth = false;
+      state.user = null;
+      sessionStorage.removeItem("userState");
+    },
+  },
 });
+
+export const userActions = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,4 +1,4 @@
-import { Checkbox, IconButton, Stack, Typography, styled } from "@mui/material";
+import { Checkbox, IconButton, Stack, styled } from "@mui/material";
 import React from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 

@@ -1,8 +1,18 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Box, FormControl, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  FormControl,
+  TextField,
+  Typography,
+} from "@mui/material";
 import logo from "../assets/hrLogo.svg";
 import { FilledButton } from "../styled-components/styledButtons";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userActions } from "../state/userSlice";
 
 const validationSchema = yup.object({
   email: yup
@@ -18,6 +28,9 @@ const validationSchema = yup.object({
 const LoginForm = () => {
   // const [userEmail, setUserEmail] = useState("");
   // const [userPassword, setUserPassword] = useState("");
+  const [loading, setLoading] = React.useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -26,11 +39,45 @@ const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      // setUserEmail(values.email);
-      // setUserPassword(values.password);
-      console.log(values);
+      handleLogin(values);
     },
   });
+
+  const handleLogin = async (values) => {
+    setLoading(true);
+    try {
+      const formData = {
+        email: values.email,
+        password: values.password,
+      };
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_API_URL}/user/login/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!response.ok) {
+        console.log(JSON.stringify(formData));
+        alert("Failed to Log in! Please try again.");
+        throw new Error("Failed to submit form");
+      }
+      const user = await response.json();
+      delete user.password;
+      console.log("Form submitted successfully");
+      dispatch(userActions.login(user));
+      navigate("/");
+    } catch (error) {
+      console.error("Error logging user in: ", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -112,7 +159,7 @@ const LoginForm = () => {
           type="submit"
           sx={{ width: "170px", height: "44px", mt: "0px" }}
         >
-          Log in
+          {loading ? <CircularProgress size={22} /> : "Log in"}
         </FilledButton>
       </FormControl>
     </Box>

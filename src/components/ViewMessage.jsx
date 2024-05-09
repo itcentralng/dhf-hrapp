@@ -31,7 +31,9 @@ const ViewMessage = () => {
   };
 
   const handleNextMessage = (type, id) => {
-    const currentIndex = newArray.findIndex((item) => item.id === id);
+    const currentIndex = newArray
+      .filter((item) => item.type === type)
+      .findIndex((item) => item.id === id);
 
     if (currentIndex === -1) {
       alert("Page does not exist");
@@ -48,7 +50,9 @@ const ViewMessage = () => {
   };
 
   const handlePrevMessage = (type, id) => {
-    const currentIndex = newArray.findIndex((item) => item.id === id);
+    const currentIndex = newArray
+      .filter((item) => item.type === type)
+      .findIndex((item) => item.id === id);
 
     if (currentIndex === -1) {
       alert("Page does not exist");

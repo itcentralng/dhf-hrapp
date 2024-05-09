@@ -8,6 +8,7 @@ import Users from "./pages/users/Users";
 import Reports from "./pages/reports/Reports";
 import ViewMessage from "./components/ViewMessage";
 import { UserListProvider } from "./components/UserListContext";
+import Auth from "./auth/Auth";
 const routes = [
   {
     path: "/inbox",
@@ -45,7 +46,10 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               {routes.map((route) => (
                 <Route path="/" element={<Layout />} key={route.path}>
-                  <Route path={route.path} element={route.element} />
+                  <Route
+                    path={route.path}
+                    element={<Auth>{route.element}</Auth>}
+                  />
                 </Route>
               ))}
             </Routes>
