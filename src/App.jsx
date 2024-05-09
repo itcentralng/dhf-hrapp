@@ -11,6 +11,8 @@ import { UserListProvider } from "./components/UserListContext";
 import Auth from "./auth/Auth";
 import CreateDocument from "./pages/documents/CreateDocument";
 import BlankDocument from "./pages/documents/BlankDocument";
+import { ShareFormProvider } from "./components/context/ShareFormContext";
+
 const routes = [
   {
     path: "/inbox",
@@ -51,27 +53,29 @@ function App() {
     <Box>
       <BrowserRouter>
         <UserListProvider>
-          <Box>
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              {routes.map((route) => (
-                <Route
-                  path="/"
-                  element={
-                    <Auth>
-                      <Layout />
-                    </Auth>
-                  }
-                  key={route.path}
-                >
+          <ShareFormProvider>
+            <Box>
+              <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                {routes.map((route) => (
                   <Route
-                    path={route.path}
-                    element={<Auth>{route.element}</Auth>}
-                  />
-                </Route>
-              ))}
-            </Routes>
-          </Box>
+                    path="/"
+                    element={
+                      <Auth>
+                        <Layout />
+                      </Auth>
+                    }
+                    key={route.path}
+                  >
+                    <Route
+                      path={route.path}
+                      element={<Auth>{route.element}</Auth>}
+                    />
+                  </Route>
+                ))}
+              </Routes>
+            </Box>
+          </ShareFormProvider>
         </UserListProvider>
       </BrowserRouter>
     </Box>

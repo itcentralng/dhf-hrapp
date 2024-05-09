@@ -18,7 +18,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // import usersList from "../data/usersList";
 import { useUserList } from "./UserListContext";
 import CloseIcon from "@mui/icons-material/Close";
-const FileUploadContainer = styled(Box)({
+const FileUploadContainer = styled("Box")({
   display: "flex",
   flexDirection: "row",
   border: "#CDD0D5 1px solid",
@@ -27,7 +27,7 @@ const FileUploadContainer = styled(Box)({
   padding: "9px",
 });
 
-const UploadButton = styled(Button)({
+const UploadButton = styled("Button")({
   bgcolor: "rgba(85, 85, 85, 0.5)",
   borderRadius: "6px",
   width: "125px",
@@ -36,7 +36,7 @@ const UploadButton = styled(Button)({
   marginRight: "10px",
 });
 
-const InputLabel = styled(Typography)({
+const InputLabel = styled("Typography")({
   fontFamily: "DM sans",
   fontWeigth: 400,
   fontSize: "14px",

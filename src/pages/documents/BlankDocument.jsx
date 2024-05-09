@@ -5,6 +5,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../../styles/documentStyles.css";
 import DocDetailsAndButton from "./DocDetailsAndButton";
+import { useShareForm } from "../../components/context/ShareFormContext";
+import ShareWithForm from "../../components/ShareWithForm";
+import { Overlay } from "../../styled-components/styledBox";
 const EditorContainer = styled("div")({
   padding: "16px",
   display: "flex",
@@ -58,6 +61,8 @@ const formats = [
 
 const Editor = () => {
   const [editorHtml, setEditorHtml] = useState("");
+  const { displayShareForm } = useShareForm();
+  const [documentTitle, setDocumentTitle] = useState("Untitled Document");
 
   const handleChange = (html) => {
     setEditorHtml(html);
@@ -71,7 +76,10 @@ const Editor = () => {
 
   return (
     <>
-      <DocDetailsAndButton />
+      <DocDetailsAndButton
+        documentTitle={documentTitle}
+        setDocumentTitle={setDocumentTitle}
+      />
       <EditorContainer>
         <EditorPaper elevation={2} sx={{ padding: "90px" }}>
           <ReactQuill
@@ -85,6 +93,11 @@ const Editor = () => {
           />
         </EditorPaper>
       </EditorContainer>
+      {displayShareForm && (
+        <Overlay>
+          <ShareWithForm documentType={documentTitle} />
+        </Overlay>
+      )}
     </>
   );
 };

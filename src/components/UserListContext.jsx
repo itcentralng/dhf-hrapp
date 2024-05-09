@@ -58,7 +58,7 @@ export const UserListProvider = ({ children }) => {
        * won't allow you to set a value on file inputs.
        * Only the user can select a file to upload by clicking on
        * the file button, and selecting the file location on their computer.
-       * Meaning we cant set user files to the form file inputs while trying to edit as we need
+       * Meaning we cant set user files to the form file inputs while trying to edit as we did
        * for the other regular inputs*/
       passport: null,
       resume: null,

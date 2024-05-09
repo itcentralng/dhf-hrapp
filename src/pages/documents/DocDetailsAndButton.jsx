@@ -6,12 +6,13 @@ import {
   HeadingText,
   SubHeadingText,
 } from "../../styled-components/StyledText";
-const DocDetailsAndButton = () => {
-  const [documentTitle, setDocumentTitle] = useState("Untitled Document");
-
+import { useShareForm } from "../../components/context/ShareFormContext";
+const DocDetailsAndButton = ({ documentTitle, setDocumentTitle }) => {
+  const { setDisplayShareForm } = useShareForm();
   const changeHandler = (event) => {
     setDocumentTitle(event.target.value);
   };
+
   return (
     <Stack
       direction="row"
@@ -49,7 +50,12 @@ const DocDetailsAndButton = () => {
           <SubHeadingText>created 08/05/23</SubHeadingText>
         </Stack>
       </Stack>
-      <FilledButton sx={{ width: "136px", height: "39px" }}>Share</FilledButton>
+      <FilledButton
+        sx={{ width: "136px", height: "39px" }}
+        onClick={() => setDisplayShareForm(true)}
+      >
+        Share
+      </FilledButton>
     </Stack>
   );
 };
