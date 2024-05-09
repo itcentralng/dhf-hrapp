@@ -62,7 +62,6 @@ const LoginForm = () => {
       );
 
       if (!response.ok) {
-        console.log(JSON.stringify(formData));
         alert("Failed to Log in! Please try again.");
         throw new Error("Failed to submit form");
       }
