@@ -6,7 +6,7 @@ const CenteredBox = styled(Box)(() => ({
   alignItems: "center",
 }));
 
-const Overlay = styled("Box")({
+const Overlay = styled(Box)({
   zIndex: 10,
   position: "fixed",
   top: 0,
