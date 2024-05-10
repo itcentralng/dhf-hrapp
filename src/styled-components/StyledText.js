@@ -14,4 +14,11 @@ const SubHeadingText = styled(Typography)({
   color: "#4B5563",
 });
 
-export { HeadingText, SubHeadingText };
+const InputLabel = styled(Typography)({
+  fontFamily: "DM sans",
+  fontWeigth: 400,
+  fontSize: "14px",
+  color: "black",
+});
+
+export { HeadingText, SubHeadingText, InputLabel };

@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, styled } from "@mui/material";
+import { Box, Menu, MenuItem, Stack, Typography, styled } from "@mui/material";
 import { FilledButton } from "../../styled-components/styledButtons";
 import RegisterStaffForm from "../../components/RegisterStaffForm";
 import { useEffect, useState } from "react";
@@ -7,18 +7,8 @@ import HOSListView from "../../components/HOSListView";
 import StaffListView from "../../components/StaffListView";
 import { useUserList } from "../../components/UserListContext";
 import ConfirmationPopup from "../../components/ConfirmationPopup";
-
-const Overlay = styled("Box")({
-  zIndex: 10,
-  position: "fixed",
-  top: 0,
-  backgroundColor: "rgba(0, 0, 0, 0.25)",
-  width: "100%",
-  height: "100vh",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-});
+import { Overlay } from "../../styled-components/styledBox";
+import RegisterOfficeForm from "../../components/RegisterOfficeForm";
 
 const Users = () => {
   // const [registerStaff, setRegisterStaff] = useState(false);
@@ -32,6 +22,10 @@ const Users = () => {
   } = useUserList();
   const [showRegConfirmation, setShowRegConfirmation] = useState(false);
   const [showEditConfirmation, setShowEditConfirmation] = useState(false);
+  const [showOfficeConf, setShowOfficeConf] = useState(false);
+  const [registerOffice, setRegisterOffice] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const options = ["New Staff", "New Office"];
   useEffect(() => {
     let interval = setInterval(() => {
       setShowRegConfirmation(false);
@@ -53,9 +47,36 @@ const Users = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleClick = () => {
+  useEffect(() => {
+    let interval = setInterval(() => {
+      setShowOfficeConf(false);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleClickr = () => {
     setFormData({});
     setRegisterStaff(true);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSelect = (option) => {
+    handleClose();
+    switch (option) {
+      case "New Staff":
+        setFormData({});
+        setRegisterStaff(true);
+        break;
+      case "New Office":
+        setRegisterOffice(true);
+    }
   };
 
   return (
@@ -75,8 +96,19 @@ const Users = () => {
           >
             Staff
           </Typography>
-          <FilledButton onClick={handleClick}>Register Staff</FilledButton>
+          <FilledButton onClick={handleClick}>Register</FilledButton>
         </Stack>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {options.map((option, index) => (
+            <MenuItem key={index} onClick={() => handleSelect(option)}>
+              {option}
+            </MenuItem>
+          ))}
+        </Menu>
         <StaffListView />
         <Typography
           sx={{
@@ -123,6 +155,15 @@ const Users = () => {
           />
         </Overlay>
       )}
+      {registerOffice && (
+        <Overlay>
+          <RegisterOfficeForm
+            setShowEditConfirmation={setShowEditConfirmation}
+            setShowOfficeConf={setShowOfficeConf}
+            setRegisterOffice={setRegisterOffice}
+          />
+        </Overlay>
+      )}
       {showRegConfirmation && (
         <ConfirmationPopup
           text={
@@ -135,6 +176,11 @@ const Users = () => {
       )}
       {showDeleteConfirmation && (
         <ConfirmationPopup text={"You have successfully Deleted a staff."} />
+      )}
+      {showOfficeConf && (
+        <ConfirmationPopup
+          text={"You have successfully registered an office."}
+        />
       )}
     </>
   );

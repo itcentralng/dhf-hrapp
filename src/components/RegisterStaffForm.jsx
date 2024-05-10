@@ -12,7 +12,11 @@ import {
   Stack,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { HeadingText, SubHeadingText } from "../styled-components/StyledText";
+import {
+  HeadingText,
+  InputLabel,
+  SubHeadingText,
+} from "../styled-components/StyledText";
 import { FilledButton } from "../styled-components/styledButtons";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // import usersList from "../data/usersList";
@@ -34,13 +38,6 @@ const UploadButton = styled(Button)({
   color: "#D9D9D9",
   textTransform: "none",
   marginRight: "10px",
-});
-
-const InputLabel = styled(Typography)({
-  fontFamily: "DM sans",
-  fontWeigth: 400,
-  fontSize: "14px",
-  color: "black",
 });
 
 const RegisterStaffForm = ({
