@@ -12,6 +12,7 @@ import Auth from "./auth/Auth";
 import CreateDocument from "./pages/documents/CreateDocument";
 import BlankDocument from "./pages/documents/BlankDocument";
 import { ShareFormProvider } from "./components/context/ShareFormContext";
+import EvaluationTemplate from "./components/EvaluationTemplate";
 
 const routes = [
   {
@@ -45,6 +46,10 @@ const routes = [
   {
     path: "/createdocument/blankdocument",
     element: <BlankDocument />,
+  },
+  {
+    path: "/createdocument/evaluationtemplate",
+    element: <EvaluationTemplate />,
   },
 ];
 
