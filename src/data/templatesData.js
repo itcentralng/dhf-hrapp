@@ -10,9 +10,9 @@ const templatesData = [
     link: "/createdocument/evaluationtemplate",
   },
   {
-    name: "Teaching Observation",
+    name: "Early Closure",
     lastEditedDate: "July 14, 2023",
-    link: "/createdocument/teachingobservation",
+    link: "/createdocument/earlyclosuretemplate",
   },
   {
     name: "Leave Of Absense",

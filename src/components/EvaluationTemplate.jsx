@@ -93,6 +93,8 @@ const EvaluationTemplate = ({ data }) => {
                 <CustomTextField
                   fullWidth
                   variant="standard"
+                  name="supervisorName"
+                  value={formData.supervisorName}
                   onChange={handleInputChange}
                 />
               </Stack>
@@ -102,6 +104,8 @@ const EvaluationTemplate = ({ data }) => {
                 <CustomTextField
                   fullWidth
                   variant="standard"
+                  name="post"
+                  value={formData.post}
                   onChange={handleInputChange}
                 />
               </Stack>
@@ -112,6 +116,8 @@ const EvaluationTemplate = ({ data }) => {
                 <CustomTextField
                   fullWidth
                   variant="standard"
+                  name="date"
+                  value={formData.date}
                   onChange={handleInputChange}
                 />
               </Stack>
@@ -120,12 +126,16 @@ const EvaluationTemplate = ({ data }) => {
                 <CustomTextField
                   fullWidth
                   variant="standard"
+                  name="term"
+                  value={formData.term}
                   onChange={handleInputChange}
                 />
                 <Typography sx={{ mt: "auto" }}>Session:</Typography>
                 <CustomTextField
                   fullWidth
                   variant="standard"
+                  name="session"
+                  value={formData.session}
                   onChange={handleInputChange}
                 />
               </Stack>
@@ -150,6 +160,8 @@ const EvaluationTemplate = ({ data }) => {
                   </Typography>
                   <CustomTextField
                     variant="standard"
+                    name="peerName"
+                    value={formData.peerName}
                     onChange={handleInputChange}
                   />
                 </Stack>
@@ -157,6 +169,8 @@ const EvaluationTemplate = ({ data }) => {
                   <Typography sx={{ mt: "auto" }}>post:</Typography>
                   <CustomTextField
                     variant="standard"
+                    name="peerPost"
+                    value={formData.peerPost}
                     onChange={handleInputChange}
                   />
                 </Stack>
@@ -207,7 +221,6 @@ const EvaluationTemplate = ({ data }) => {
                     onChange={(e) => handleRatingChange(e, item.id, "2")}
                   />
                 </StyledTableCell>
-                {/* Repeat similar Radio elements for other ratings */}
                 <StyledTableCell align="center">
                   <Radio
                     checked={selectedRating[item.id] === "1"}
@@ -226,7 +239,7 @@ const EvaluationTemplate = ({ data }) => {
                     onChange={handleInputChange}
                     size="small"
                     defaultValue={item.comments}
-                    InputProps={{ disableUnderline: true }} // Remove input underline
+                    InputProps={{ disableUnderline: true }}
                     sx={{
                       "& .MuiOutlinedInput-notchedOutline": {
                         borderColor: "#fff",
@@ -263,6 +276,8 @@ const EvaluationTemplate = ({ data }) => {
             <CustomTextField
               fullWidth
               variant="standard"
+              name="supervisorComment"
+              value={formData.supervisorComment}
               onChange={handleInputChange}
             />
             <Typography sx={{ color: "black", ml: "10px" }}>
@@ -273,6 +288,8 @@ const EvaluationTemplate = ({ data }) => {
             <CustomTextField
               fullWidth
               variant="standard"
+              name="schoolAdminComment"
+              value={formData.schoolAdminComment}
               onChange={handleInputChange}
             />
             <Typography sx={{ color: "black", ml: "10px" }}>
@@ -283,6 +300,8 @@ const EvaluationTemplate = ({ data }) => {
             <CustomTextField
               fullWidth
               variant="standard"
+              name="headTeacherComment"
+              value={formData.headTeacherComment}
               onChange={handleInputChange}
             />
             <Typography sx={{ color: "black", ml: "10px" }}>
@@ -293,6 +312,8 @@ const EvaluationTemplate = ({ data }) => {
             <CustomTextField
               fullWidth
               variant="standard"
+              name="directorComment"
+              value={formData.directorComment}
               onChange={handleInputChange}
             />
             <Typography sx={{ color: "black", ml: "10px" }}>
