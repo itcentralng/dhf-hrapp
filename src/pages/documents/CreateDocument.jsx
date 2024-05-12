@@ -70,7 +70,7 @@ const CreateDocument = () => {
         {templatesData.map((template) => (
           <Box
             key={template.name}
-            onClick={() => handleTemplateNavigate(template.name)}
+            onClick={() => navigate(`${template.link}`)}
             sx={{
               width: "200px",
               height: "265px",
