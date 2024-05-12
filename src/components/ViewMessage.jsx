@@ -14,10 +14,13 @@ import EmailLabel from "./EmailLabel";
 import DownloadDocumentArea from "./DownloadDocumentArea";
 import CommentsArea from "./CommentsArea";
 import pdf from "../assets/Background.pdf";
+import { useSelector } from "react-redux";
 
 const ViewMessage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const user = useSelector((state) => state.user.user);
 
   const pathName = location.pathname;
   const pathParts = pathName.split("/");
@@ -161,7 +164,9 @@ const ViewMessage = () => {
                           fontWeight: 500,
                         }}
                       >
-                        {item.sender}
+                        {item.type === "sent"
+                          ? `${user.user_details.first_name} ${user.user_details.last_name}`
+                          : item.sender}
                       </Typography>
                       <EmailLabel emailType={item.label} />
                     </Box>

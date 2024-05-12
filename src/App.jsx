@@ -12,8 +12,13 @@ import Auth from "./auth/Auth";
 import CreateDocument from "./pages/documents/CreateDocument";
 import BlankDocument from "./pages/documents/BlankDocument";
 import { ShareFormProvider } from "./components/context/ShareFormContext";
+import StudyLeave from "./pages/documents/StudyLeave";
 
 const routes = [
+  {
+    path: "*",
+    element: <p>Page not found</p>,
+  },
   {
     path: "/inbox",
     element: <Inbox />,
@@ -45,6 +50,10 @@ const routes = [
   {
     path: "/createdocument/blankdocument",
     element: <BlankDocument />,
+  },
+  {
+    path: "/createdocument/studyleave",
+    element: <StudyLeave />,
   },
 ];
 

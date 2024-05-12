@@ -31,7 +31,6 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import CopyrightFooter from "./copyrightFooter";
 import profileImg from "../assets/profileImg.svg";
 import CustomSearchBox from "./CustomSearchBox";
-import CustomNotificationIcon from "./CustomNotificationIcon";
 import { FilledShadowButton } from "../styled-components/styledButtons";
 import { Navigate } from "react-router-dom/dist";
 import { useSelector } from "react-redux";
@@ -299,8 +298,6 @@ const Layout = () => {
           </IconButton>
 
           <CustomSearchBox />
-
-          <CustomNotificationIcon notificationNumber={2} />
         </Toolbar>
       </AppBar>
 

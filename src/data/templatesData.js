@@ -1,8 +1,24 @@
 const templatesData = [
-  { name: "Study Leave Proposal", lastEditedDate: "July 14, 2023" },
-  { name: "Teaching Observation", lastEditedDate: "July 14, 2023" },
-  { name: "Permission Proposal", lastEditedDate: "July 14, 2023" },
-  { name: "Leave Of Absense", lastEditedDate: "July 14, 2023" },
+  {
+    name: "Study Leave Proposal",
+    lastEditedDate: "July 14, 2023",
+    link: "/createdocument/studyleave",
+  },
+  {
+    name: "Teaching Observation",
+    lastEditedDate: "July 14, 2023",
+    link: "/createdocument/teachingobservation",
+  },
+  {
+    name: "Permission Proposal",
+    lastEditedDate: "July 14, 2023",
+    link: "/createdocument/permissionproposal",
+  },
+  {
+    name: "Leave Of Absense",
+    lastEditedDate: "July 14, 2023",
+    link: "/createdocument/absenceleave",
+  },
 ];
 
 export default templatesData;

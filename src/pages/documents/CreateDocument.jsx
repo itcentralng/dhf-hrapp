@@ -67,6 +67,7 @@ const CreateDocument = () => {
               mb: "50px",
               position: "relative",
             }}
+            onClick={() => navigate(`${template.link}`)}
           >
             <Stack
               direction="row"
