@@ -50,6 +50,10 @@ const routes = [
     element: <CreateDocument />,
   },
   {
+    path: "/createdocument/*",
+    element: <p>Template does not exist yet</p>,
+  },
+  {
     path: "/createdocument/blankdocument",
     element: <BlankDocument />,
   },

@@ -7,6 +7,7 @@ import {
   styled,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 const P = styled("p")({
   marginTop: "auto",
 });
@@ -15,9 +16,11 @@ const CustomInput = styled(TextField)({
   padding: "5px 5px 0px 10px",
 });
 const EarlyClosureTemplate = () => {
+  const user = useSelector((state) => state.user.user);
+
   const [formData, setFormData] = useState({
     time: "",
-    iField: "",
+    iField: `${user.user_details.first_name} ${user.user_details.last_name}`,
     teacher: "",
     class: "",
     section: "",
