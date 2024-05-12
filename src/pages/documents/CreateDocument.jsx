@@ -17,6 +17,9 @@ const CreateDocument = () => {
       case "Staff Evaluation":
         navigate("evaluationtemplate", { state: { from: "createdocument" } });
         break;
+      case "Early Closure":
+        navigate("earlyclosuretemplate", { state: { from: "createdocument" } });
+        break;
       default:
         alert(new Error("Template is yet to be created"));
     }
