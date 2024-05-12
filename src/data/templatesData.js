@@ -5,14 +5,14 @@ const templatesData = [
     link: "/createdocument/studyleave",
   },
   {
+    name: "Staff Evaluation",
+    lastEditedDate: "July 14, 2023",
+    link: "/createdocument/staffevaluation",
+  },
+  {
     name: "Teaching Observation",
     lastEditedDate: "July 14, 2023",
     link: "/createdocument/teachingobservation",
-  },
-  {
-    name: "Permission Proposal",
-    lastEditedDate: "July 14, 2023",
-    link: "/createdocument/permissionproposal",
   },
   {
     name: "Leave Of Absense",

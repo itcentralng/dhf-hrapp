@@ -11,6 +11,16 @@ const CreateDocument = () => {
   const handleNavigation = () => {
     navigate("blankdocument", { state: { from: "createdocument" } });
   };
+
+  const handleTemplateNavigate = (prop) => {
+    switch (prop) {
+      case "Staff Evaluation":
+        navigate("evaluationtemplate", { state: { from: "createdocument" } });
+        break;
+      default:
+        alert(new Error("Template is yet to be created"));
+    }
+  };
   return (
     <Container>
       <Typography
@@ -57,6 +67,7 @@ const CreateDocument = () => {
         {templatesData.map((template) => (
           <Box
             key={template.name}
+            onClick={() => handleTemplateNavigate(template.name)}
             sx={{
               width: "200px",
               height: "265px",
@@ -66,6 +77,7 @@ const CreateDocument = () => {
               mt: "-10px",
               mb: "50px",
               position: "relative",
+              cursor: "pointer",
             }}
             onClick={() => navigate(`${template.link}`)}
           >
