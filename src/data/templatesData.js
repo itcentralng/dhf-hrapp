@@ -7,7 +7,7 @@ const templatesData = [
   {
     name: "Staff Evaluation",
     lastEditedDate: "July 14, 2023",
-    link: "/createdocument/staffevaluation",
+    link: "/createdocument/evaluationtemplate",
   },
   {
     name: "Teaching Observation",
