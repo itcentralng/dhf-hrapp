@@ -13,6 +13,7 @@ import CreateDocument from "./pages/documents/CreateDocument";
 import BlankDocument from "./pages/documents/BlankDocument";
 import { ShareFormProvider } from "./components/context/ShareFormContext";
 import EvaluationTemplate from "./components/EvaluationTemplate";
+import EarlyClosureTemplate from "./components/EarlyClosureTemplate";
 import StudyLeave from "./pages/documents/StudyLeave";
 
 const routes = [
@@ -55,6 +56,10 @@ const routes = [
   {
     path: "/createdocument/evaluationtemplate",
     element: <EvaluationTemplate />,
+  },
+  {
+    path: "/createdocument/earlyclosuretemplate",
+    element: <EarlyClosureTemplate />,
   },
   {
     path: "/createdocument/studyleave",
