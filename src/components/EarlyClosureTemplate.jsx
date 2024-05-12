@@ -69,7 +69,7 @@ const EarlyClosureTemplate = () => {
             <P mt={"auto"}>I</P>
             <CustomInput
               variant="standard"
-              name="iFleld"
+              name="iField"
               value={formData.iField}
               onChange={handleChange}
               sx={{ width: "70%" }}
