@@ -4,7 +4,7 @@ import { HeadingText, SubHeadingText } from "../styled-components/StyledText";
 import Calendar from "./Calendar";
 import { FilledButton } from "../styled-components/styledButtons";
 import CloseIcon from "@mui/icons-material/Close";
-const GenerateReportCalender = ({ setShowCalendar }) => {
+const GenerateReportCalender = ({ setShowCalendar, title }) => {
   return (
     <Stack
       gap={"20px"}
@@ -27,7 +27,7 @@ const GenerateReportCalender = ({ setShowCalendar }) => {
           <CloseIcon />
         </IconButton>
 
-        <HeadingText>Early Closure Report</HeadingText>
+        <HeadingText>{`${title} Report`}</HeadingText>
 
         <SubHeadingText sx={{ display: "block" }}>
           Please select the timeframe you want to generate your report from.

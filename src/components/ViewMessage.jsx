@@ -15,10 +15,21 @@ import DownloadDocumentArea from "./DownloadDocumentArea";
 import CommentsArea from "./CommentsArea";
 import pdf from "../assets/Background.pdf";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { Overlay } from "../styled-components/styledBox";
+import ConfirmationPopup from "./ConfirmationPopup";
 
 const ViewMessage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      setShowDeletePopup(false);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const user = useSelector((state) => state.user.user);
 
@@ -31,6 +42,7 @@ const ViewMessage = () => {
     const array = newArray.filter((item) => item.id !== id);
     mailInfo.splice(0, mailInfo.length, ...array);
     handleNextMessage(type, id);
+    setShowDeletePopup(true);
   };
 
   const handleNextMessage = (type, id) => {
@@ -72,160 +84,173 @@ const ViewMessage = () => {
   };
 
   return (
-    <Box sx={{ minHeight: "75vh" }}>
-      {newArray
-        .filter((item) => item.id === pathId)
-        .map((item) => (
-          <Box key={item.id}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                borderBottom: "1px solid #EDEFF1",
-                padding: ".5em 0",
-              }}
-            >
-              <IconButton onClick={() => navigate(-1)}>
-                <ArrowBack />
-              </IconButton>
-              <Box>
-                <IconButton>
-                  <InboxOutlined
-                    sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
-                  />
-                </IconButton>
-                <IconButton onClick={() => deleteMessage(item.type, item.id)}>
-                  <DeleteOutline
-                    sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
-                  />
-                </IconButton>
-                <IconButton>
-                  <MoreVert sx={{ fontSize: "1.3rem", color: "#4D90F0" }} />
-                </IconButton>
-                <IconButton>
-                  <KeyboardArrowLeft
-                    sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
-                    onClick={() => handlePrevMessage(item.type, item.id)}
-                  />
-                </IconButton>
-                <IconButton>
-                  <KeyboardArrowRight
-                    sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
-                    onClick={() => handleNextMessage(item.type, item.id)}
-                  />
-                </IconButton>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                marginTop: "1em",
-                padding: "0 .8em",
-                gap: 2,
-              }}
-            >
+    <>
+      <Box sx={{ minHeight: "75vh" }}>
+        {newArray
+          .filter((item) => item.id === pathId)
+          .map((item) => (
+            <Box key={item.id}>
               <Box
                 sx={{
-                  backgroundColor: "#0000000D",
-                  width: "3em",
-                  height: "3em",
-                  borderRadius: "50px",
                   display: "flex",
-                  justifyContent: "center",
+                  justifyContent: "space-between",
                   alignItems: "center",
+                  borderBottom: "1px solid #EDEFF1",
+                  padding: ".5em 0",
                 }}
               >
-                <Person sx={{ color: "#00000029" }} />
+                <IconButton onClick={() => navigate(-1)}>
+                  <ArrowBack />
+                </IconButton>
+                <Box>
+                  <IconButton>
+                    <InboxOutlined
+                      sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
+                    />
+                  </IconButton>
+                  <IconButton onClick={() => deleteMessage(item.type, item.id)}>
+                    <DeleteOutline
+                      sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
+                    />
+                  </IconButton>
+                  <IconButton>
+                    <MoreVert sx={{ fontSize: "1.3rem", color: "#4D90F0" }} />
+                  </IconButton>
+                  <IconButton>
+                    <KeyboardArrowLeft
+                      sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
+                      onClick={() => handlePrevMessage(item.type, item.id)}
+                    />
+                  </IconButton>
+                  <IconButton>
+                    <KeyboardArrowRight
+                      sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
+                      onClick={() => handleNextMessage(item.type, item.id)}
+                    />
+                  </IconButton>
+                </Box>
               </Box>
               <Box
                 sx={{
                   display: "flex",
-                  gap: 1,
-                  alignItems: "center",
-                  width: "100%",
+                  marginTop: "1em",
+                  padding: "0 .8em",
+                  gap: 2,
                 }}
               >
                 <Box
                   sx={{
+                    backgroundColor: "#0000000D",
+                    width: "3em",
+                    height: "3em",
+                    borderRadius: "50px",
                     display: "flex",
+                    justifyContent: "center",
                     alignItems: "center",
-                    justifyContent: "space-between",
+                  }}
+                >
+                  <Person sx={{ color: "#00000029" }} />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    gap: 1,
+                    alignItems: "center",
                     width: "100%",
                   }}
                 >
-                  <Box>
-                    <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      width: "100%",
+                    }}
+                  >
+                    <Box>
+                      <Box
+                        sx={{ display: "flex", gap: 1, alignItems: "center" }}
+                      >
+                        <Typography
+                          variant="h3"
+                          sx={{
+                            fontSize: "1.3rem",
+                            fontFamily: "DM Sans",
+                            fontWeight: 500,
+                          }}
+                        >
+                          {item.type === "sent"
+                            ? `${user.user_details.first_name} ${user.user_details.last_name}`
+                            : item.sender}
+                        </Typography>
+                        <EmailLabel emailType={item.label} />
+                      </Box>
                       <Typography
-                        variant="h3"
+                        variant="body2"
                         sx={{
-                          fontSize: "1.3rem",
                           fontFamily: "DM Sans",
-                          fontWeight: 500,
+                          fontSize: ".8rem",
+                          color: "#0000008A",
+                          display: "flex",
+                          alignItems: "center",
                         }}
                       >
-                        {item.type === "sent"
-                          ? `${user.user_details.first_name} ${user.user_details.last_name}`
-                          : item.sender}
+                        {location.pathname.includes("inbox")
+                          ? "to me"
+                          : "to Admin Office"}{" "}
+                        <KeyboardArrowRight sx={{ fontSize: ".7rem" }} />
                       </Typography>
-                      <EmailLabel emailType={item.label} />
                     </Box>
                     <Typography
                       variant="body2"
                       sx={{
+                        fontWeight: 500,
+                        fontSize: ".9rem",
+                        letterSpacing: "0.75%",
+                        color: "#00000099",
                         fontFamily: "DM Sans",
-                        fontSize: ".8rem",
-                        color: "#0000008A",
-                        display: "flex",
-                        alignItems: "center",
                       }}
                     >
-                      {location.pathname.includes("inbox")
-                        ? "to me"
-                        : "to Admin Office"}{" "}
-                      <KeyboardArrowRight sx={{ fontSize: ".7rem" }} />
+                      Tue, May 12, 9:14 AM (8 days ago)
                     </Typography>
                   </Box>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      fontWeight: 500,
-                      fontSize: ".9rem",
-                      letterSpacing: "0.75%",
-                      color: "#00000099",
-                      fontFamily: "DM Sans",
-                    }}
-                  >
-                    Tue, May 12, 9:14 AM (8 days ago)
-                  </Typography>
                 </Box>
               </Box>
-            </Box>
-            <Box
-              sx={{ marginLeft: "4em", padding: "0 .7em", marginTop: "1.5em" }}
-            >
-              <Typography
-                variant="body2"
+              <Box
                 sx={{
-                  fontFamily: "DM Sans",
-                  fontSize: "1rem",
-                  lineHeight: "28.8px",
+                  marginLeft: "4em",
+                  padding: "0 .7em",
+                  marginTop: "1.5em",
                 }}
               >
-                {item.text}
-              </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    fontFamily: "DM Sans",
+                    fontSize: "1rem",
+                    lineHeight: "28.8px",
+                  }}
+                >
+                  {item.text}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-        ))}
-      <Stack
-        direction="column"
-        gap="32px"
-        sx={{ padding: "55px 75px", width: "70%" }}
-      >
-        <DownloadDocumentArea file={pdf} />
-        <CommentsArea />
-      </Stack>
-    </Box>
+          ))}
+        <Stack
+          direction="column"
+          gap="32px"
+          sx={{ padding: "55px 75px", width: "70%" }}
+        >
+          <DownloadDocumentArea file={pdf} />
+          <CommentsArea />
+        </Stack>
+      </Box>
+      {showDeletePopup && (
+        <Overlay>
+          <ConfirmationPopup text={"Message has successfully been deleted."} />
+        </Overlay>
+      )}
+    </>
   );
 };
 
