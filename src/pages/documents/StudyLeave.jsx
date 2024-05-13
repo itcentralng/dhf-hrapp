@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import { useRef } from "react";
 
 const validationSchema = yup.object({
+  // part a
   fullname: yup.string().required("Required"),
   designation: yup.string().required("Required"),
   appointmentDate: yup.string().required("Required"),
@@ -30,6 +31,15 @@ const validationSchema = yup.object({
   lastStudyPeriod: yup.string(),
   pursureIndication: yup.string().required("Required"),
   date: yup.string().required("Required"),
+  //   part b
+  relevance: yup.string().required("Required"),
+  applicantJobDesc: yup.string().required("Required"),
+  dutiesToCover: yup.string().required("Required"),
+  remarks: yup.string().required("Required"),
+  appraiserName: yup.string().required("Required"),
+  post: yup.string().required("Required"),
+  headSign: yup.string().required("Required"),
+  headDate: yup.string().required("Required"),
 });
 
 const StudyLeave = () => {
@@ -38,6 +48,7 @@ const StudyLeave = () => {
 
   const formik = useFormik({
     initialValues: {
+      // part a
       fullname: `${user.user_details.first_name} ${user.user_details.last_name}`,
       designation: "",
       appointmentDate: "",
@@ -55,6 +66,15 @@ const StudyLeave = () => {
       pursureIndication: "",
       applicantSign: File | null,
       date: "",
+      //   part b
+      relevance: "",
+      applicantJobDesc: "",
+      dutiesToCover: "",
+      remarks: "",
+      appraiserName: "",
+      post: "",
+      headSign: "",
+      headDate: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -616,6 +636,44 @@ const StudyLeave = () => {
                   value={formik.values.date}
                   onChange={formik.handleChange}
                   sx={{ width: "80%" }}
+                />
+              </Grid>
+            </Grid>
+
+            {/* part b */}
+
+            <Typography
+              variant="body2"
+              sx={{ fontSize: "1.2rem", margin: "1em 0" }}
+            >
+              Part B: To be completed by the head teacher
+            </Typography>
+            <Grid container gap={2}>
+              <Grid
+                item
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  gap: 2,
+                  justifyContent: "space-between",
+                  flexDirection: "column",
+                }}
+              >
+                <InputLabel id="relevance" sx={{ fontWeight: 800 }}>
+                  The proposed study purpose is relevant to progressing the
+                  applicant work?
+                </InputLabel>
+                <textarea
+                  id="relevance"
+                  name="relevance"
+                  value={formik.values.relevance}
+                  onChange={formik.handleChange}
+                  style={{
+                    padding: "1em",
+                    fontSize: "1rem",
+                    minHeight: "2rem",
+                    maxWidth: "100%",
+                  }}
                 />
               </Grid>
             </Grid>
