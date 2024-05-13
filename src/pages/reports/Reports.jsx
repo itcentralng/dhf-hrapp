@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, styled } from "@mui/material";
+import { Box, Menu, MenuItem, Stack, Typography, styled } from "@mui/material";
 import { FilledButton } from "../../styled-components/styledButtons";
 import { useState } from "react";
 import {
@@ -7,7 +7,7 @@ import {
 } from "../../styled-components/StyledText";
 import GenerateReportCalendar from "../../components/GenerateReportCalender";
 import ReportListItem from "../../components/ReportListItem";
-const Overlay = styled("Box")({
+const Overlay = styled(Box)({
   zIndex: 10,
   position: "fixed",
   top: 0,
@@ -21,11 +21,41 @@ const Overlay = styled("Box")({
 
 const Reports = () => {
   const [showCalendar, setShowCalendar] = useState(false);
+  const [calendarTitle, setCalendarTitle] = useState();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const options = [
+    "Early closure",
+    "Late Arrivals",
+    "Leave of Absence",
+    "Movement",
+  ];
 
-  function handleClick(e) {
-    e.preventDefault();
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSelect = (option) => {
+    handleClose();
+    switch (option) {
+      case "Early closure":
+        setCalendarTitle();
+        break;
+      case "Late Arrivals":
+        setCalendarTitle();
+        break;
+      case "Leave of Absence":
+        setCalendarTitle();
+        break;
+      case "Movement":
+        setCalendarTitle();
+        break;
+    }
     setShowCalendar(true);
-  }
+  };
   return (
     <>
       <Stack
@@ -40,10 +70,20 @@ const Reports = () => {
         </Stack>
         <FilledButton onClick={handleClick}>Generate Report</FilledButton>
       </Stack>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        {options.map((option, index) => (
+          <MenuItem key={index} onClick={() => handleSelect(option)}>
+            {option}
+          </MenuItem>
+        ))}
+      </Menu>
       <ReportListItem />
       {showCalendar && (
         <Overlay>
-          <GenerateReportCalendar setShowCalendar={setShowCalendar} />
+          <GenerateReportCalendar
+            setShowCalendar={setShowCalendar}
+            title={calendarTitle}
+          />
         </Overlay>
       )}
     </>

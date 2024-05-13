@@ -12,18 +12,6 @@ const CreateDocument = () => {
     navigate("blankdocument", { state: { from: "createdocument" } });
   };
 
-  const handleTemplateNavigate = (prop) => {
-    switch (prop) {
-      case "Staff Evaluation":
-        navigate("evaluationtemplate", { state: { from: "createdocument" } });
-        break;
-      case "Early Closure":
-        navigate("earlyclosuretemplate", { state: { from: "createdocument" } });
-        break;
-      default:
-        alert(new Error("Template is yet to be created"));
-    }
-  };
   return (
     <Container>
       <Typography
@@ -82,7 +70,6 @@ const CreateDocument = () => {
               position: "relative",
               cursor: "pointer",
             }}
-            onClick={() => navigate(`${template.link}`)}
           >
             <Stack
               direction="row"
