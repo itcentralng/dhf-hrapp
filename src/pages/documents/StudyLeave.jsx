@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import {
   Box,
   FormControlLabel,
@@ -40,9 +41,29 @@ const validationSchema = yup.object({
   applicantJobDesc: yup.string().required("Required"),
   dutiesToCover: yup.string().required("Required"),
   remarks: yup.string(),
-  appraiserName: yup.string().required("Required"),
-  post: yup.string().required("Required"),
+  headTeacherName: yup.string().required("Required"),
+  headPost: yup.string().required("Required"),
   headDate: yup.string().required("Required"),
+  //   part c
+  salaryCost: yup.string().required("Required"),
+  accountantName: yup.string().required("Required"),
+  accountantPost: yup.string().required("Required"),
+  accountantDate: yup.string().required("Required"),
+  //   part d
+  approvalGrant: yup.string().required("Required"),
+  grantWithPay: yup.string().required("Required"),
+  grantedProgram: yup.string().required("Required"),
+  yearsAfterResumption: yup.string().required("Required"),
+  certificateUpgrade: yup.string().required("Required"),
+  grantConfirmation: yup.string().required("Required"),
+  beneficiaryNumber: yup.string().required("Required"),
+  applicantNotSupported: yup.string(),
+  hrName: yup.string().required("Required"),
+  hrPost: yup.string().required("Required"),
+  hrDate: yup.string().required("Required"),
+  //   part e
+  approvalStatus: yup.string().required("Required"),
+  directorsDate: yup.string().required("Required"),
 });
 
 const StudyLeave = () => {
@@ -76,10 +97,33 @@ const StudyLeave = () => {
       applicantJobDesc: "",
       dutiesToCover: "",
       remarks: "",
-      appraiserName: "",
-      post: "",
+      headTeacherName: "",
+      headPost: "",
       headSign: File | null,
       headDate: "",
+      //   part c
+      salaryCost: "",
+      accountantName: "",
+      accountantPost: "",
+      accountantSign: File | null,
+      accountantDate: "",
+      //   part d
+      approvalGrant: "",
+      grantWithPay: "",
+      grantedProgram: "",
+      yearsAfterResumption: "",
+      certificateUpgrade: "",
+      grantConfirmation: "",
+      beneficiaryNumber: "",
+      applicantNotSupported: "",
+      hrName: "",
+      hrPost: "",
+      hrSign: File | null,
+      hrDate: "",
+      //   part e
+      approvalStatus: "",
+      directorsSign: File | null,
+      directorsDate: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -96,7 +140,7 @@ const StudyLeave = () => {
       const file = e.target.files[0];
       const formData = new FormData();
       formData.append("file", file);
-      console.log(file.name);
+      console.log(file);
       formik.setFieldValue("applicantSign", file.name); // Set the filename instead of the file object
       //   fileInputRef.current.value = ""; // Reset the value of the input element
 
@@ -117,6 +161,42 @@ const StudyLeave = () => {
       formData.append("file", file);
       console.log(file.name);
       formik.setFieldValue("headSign", file.name);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleAccountantSign = async (e) => {
+    try {
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log(file.name);
+      formik.setFieldValue("accountantSign", file.name);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleHrSign = async (e) => {
+    try {
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log(file.name);
+      formik.setFieldValue("hrSign", file.name);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDirectorsSign = async (e) => {
+    try {
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log(file.name);
+      formik.setFieldValue("hrSign", file.name);
     } catch (error) {
       console.log(error);
     }
@@ -795,14 +875,14 @@ const StudyLeave = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <InputLabel id="appraiserName" sx={{ fontWeight: 800 }}>
+                  <InputLabel id="headTeacherName" sx={{ fontWeight: 800 }}>
                     Name of Appraiser:
                   </InputLabel>
                   <TextField
                     variant="standard"
-                    id="appraiserName"
-                    name="appraiserName"
-                    value={formik.values.appraiserName}
+                    id="headTeacherName"
+                    name="headTeacherName"
+                    value={formik.values.headTeacherName}
                     onChange={formik.handleChange}
                     sx={{ width: "62%" }}
                   />
@@ -818,14 +898,14 @@ const StudyLeave = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <InputLabel id="post" sx={{ fontWeight: 800 }}>
+                  <InputLabel id="headPost" sx={{ fontWeight: 800 }}>
                     Post:
                   </InputLabel>
                   <TextField
                     variant="standard"
-                    id="post"
-                    name="post"
-                    value={formik.values.post}
+                    id="headPost"
+                    name="headPost"
+                    value={formik.values.headPost}
                     onChange={formik.handleChange}
                     sx={{ width: "85%" }}
                   />
@@ -873,6 +953,459 @@ const StudyLeave = () => {
                     id="date"
                     name="date"
                     value={formik.values.date}
+                    onChange={formik.handleChange}
+                    sx={{ width: "80%" }}
+                  />
+                </Grid>
+              </Grid>
+
+              {/* part c */}
+              <Typography
+                variant="body2"
+                sx={{ fontSize: "1.2rem", margin: "1em 0" }}
+              >
+                Part C: To be completed by the accountant
+              </Typography>
+              <Grid container gap={2}>
+                <Grid
+                  item
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    gap: 2,
+                    justifyContent: "space-between",
+                    flexDirection: "column",
+                  }}
+                >
+                  <InputLabel id="salaryCost" sx={{ fontWeight: 800 }}>
+                    What are the salary costs for this applicant for the
+                    duration of his/her study?
+                  </InputLabel>
+                  <textarea
+                    id="salaryCost"
+                    name="salaryCost"
+                    value={formik.values.salaryCost}
+                    onChange={formik.handleChange}
+                    style={{
+                      padding: "1em",
+                      fontSize: "1rem",
+                      minHeight: "2rem",
+                      maxWidth: "100%",
+                    }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "52%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <InputLabel id="accountantName" sx={{ fontWeight: 800 }}>
+                    Name of Appraiser:
+                  </InputLabel>
+                  <TextField
+                    variant="standard"
+                    id="accountantName"
+                    name="accountantName"
+                    value={formik.values.accountantName}
+                    onChange={formik.handleChange}
+                    sx={{ width: "62%" }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "46%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <InputLabel id="accountantPost" sx={{ fontWeight: 800 }}>
+                    Post:
+                  </InputLabel>
+                  <TextField
+                    variant="standard"
+                    id="accountantPost"
+                    name="accountantPost"
+                    value={formik.values.accountantPost}
+                    onChange={formik.handleChange}
+                    sx={{ width: "85%" }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "60%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                  }}
+                >
+                  <InputLabel id="applicantSign" sx={{ fontWeight: 800 }}>
+                    Signature:
+                  </InputLabel>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleAccountantSign}
+                    placeholder="upload signature"
+                    accept="image/jpeg, image/jpg, image/png"
+                    value={
+                      formik.values.applicantSign
+                        ? formik.values.applicantSign.name
+                        : ""
+                    }
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "38%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <InputLabel id="accountantDate" sx={{ fontWeight: 800 }}>
+                    Date:
+                  </InputLabel>
+                  <TextField
+                    variant="standard"
+                    id="accountantDate"
+                    name="accountantDate"
+                    value={formik.values.accountantDate}
+                    onChange={formik.handleChange}
+                    sx={{ width: "80%" }}
+                  />
+                </Grid>
+              </Grid>
+
+              <Typography
+                variant="body2"
+                sx={{ fontSize: "1.2rem", margin: "1em 0" }}
+              >
+                Part D: To be completed by Human Resource Officer
+              </Typography>
+
+              <Grid container gap={2}>
+                <Grid
+                  item
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <InputLabel id="approvalGrant" sx={{ fontWeight: 800 }}>
+                    Have the applicant been granted approval to pursue further
+                    studies before?
+                  </InputLabel>
+                  <RadioGroup
+                    onChange={formik.handleChange}
+                    value={
+                      formik.values.approvalGrant === undefined
+                        ? ""
+                        : formik.values.approvalGrant
+                    }
+                    name="approvalGrant"
+                    id="approvalGrant"
+                    row
+                    sx={{ width: "35%" }}
+                  >
+                    <FormControlLabel
+                      value="Yes"
+                      control={<Radio />}
+                      label="Yes"
+                      labelPlacement="start"
+                    />
+                    <FormControlLabel
+                      value="No"
+                      control={<Radio />}
+                      label="No"
+                      labelPlacement="start"
+                    />
+                  </RadioGroup>
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "start",
+                    gap: 2,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{ fontSize: "1rem", width: "30%" }}
+                  >
+                    This is to confirm that
+                  </Typography>
+                  <TextField
+                    variant="standard"
+                    id="grantConfirmation"
+                    name="grantConfirmation"
+                    value={formik.values.grantConfirmation}
+                    onChange={formik.handleChange}
+                    sx={{ width: "50%" }}
+                  />
+                  <Typography variant="body2" sx={{ fontSize: "1rem" }}>
+                    have satisfied the requirement indicated in the study leave
+                    policy and has been duly selected among suitable applicant
+                    to further his/her education.
+                  </Typography>
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "start",
+                    gap: 2,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{ fontSize: "1rem", width: "30%" }}
+                  >
+                    His/ Her beneficiary number is
+                  </Typography>
+                  <TextField
+                    variant="standard"
+                    id="beneficiaryNumber"
+                    name="beneficiaryNumber"
+                    value={formik.values.beneficiaryNumber}
+                    onChange={formik.handleChange}
+                    sx={{ width: "50%" }}
+                  />
+                  <Typography variant="body2" sx={{ fontSize: "1rem" }}>
+                    on the provisional list submitted to the Admin Office. Based
+                    on the above, I recommend his/her approval for processing.
+                  </Typography>
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    gap: 2,
+                    justifyContent: "space-between",
+                    flexDirection: "column",
+                  }}
+                >
+                  <InputLabel
+                    id="applicantNotSupported"
+                    sx={{ fontWeight: 800 }}
+                  >
+                    If the Applicant is not supported (Please states reasons.)
+                  </InputLabel>
+                  <textarea
+                    id="applicantNotSupported"
+                    name="applicantNotSupported"
+                    value={formik.values.applicantNotSupported}
+                    onChange={formik.handleChange}
+                    style={{
+                      padding: "1em",
+                      fontSize: "1rem",
+                      minHeight: "2rem",
+                      maxWidth: "100%",
+                    }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "52%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <InputLabel id="hrName" sx={{ fontWeight: 800 }}>
+                    Name of Appraiser:
+                  </InputLabel>
+                  <TextField
+                    variant="standard"
+                    id="hrName"
+                    name="hrName"
+                    value={formik.values.hrName}
+                    onChange={formik.handleChange}
+                    sx={{ width: "62%" }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "46%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <InputLabel id="hrPost" sx={{ fontWeight: 800 }}>
+                    Post:
+                  </InputLabel>
+                  <TextField
+                    variant="standard"
+                    id="hrPost"
+                    name="hrPost"
+                    value={formik.values.hrPost}
+                    onChange={formik.handleChange}
+                    sx={{ width: "85%" }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "60%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                  }}
+                >
+                  <InputLabel id="hrSign" sx={{ fontWeight: 800 }}>
+                    Signature:
+                  </InputLabel>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleHrSign}
+                    placeholder="upload signature"
+                    accept="image/jpeg, image/jpg, image/png"
+                    value={
+                      formik.values.hrSign ? formik.values.hrSign.name : ""
+                    }
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "38%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <InputLabel id="hrDate" sx={{ fontWeight: 800 }}>
+                    Date:
+                  </InputLabel>
+                  <TextField
+                    variant="standard"
+                    id="hrDate"
+                    name="hrDate"
+                    value={formik.values.hrDate}
+                    onChange={formik.handleChange}
+                    sx={{ width: "80%" }}
+                  />
+                </Grid>
+              </Grid>
+
+              {/* part e */}
+
+              <Typography
+                variant="body2"
+                sx={{ fontSize: "1.2rem", margin: "1em 0" }}
+              >
+                Part E: Director's Recommendation
+              </Typography>
+
+              <Grid container gap={2}>
+                <Grid
+                  item
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    gap: 2,
+                    justifyContent: "space-between",
+                    flexDirection: "column",
+                  }}
+                >
+                  <InputLabel id="approvalStatus" sx={{ fontWeight: 800 }}>
+                    Approved / Not Approved; If Approved State conditions:
+                  </InputLabel>
+                  <textarea
+                    id="approvalStatus"
+                    name="approvalStatus"
+                    value={formik.values.approvalStatus}
+                    onChange={formik.handleChange}
+                    style={{
+                      padding: "1em",
+                      fontSize: "1rem",
+                      minHeight: "2rem",
+                      maxWidth: "100%",
+                    }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "60%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                  }}
+                >
+                  <InputLabel id="directorsSign" sx={{ fontWeight: 800 }}>
+                    Signature/Stamp:
+                  </InputLabel>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleDirectorsSign}
+                    placeholder="upload signature"
+                    accept="image/jpeg, image/jpg, image/png"
+                    value={
+                      formik.values.directorsSign
+                        ? formik.values.directorsSign.name
+                        : ""
+                    }
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  sx={{
+                    width: "38%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <InputLabel id="directorsDate" sx={{ fontWeight: 800 }}>
+                    Date:
+                  </InputLabel>
+                  <TextField
+                    variant="standard"
+                    id="directorsDate"
+                    name="directorsDate"
+                    value={formik.values.directorsDate}
                     onChange={formik.handleChange}
                     sx={{ width: "80%" }}
                   />
