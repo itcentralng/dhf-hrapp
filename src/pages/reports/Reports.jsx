@@ -42,16 +42,16 @@ const Reports = () => {
     handleClose();
     switch (option) {
       case "Early closure":
-        setCalendarTitle();
+        setCalendarTitle("Early closure");
         break;
       case "Late Arrivals":
-        setCalendarTitle();
+        setCalendarTitle("Late Arrivals");
         break;
       case "Leave of Absence":
-        setCalendarTitle();
+        setCalendarTitle("Leave of Absence");
         break;
       case "Movement":
-        setCalendarTitle();
+        setCalendarTitle("Movement");
         break;
     }
     setShowCalendar(true);
