@@ -23,6 +23,7 @@ import {
   CreateOutlined,
   FolderOutlined,
   InsertDriveFileOutlined,
+  LogoutOutlined,
   MoreVertOutlined,
   PeopleAltOutlined,
   RefreshOutlined,
@@ -33,7 +34,8 @@ import profileImg from "../assets/profileImg.svg";
 import CustomSearchBox from "./CustomSearchBox";
 import { FilledShadowButton } from "../styled-components/styledButtons";
 import { Navigate } from "react-router-dom/dist";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../state/userSlice";
 
 const drawerWidth = 240;
 
@@ -47,6 +49,7 @@ const Layout = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user.user);
 
@@ -86,6 +89,11 @@ const Layout = () => {
     setTimeout(() => {
       setRefreshLoading(false);
     }, 2000);
+  };
+
+  const handleLogout = () => {
+    dispatch(userActions.logout());
+    navigate("/login");
   };
 
   const renderMenu = (
@@ -234,11 +242,12 @@ const Layout = () => {
         sx={{
           backgroundColor: "#DFECEB",
           borderRadius: "12px",
-          padding: ".4em .7em",
+          padding: ".4em .6em",
           marginBottom: "1em",
           display: "flex",
           alignItems: "center",
-          gap: 1,
+          justifyContent: "space-between",
+          // gap: 2.2,
         }}
       >
         <Box sx={{ width: "2em" }}>
@@ -248,7 +257,7 @@ const Layout = () => {
           <Typography
             variant="body2"
             sx={{
-              fontSize: ".8em",
+              fontSize: ".7em",
               fontWeight: 500,
               fontFamily: "DM Sans",
               lineHeight: "1em",
@@ -260,7 +269,7 @@ const Layout = () => {
           <Typography
             variant="body2"
             sx={{
-              fontSize: ".7em",
+              fontSize: ".6em",
               fontWeight: 400,
               fontFamily: "DM Sans",
               color: "#2586F8",
@@ -270,6 +279,9 @@ const Layout = () => {
             {`${user.user_details.role}`}
           </Typography>
         </Box>
+        <IconButton onClick={handleLogout}>
+          <LogoutOutlined />
+        </IconButton>
       </Box>
     </Box>
   );

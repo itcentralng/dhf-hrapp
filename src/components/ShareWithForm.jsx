@@ -1,5 +1,6 @@
 import {
   Box,
+  CircularProgress,
   FormControl,
   IconButton,
   Stack,
@@ -7,12 +8,13 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import React from "react";
 import { HeadingText, SubHeadingText } from "../styled-components/StyledText";
 import { FilledButton } from "../styled-components/styledButtons";
 import CloseIcon from "@mui/icons-material/Close";
 import { useShareForm } from "./context/ShareFormContext";
 import MutipleSelect from "./MultipleSelect";
+import { SubmitStudyLeave } from "../state/studyLeaveRequests";
+import React from "react";
 const Text = styled(Typography)({
   fontFamily: "DM Sans",
   fontWeight: 400,
@@ -21,8 +23,16 @@ const Text = styled(Typography)({
   margin: "10px 0px 10px 0px",
 });
 
-const ShareWithForm = ({ documentType }) => {
+const ShareWithForm = ({ documentType, formData }) => {
   const { setDisplayShareForm } = useShareForm();
+  const [loading, setLoading] = React.useState(false);
+
+  const handleSubmit = async () => {
+    if (documentType === "Study Leave") {
+      await SubmitStudyLeave(formData, setLoading);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -50,7 +60,7 @@ const ShareWithForm = ({ documentType }) => {
         Please fill out the form below to share report to the selected person.
       </SubHeadingText>
       <FormControl
-        component="form"
+        // component="form"
         sx={{
           "& .MuiOutlinedInput-notchedOutline": {
             borderColor: "#CDD0D5",
@@ -74,8 +84,11 @@ const ShareWithForm = ({ documentType }) => {
         />
         <FilledButton
           sx={{ width: "36%", mx: "auto", mt: "30px", fontFamily: "DM sans" }}
+          onClick={handleSubmit}
+          disabled={loading}
+          type="submit"
         >
-          Send Messsage
+          {loading ? <CircularProgress size={22} /> : "Send Messsage"}
         </FilledButton>
       </FormControl>
     </Box>

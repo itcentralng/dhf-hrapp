@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = JSON.parse(sessionStorage.getItem("userState")) || {
+const initialState = JSON.parse(localStorage.getItem("userState")) || {
   isAuth: false,
   user: null,
 };

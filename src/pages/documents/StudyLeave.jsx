@@ -35,6 +35,7 @@ const validationSchema = yup.object({
   purpose: yup.string().required("Required"),
   lastStudyPeriod: yup.string(),
   pursureIndication: yup.string().required("Required"),
+  applicantSign: yup.string().required("Required"),
   date: yup.string().required("Required"),
   //   part b
   relevance: yup.string().required("Required"),
@@ -90,7 +91,7 @@ const StudyLeave = () => {
       purpose: "",
       lastStudyPeriod: "",
       pursureIndication: "",
-      applicantSign: File | null,
+      applicantSign: "",
       date: "",
       //   part b
       relevance: "",
@@ -133,25 +134,6 @@ const StudyLeave = () => {
 
   const handleSubmit = (values) => {
     console.log(values);
-  };
-
-  const handleApplicantSign = async (e) => {
-    try {
-      const file = e.target.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      console.log(file);
-      formik.setFieldValue("applicantSign", file.name); // Set the filename instead of the file object
-      //   fileInputRef.current.value = ""; // Reset the value of the input element
-
-      // const response = await uploadFile(formData).unwrap();
-      // if (response) {
-      //   formik.setFieldValue("file", response.url);
-      //   formik.setFieldValue("fileName", file.name);
-      // }
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleHeadSign = async (e) => {
@@ -203,7 +185,7 @@ const StudyLeave = () => {
   };
 
   return (
-    <Box component="form">
+    <Box component="form" onSubmit={formik.handleSubmit}>
       <DocDetailsAndButton
         documentTitle={documentTitle}
         setDocumentTitle={setDocumentTitle}
@@ -709,17 +691,13 @@ const StudyLeave = () => {
                   <InputLabel id="applicantSign" sx={{ fontWeight: 800 }}>
                     Signature of Applicant:
                   </InputLabel>
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleApplicantSign}
-                    placeholder="upload signature"
-                    accept="image/jpeg, image/jpg, image/png"
-                    value={
-                      formik.values.applicantSign
-                        ? formik.values.applicantSign.name
-                        : ""
-                    }
+                  <TextField
+                    variant="standard"
+                    id="applicantSign"
+                    name="applicantSign"
+                    value={formik.values.applicantSign}
+                    onChange={formik.handleChange}
+                    sx={{ width: "60%" }}
                   />
                 </Grid>
 
@@ -920,7 +898,7 @@ const StudyLeave = () => {
                     gap: 2,
                   }}
                 >
-                  <InputLabel id="applicantSign" sx={{ fontWeight: 800 }}>
+                  <InputLabel id="headSign" sx={{ fontWeight: 800 }}>
                     Signature:
                   </InputLabel>
                   <input
@@ -1050,7 +1028,7 @@ const StudyLeave = () => {
                     gap: 2,
                   }}
                 >
-                  <InputLabel id="applicantSign" sx={{ fontWeight: 800 }}>
+                  <InputLabel id="accountantSign" sx={{ fontWeight: 800 }}>
                     Signature:
                   </InputLabel>
                   <input
@@ -1060,8 +1038,8 @@ const StudyLeave = () => {
                     placeholder="upload signature"
                     accept="image/jpeg, image/jpg, image/png"
                     value={
-                      formik.values.applicantSign
-                        ? formik.values.applicantSign.name
+                      formik.values.accountantSign
+                        ? formik.values.accountantSign.name
                         : ""
                     }
                   />
@@ -1417,7 +1395,10 @@ const StudyLeave = () => {
       </Box>
       {displayShareForm && (
         <Overlay>
-          <ShareWithForm documentType={documentTitle} />
+          <ShareWithForm
+            documentType={documentTitle}
+            formData={formik.values}
+          />
         </Overlay>
       )}
     </Box>
