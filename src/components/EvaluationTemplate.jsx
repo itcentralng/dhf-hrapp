@@ -69,6 +69,7 @@ const EvaluationTemplate = ({ data }) => {
   const [formData, dispatch] = useReducer(reducer, initialState);
   const { displayShareForm } = useShareForm();
   const handleRatingChange = (event, id, rating) => {
+    console.log(selectedRating);
     setSelectedRating((prevSelected) => ({
       ...prevSelected,
       [id]: rating,

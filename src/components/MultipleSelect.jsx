@@ -1,25 +1,13 @@
 import React, { useState } from "react";
-import {
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
-  Chip,
-  TextField,
-} from "@mui/material";
+import { Select, MenuItem, FormControl, Chip } from "@mui/material";
 import usersList from "../data/usersList";
 
 const UserSelect = () => {
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [searchInput, setSearchInput] = useState("");
 
   const handleUserSelect = (event) => {
     const { value } = event.target;
     setSelectedUsers(value);
-  };
-
-  const handleSearchInputChange = (event) => {
-    setSearchInput(event.target.value);
   };
 
   return (
@@ -41,15 +29,11 @@ const UserSelect = () => {
           </div>
         )}
       >
-        {usersList
-          .filter((user) =>
-            user.name.toLowerCase().includes(searchInput.toLowerCase())
-          )
-          .map((user) => (
-            <MenuItem key={user} value={user}>
-              {user.name}
-            </MenuItem>
-          ))}
+        {usersList.map((user) => (
+          <MenuItem key={user} value={user}>
+            {user.name}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );
