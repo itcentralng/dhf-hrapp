@@ -3,9 +3,10 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 const Auth = ({ children }) => {
-  const user = useSelector((state) => state.user.user);
-  // console.log(user);
-  if (user === null) {
+  const isAuth = useSelector((state) => state.user.isAuth);
+  const accessToken = useSelector((state) => state.user.token);
+
+  if (!isAuth & !accessToken) {
     return <Navigate to="/login" />;
   }
   return <>{children}</>;

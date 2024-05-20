@@ -1,15 +1,9 @@
 import React, { useState } from "react";
-import {
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
-  Chip,
-  TextField,
-} from "@mui/material";
-import usersList from "../data/usersList";
+import { Select, MenuItem, FormControl, Chip, TextField } from "@mui/material";
+import { useGetUsersQuery } from "../state/api";
 
 const UserSelect = () => {
+  const { data: users, error, isLoading } = useGetUsersQuery();
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 
@@ -22,6 +16,9 @@ const UserSelect = () => {
     setSearchInput(event.target.value);
   };
 
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <FormControl fullWidth>
       <Select
@@ -33,21 +30,21 @@ const UserSelect = () => {
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {selected.map((user) => (
               <Chip
-                key={user.role}
-                label={user.name}
+                key={user.user_id} // Ensure correct key
+                label={`${user.first_name} ${user.last_name}`}
                 style={{ marginRight: 5 }}
               />
             ))}
           </div>
         )}
       >
-        {usersList
-          .filter((user) =>
-            user.name.toLowerCase().includes(searchInput.toLowerCase())
+        {users
+          ?.filter((user) =>
+            user.first_name.toLowerCase().includes(searchInput.toLowerCase())
           )
           .map((user) => (
-            <MenuItem key={user} value={user}>
-              {user.name}
+            <MenuItem key={user.user_id} value={user}>
+              {user.first_name} {user.last_name}
             </MenuItem>
           ))}
       </Select>

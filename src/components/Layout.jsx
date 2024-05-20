@@ -195,9 +195,7 @@ const Layout = () => {
                     : "#FFFFFF",
                   borderRadius: "4px",
                   gap: 1,
-                  display: item.role.includes(user.user_details.role)
-                    ? "flex"
-                    : "none",
+                  display: item.role.includes(user.role) ? "flex" : "none",
                   "&:hover": {
                     backgroundColor: "#ffffff3d",
                     color: "#fff",
@@ -264,7 +262,7 @@ const Layout = () => {
               textTransform: "capitalize",
             }}
           >
-            {`${user.user_details.first_name} ${user.user_details.last_name}`}
+            {`${user.first_name} ${user.last_name}`}
           </Typography>
           <Typography
             variant="body2"
@@ -276,7 +274,7 @@ const Layout = () => {
               textTransform: "capitalize",
             }}
           >
-            {`${user.user_details.role}`}
+            {`${user.role}`}
           </Typography>
         </Box>
         <IconButton onClick={handleLogout}>

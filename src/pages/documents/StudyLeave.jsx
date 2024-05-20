@@ -44,6 +44,7 @@ const validationSchema = yup.object({
   remarks: yup.string(),
   headTeacherName: yup.string().required("Required"),
   headPost: yup.string().required("Required"),
+  headSign: yup.string().required("Required"),
   headDate: yup.string().required("Required"),
   //   part c
   salaryCost: yup.string().required("Required"),
@@ -76,7 +77,7 @@ const StudyLeave = () => {
   const formik = useFormik({
     initialValues: {
       // part a
-      fullname: `${user.user_details.first_name} ${user.user_details.last_name}`,
+      fullname: `${user.first_name} ${user.last_name}`,
       designation: "",
       appointmentDate: "",
       yearsServed: "",
@@ -100,7 +101,7 @@ const StudyLeave = () => {
       remarks: "",
       headTeacherName: "",
       headPost: "",
-      headSign: File | null,
+      headSign: "",
       headDate: "",
       //   part c
       salaryCost: "",
@@ -134,18 +135,6 @@ const StudyLeave = () => {
 
   const handleSubmit = (values) => {
     console.log(values);
-  };
-
-  const handleHeadSign = async (e) => {
-    try {
-      const file = e.target.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      console.log(file.name);
-      formik.setFieldValue("headSign", file.name);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleAccountantSign = async (e) => {
@@ -901,15 +890,13 @@ const StudyLeave = () => {
                   <InputLabel id="headSign" sx={{ fontWeight: 800 }}>
                     Signature:
                   </InputLabel>
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleHeadSign}
-                    placeholder="upload signature"
-                    accept="image/jpeg, image/jpg, image/png"
-                    value={
-                      formik.values.headSign ? formik.values.headSign.name : ""
-                    }
+                  <TextField
+                    variant="standard"
+                    id="headSign"
+                    name="headSign"
+                    value={formik.values.headSign}
+                    onChange={formik.handleChange}
+                    sx={{ width: "85%" }}
                   />
                 </Grid>
 

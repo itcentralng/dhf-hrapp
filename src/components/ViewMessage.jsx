@@ -180,7 +180,7 @@ const ViewMessage = () => {
                           }}
                         >
                           {item.type === "sent"
-                            ? `${user.user_details.first_name} ${user.user_details.last_name}`
+                            ? `${user.first_name} ${user.last_name}`
                             : item.sender}
                         </Typography>
                         <EmailLabel emailType={item.label} />

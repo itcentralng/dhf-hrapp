@@ -1,13 +1,14 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import usersListData from "../data/usersList";
+import { createContext, useContext, useEffect, useState } from "react";
+
+import { useGetUsersQuery } from "../state/api";
 const UserListContext = createContext();
 
 export const useUserList = () => useContext(UserListContext);
 
 export const UserListProvider = ({ children }) => {
-  const initialUsersList =
-    JSON.parse(localStorage.getItem("usersList")) || usersListData;
-  const [usersList, setUsersList] = useState(initialUsersList);
+  const { data: users, error, isLoading } = useGetUsersQuery();
+
+  const [usersList, setUsersList] = useState(users);
   //we defined registerStaff here cos we need to display the form when editUser is triggered from UserListRow
   const [registerStaff, setRegisterStaff] = useState(false);
   const [editStaffForm, setEditStaffForm] = useState(false);

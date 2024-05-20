@@ -26,7 +26,7 @@ const EarlyClosureTemplate = () => {
 
   const [formData, setFormData] = useState({
     time: "",
-    iField: `${user.user_details.first_name} ${user.user_details.last_name}`,
+    iField: `${user.first_name} ${user.last_name}`,
     teacher: "",
     class: "",
     section: "",
