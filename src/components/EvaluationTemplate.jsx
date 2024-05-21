@@ -1,4 +1,6 @@
-import React, { useEffect, useReducer, useState } from "react";
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/prop-types */
+import { useReducer, useState } from "react";
 import {
   Table,
   TableHead,
@@ -14,9 +16,7 @@ import {
   Grid,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import usersList from "../data/usersList";
 import evaluationFormDetails from "../data/evaluationFormData";
-import { StyledTextArea } from "../styled-components/styledInputs";
 import DocDetailsAndButton from "../pages/documents/DocDetailsAndButton";
 import { Overlay } from "../styled-components/styledBox";
 import ShareWithForm from "./ShareWithForm";
@@ -69,6 +69,7 @@ const EvaluationTemplate = ({ data }) => {
   const [formData, dispatch] = useReducer(reducer, initialState);
   const { displayShareForm } = useShareForm();
   const handleRatingChange = (event, id, rating) => {
+    console.log(selectedRating);
     setSelectedRating((prevSelected) => ({
       ...prevSelected,
       [id]: rating,
@@ -206,7 +207,7 @@ const EvaluationTemplate = ({ data }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {evaluationFormDetails.map((item, index) => (
+              {evaluationFormDetails.map((item) => (
                 <TableRow key={item.id}>
                   <StyledTableCell>{item.id}</StyledTableCell>
                   <StyledTableCell>{item.description}</StyledTableCell>

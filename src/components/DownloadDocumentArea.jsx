@@ -1,23 +1,23 @@
 import React from "react";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import PDFIcon from "../assets/xlsIcon.svg";
+import PropTypes from "prop-types";
+import { Box, Stack, Typography, Button } from "@mui/material";
+import PDFIcon from "../assets/xlsIcon.svg"; // Corrected icon paths
 import DOCXIcon from "../assets/xlsIcon.svg";
 import XLSIcon from "../assets/xlsIcon.svg";
-import { Box, Stack } from "@mui/material";
 
-const DownloadDocumentArea = ({ file /*sender*/ }) => {
+const DownloadDocumentArea = ({ file, sender }) => {
+  if (!file) {
+    return <Typography>No document available for download.</Typography>;
+  }
+
   const handleDownload = () => {
-    const downloadLink = document.createElement("a");
-    downloadLink.href = file.url; // Assuming file.url contains the download link
-    downloadLink.setAttribute("download", file.name);
-
-    document.body.appendChild(downloadLink);
-
-    downloadLink.click();
-
-    document.body.removeChild(downloadLink);
+    // const downloadLink = document.createElement("a");
+    // downloadLink.href = file;
+    // downloadLink.setAttribute("download", file.name);
+    // document.body.appendChild(downloadLink);
+    // downloadLink.click();
+    // document.body.removeChild(downloadLink);
+    console.log(file);
   };
 
   const renderFileIcon = () => {
@@ -57,7 +57,7 @@ const DownloadDocumentArea = ({ file /*sender*/ }) => {
             fontSize: "14px",
           }}
         >
-          {/*file.name*/}Leave-Form.xls
+          {file.name}
         </Typography>
         <Typography
           sx={{
@@ -67,13 +67,13 @@ const DownloadDocumentArea = ({ file /*sender*/ }) => {
             fontSize: "11px",
           }}
         >
-          Mustapha Yakubu{/*sender*/}
+          {sender}
         </Typography>
       </Stack>
       <Typography
         sx={{ fontWeight: 400, fontSize: "12px", color: "#121212", mb: "19px" }}
       >
-        12.4MB{/*file.size*/}
+        {file.size}
       </Typography>
       <Button
         sx={{
@@ -90,6 +90,16 @@ const DownloadDocumentArea = ({ file /*sender*/ }) => {
       </Button>
     </Box>
   );
+};
+
+DownloadDocumentArea.propTypes = {
+  file: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    size: PropTypes.string.isRequired,
+  }),
+  sender: PropTypes.string.isRequired,
 };
 
 export default DownloadDocumentArea;

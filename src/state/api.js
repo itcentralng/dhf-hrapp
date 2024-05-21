@@ -5,12 +5,10 @@ const baseUrl = import.meta.env.VITE_APP_API_URL;
 const baseQuery = fetchBaseQuery({
   baseUrl,
   prepareHeaders: (headers, { getState }) => {
-    const token = getState().user.token; // Ensure correct state path
+    const token = getState().user.token;
 
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
-    } else {
-      console.log("Token not found");
     }
 
     return headers;
@@ -24,7 +22,20 @@ export const api = createApi({
     getUsers: build.query({
       query: () => "user/get-users",
     }),
+    getInbox: build.query({
+      query: () => "messages/inbox/",
+    }),
+    getOutbox: build.query({
+      query: () => "messages/outbox/",
+    }),
+    registerStaff: build.query({
+      query: (newStaff) => ({
+        url: "user/signup/",
+        method: "POST",
+        body: newStaff,
+      }),
+    }),
   }),
 });
 
-export const { useGetUsersQuery } = api;
+export const { useGetUsersQuery, useGetInboxQuery, useGetOutboxQuery } = api;

@@ -34,10 +34,6 @@ export const UserListProvider = ({ children }) => {
     staffId: "",
   });
 
-  useEffect(() => {
-    localStorage.setItem("usersList", JSON.stringify(usersList));
-  }, [usersList]);
-
   const updateUsersList = (newList) => {
     setUsersList(newList);
   };

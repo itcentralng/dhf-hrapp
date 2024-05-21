@@ -36,7 +36,6 @@ export const SubmitStudyLeave = async (formData, setLoading) => {
     );
 
     if (!response.ok) {
-      console.log(accessToken);
       alert("Failed to submit study leave! Please try again.");
       throw new Error("Failed to submit study leave");
     }

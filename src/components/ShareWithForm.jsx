@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import UserSelect from "./MultipleSelect";
 import {
   Box,
   CircularProgress,
@@ -11,10 +13,10 @@ import {
 import { HeadingText, SubHeadingText } from "../styled-components/StyledText";
 import { FilledButton } from "../styled-components/styledButtons";
 import CloseIcon from "@mui/icons-material/Close";
-import { useShareForm } from "./context/ShareFormContext";
-import MutipleSelect from "./MultipleSelect";
 import { SubmitStudyLeave } from "../state/studyLeaveRequests";
-import React from "react";
+import { SubmitBlankDocument } from "../state/BlankDocument";
+import { useShareForm } from "./context/ShareFormContext";
+
 const Text = styled(Typography)({
   fontFamily: "DM Sans",
   fontWeight: 400,
@@ -23,13 +25,25 @@ const Text = styled(Typography)({
   margin: "10px 0px 10px 0px",
 });
 
-const ShareWithForm = ({ documentType, formData }) => {
+const ShareWithForm = ({ documentType, formData, documentFile }) => {
   const { setDisplayShareForm } = useShareForm();
   const [loading, setLoading] = React.useState(false);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [additionalInfo, setAdditionalInfo] = React.useState("");
 
   const handleSubmit = async () => {
+    const sendFormData = {
+      text: formData,
+      document: documentFile,
+      title: documentType,
+      recipients: selectedUsers.map((user) => user.email), // Extract emails from selected users
+      label: additionalInfo, // Replace with actual text if needed
+    };
+
     if (documentType === "Study Leave") {
-      await SubmitStudyLeave(formData, setLoading);
+      await SubmitStudyLeave(sendFormData, setLoading);
+    } else {
+      await SubmitBlankDocument(sendFormData, setLoading);
     }
   };
 
@@ -73,7 +87,7 @@ const ShareWithForm = ({ documentType, formData }) => {
         }}
       >
         <Text>Share</Text>
-        <MutipleSelect />
+        <UserSelect onUserSelect={setSelectedUsers} />
         <Text>Additional info</Text>
         <TextField
           id="outlined-multiline-flexible"
@@ -81,6 +95,10 @@ const ShareWithForm = ({ documentType, formData }) => {
           multiline
           minRows={6}
           placeholder="Type something..."
+          value={additionalInfo}
+          onChange={(event) => {
+            setAdditionalInfo(event.target.value);
+          }}
         />
         <FilledButton
           sx={{ width: "36%", mx: "auto", mt: "30px", fontFamily: "DM sans" }}
@@ -88,7 +106,7 @@ const ShareWithForm = ({ documentType, formData }) => {
           disabled={loading}
           type="submit"
         >
-          {loading ? <CircularProgress size={22} /> : "Send Messsage"}
+          {loading ? <CircularProgress size={22} /> : "Send Message"}
         </FilledButton>
       </FormControl>
     </Box>

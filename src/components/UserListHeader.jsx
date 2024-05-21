@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import sortAscending from "../assets/Sort ascending.svg";
 import { Box, Checkbox, Stack, Typography, styled } from "@mui/material";
 
@@ -36,7 +36,7 @@ const UserListHeader = ({ checked, handleChange }) => {
             <img src={sortAscending} alt="" />
           </span>
         </Box>
-        <TableHeadText>Title</TableHeadText>
+        {/* <TableHeadText>Title</TableHeadText> */}
         <TableHeadText>Role</TableHeadText>
         <TableHeadText>Staff Id</TableHeadText>
       </Stack>

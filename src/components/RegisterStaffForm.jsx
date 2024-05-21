@@ -11,7 +11,7 @@ import {
   styled,
   Stack,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   HeadingText,
   InputLabel,
@@ -22,6 +22,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // import usersList from "../data/usersList";
 import { useUserList } from "./UserListContext";
 import CloseIcon from "@mui/icons-material/Close";
+import { RegisterStaff } from "../state/RegisterStaff";
 const FileUploadContainer = styled(Box)({
   display: "flex",
   flexDirection: "row",
@@ -57,23 +58,6 @@ const RegisterStaffForm = ({
   const [passport, setPassport] = useState();
   const [resume, setResume] = useState();
   const [signature, setSignature] = useState();
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   department: "",
-  //   title: "",
-  //   phoneNumber: "",
-  //   role: "",
-  //   email: "",
-  //   clockIn: "",
-  //   clockOut: "",
-  //   gender: "",
-  //   passport: null,
-  //   resume: null,
-  //   signature: null,
-  //   homeAddress: "",
-  //   additionalNotes: "",
-  //   staffId: generateRandomID(),
-  // });
 
   function generateRandomID() {
     const numbers = "1234567890";
@@ -107,16 +91,10 @@ const RegisterStaffForm = ({
       case "signature":
         setSignature(file);
         break;
+      default:
+        break;
     }
   };
-
-  // const handleFileChange = (event) => {
-  //   const { name, value } = event.target.files[0];
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -127,9 +105,9 @@ const RegisterStaffForm = ({
       resume: resume,
       signature: signature,
     };
-    console.log(newStaff);
-    updateUsersList((prevList) => [...prevList, newStaff]);
-    setFormData({});
+    console.log("Submitting form with data:", newStaff); // For debugging
+    RegisterStaff(newStaff);
+    setFormData({}); // Clear the form
     setShowRegConfirmation(true);
     setRegisterStaff(false);
   };
@@ -162,14 +140,13 @@ const RegisterStaffForm = ({
         padding: "15px 30px",
         fontFamily: "DM sans",
         bgcolor: "white",
-        // mx: "auto",
         ml: "-300px",
         mt: expanded ? "-300px" : "100px",
       }}
     >
       <Stack direction="row" sx={{ justifyContent: "space-between" }}>
         <HeadingText>
-          {formType == "register staff"
+          {formType === "register staff"
             ? "Register New Staff"
             : "Edit Existing Staff"}
         </HeadingText>
@@ -179,7 +156,7 @@ const RegisterStaffForm = ({
       </Stack>
       <br />
       <SubHeadingText sx={{ mt: "-25px" }}>
-        {formType == "register staff"
+        {formType === "register staff"
           ? "Please fill out the form below to register a new staff in your school"
           : "Modify existing staff data"}
       </SubHeadingText>
@@ -207,26 +184,7 @@ const RegisterStaffForm = ({
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={6}>
-            <InputLabel variant="subtitle1">Department</InputLabel>
-            <TextField
-              select
-              fullWidth
-              required
-              variant="outlined"
-              placeholder="Department"
-              name="department"
-              value={formData.department}
-              onChange={handleChange}
-            >
-              <MenuItem value="option1">Option 1</MenuItem>
-              <MenuItem value="option2">Option 2</MenuItem>
-              <MenuItem value="option3">Option 3</MenuItem>
-            </TextField>
-          </Grid>
-
-          {/* Second Row */}
-          <Grid item xs={6}>
+          {/* <Grid item xs={6}>
             <InputLabel variant="subtitle1">Title</InputLabel>
             <TextField
               fullWidth
@@ -237,7 +195,7 @@ const RegisterStaffForm = ({
               value={formData.title}
               onChange={handleChange}
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={6}>
             <InputLabel variant="subtitle1">Phone Number</InputLabel>
             <TextField
@@ -250,8 +208,6 @@ const RegisterStaffForm = ({
               onChange={handleChange}
             />
           </Grid>
-
-          {/* Third Row */}
           <Grid item xs={6}>
             <InputLabel variant="subtitle1">Role</InputLabel>
             <TextField
@@ -261,12 +217,13 @@ const RegisterStaffForm = ({
               variant="outlined"
               placeholder="Role"
               name="role"
-              value={formData.role}
+              value={formData.role || ""}
               onChange={handleChange}
             >
-              <MenuItem value="Staff">Staff</MenuItem>
-              <MenuItem value="Admin">Admin</MenuItem>
-              <MenuItem value="Head Of Section">Head Of Section</MenuItem>
+              <MenuItem value="staff">Staff</MenuItem>
+              <MenuItem value="admin">Admin</MenuItem>
+              <MenuItem value="hos">Head Of Section</MenuItem>
+              <MenuItem value="hr">Head Of Section</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={6}>
@@ -281,8 +238,17 @@ const RegisterStaffForm = ({
               onChange={handleChange}
             />
           </Grid>
-
-          {/* Fourth Row */}
+          <Grid item xs={6} sx={{ padding: "10px" }}>
+            <InputLabel>Password </InputLabel>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </Grid>
           <Grid item xs={6}>
             <InputLabel variant="subtitle1">Work Hours</InputLabel>
             <Grid container spacing={1}>
@@ -310,7 +276,7 @@ const RegisterStaffForm = ({
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={6}>
+          {/* <Grid item xs={6}>
             <InputLabel variant="subtitle1">Gender</InputLabel>
             <TextField
               select
@@ -332,7 +298,7 @@ const RegisterStaffForm = ({
               <MenuItem value="male">Male</MenuItem>
               <MenuItem value="female">Female</MenuItem>
             </TextField>
-          </Grid>
+          </Grid> */}
         </Grid>
         <Grid container alignItems="center" spacing={1} sx={{ marginTop: 2 }}>
           <Grid item>
@@ -346,6 +312,28 @@ const RegisterStaffForm = ({
         </Grid>
         {expanded && (
           <Grid container spacing={1} sx={{ marginTop: 2 }}>
+            <Grid item xs={6} sx={{ padding: "10px" }}>
+              <InputLabel>
+                Home Address{" "}
+                <span
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "12px",
+                    color: "rgba(85, 85, 85, 0.5)",
+                  }}
+                >
+                  (optional)
+                </span>
+              </InputLabel>
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="Home Address"
+                name="homeAddress"
+                value={formData.homeAddress}
+                onChange={handleChange}
+              />
+            </Grid>
             <Grid item xs={6} sx={{ padding: "10px" }}>
               <InputLabel>Passport</InputLabel>
               <FileUploadContainer>
@@ -392,7 +380,6 @@ const RegisterStaffForm = ({
                 </Typography>
               </FileUploadContainer>
             </Grid>
-
             <Grid item xs={6} sx={{ padding: "10px" }}>
               <InputLabel>Signature</InputLabel>
               <FileUploadContainer>
@@ -408,7 +395,7 @@ const RegisterStaffForm = ({
                 />
                 <label htmlFor="signature-upload">
                   <UploadButton variant="contained" component="span">
-                    choose File
+                    Choose File
                   </UploadButton>
                 </label>
                 <Typography variant="subtitle1">
@@ -416,30 +403,6 @@ const RegisterStaffForm = ({
                 </Typography>
               </FileUploadContainer>
             </Grid>
-            <Grid item xs={6} sx={{ padding: "10px" }}>
-              <InputLabel>
-                Home Address{" "}
-                <span
-                  style={{
-                    fontWeight: 400,
-                    fontSize: "12px",
-                    color: "rgba(85, 85, 85, 0.5)",
-                  }}
-                >
-                  (optional)
-                </span>
-              </InputLabel>
-              <TextField
-                fullWidth
-                variant="outlined"
-                placeholder="Home Address"
-                name="homeAddress"
-                value={formData.homeAddress}
-                onChange={handleChange}
-              />
-            </Grid>
-
-            {/* Third row */}
             <Grid item xs={12} sx={{ padding: "10px" }}>
               <InputLabel>
                 Additional Notes{" "}
@@ -453,7 +416,6 @@ const RegisterStaffForm = ({
                   (optional)
                 </span>
               </InputLabel>
-
               <TextareaAutosize
                 minRows={4}
                 maxRows={6}
@@ -472,7 +434,7 @@ const RegisterStaffForm = ({
             </Grid>
           </Grid>
         )}
-        {formType == "register staff" ? (
+        {formType === "register staff" ? (
           <FilledButton
             type="submit"
             onClick={handleSubmit}

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
   Checkbox,
@@ -6,11 +7,12 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DeleteOutline } from "@mui/icons-material";
 import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
 import { useUserList } from "./UserListContext";
+
 const TableBodyText = styled(Typography)({
   fontFamily: "inter",
   fontWeight: 400,
@@ -20,21 +22,14 @@ const TableBodyText = styled(Typography)({
   minWidth: "60px",
 });
 
-const UserListRow = ({ name, title, role, staffId, checked }) => {
-  const [singleChecked, setSingleChecked] = React.useState(false);
+const UserListRow = ({ user, checked }) => {
   const { editUser, deleteUser } = useUserList();
-
-  useEffect(() => {
-    if (checked) {
-      setSingleChecked(true);
-    } else {
-      setSingleChecked(false);
-    }
-  }, [checked]);
+  const [singleChecked, setSingleChecked] = React.useState(checked);
 
   const handleChange = (event) => {
     setSingleChecked(event.target.checked);
   };
+
   return (
     <Stack
       direction="row"
@@ -52,17 +47,19 @@ const UserListRow = ({ name, title, role, staffId, checked }) => {
         }}
       >
         <Checkbox checked={singleChecked} onChange={handleChange} />
-        <TableBodyText>{name}</TableBodyText>
-        <TableBodyText>{title}</TableBodyText>
-        <TableBodyText>{role}</TableBodyText>
+        <TableBodyText>
+          {user.first_name} {user.last_name}
+        </TableBodyText>
+        {/* <TableBodyText>{user.title}</TableBodyText> */}
+        <TableBodyText>{user.role}</TableBodyText>
         <Box
           onClick={() => {
             alert("ID copied to clipboard");
-            navigator.clipboard.writeText(staffId);
+            navigator.clipboard.writeText(user.user_id);
           }}
           sx={{ cursor: "pointer" }}
         >
-          <TableBodyText sx={{ width: "40px" }}>{staffId}</TableBodyText>
+          <TableBodyText sx={{ width: "40px" }}>{user.user_id}</TableBodyText>
           <ContentCopyRoundedIcon
             sx={{ width: "12px", height: "12px", color: "#6E7079", ml: "10px" }}
           />
@@ -76,10 +73,10 @@ const UserListRow = ({ name, title, role, staffId, checked }) => {
           alignItems: "center",
         }}
       >
-        <IconButton onClick={() => editUser(staffId)}>
+        <IconButton onClick={() => editUser(user.user_id)}>
           <EditOutlinedIcon sx={{ color: "rgba(85, 85, 85, 0.6)" }} />
         </IconButton>
-        <IconButton onClick={() => deleteUser(staffId)}>
+        <IconButton onClick={() => deleteUser(user.user_id)}>
           <DeleteOutline sx={{ color: "rgba(85, 85, 85, 0.6)" }} />
         </IconButton>
       </Stack>

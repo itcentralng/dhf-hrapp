@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Paper, Typography } from "@mui/material";
+import { useState } from "react";
+import { Paper } from "@mui/material";
 import { styled } from "@mui/system";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "../../styles/documentStyles.css";
+import { Overlay } from "../../styled-components/styledBox";
+import ShareWithForm from "../../components/ShareWithForm";
 import DocDetailsAndButton from "./DocDetailsAndButton";
 import { useShareForm } from "../../components/context/ShareFormContext";
-import ShareWithForm from "../../components/ShareWithForm";
-import { Overlay } from "../../styled-components/styledBox";
+
 const EditorContainer = styled("div")({
   padding: "16px",
   display: "flex",
@@ -16,8 +16,8 @@ const EditorContainer = styled("div")({
 
 const EditorPaper = styled(Paper)({
   padding: "16px",
-  backgroundColor: "white", // A4 paper color
-  width: "690px", // Adjust height as needed
+  backgroundColor: "white",
+  width: "690px",
   borderRadius: "8px",
   boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
   height: "1035px",
@@ -28,12 +28,11 @@ const modules = {
     [{ size: [] }],
     ["bold", "italic", "underline", "strike", "blockquote"],
     [{ list: "ordered" }, { list: "bullet" }],
-    [{ color: [] }, { background: [] }], // Text and Background Color
+    [{ color: [] }, { background: [] }],
     ["link", "image"],
-    [{ align: [] }], // Text Alignment
-    [{ undo: "undo" }, { redo: "redo" }], // Undo and Redo
-
-    [{ quote: "blockquote" }], // Quote
+    [{ align: [] }],
+    [{ undo: "undo" }, { redo: "redo" }],
+    [{ quote: "blockquote" }],
   ],
 };
 
@@ -61,17 +60,17 @@ const formats = [
 
 const Editor = () => {
   const [editorHtml, setEditorHtml] = useState("");
-  const { displayShareForm } = useShareForm();
+  const [documentFile, setDocumentFile] = useState(null);
   const [documentTitle, setDocumentTitle] = useState("Untitled Document");
+  const { displayShareForm } = useShareForm(); // Assuming useShareForm hook is imported
 
   const handleChange = (html) => {
     setEditorHtml(html);
   };
 
-  const customEditorStyles = {
-    border: "none",
-    marginTop: "0px",
-    fontFamily: "Arial, sans-serif",
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setDocumentFile(file);
   };
 
   return (
@@ -89,13 +88,17 @@ const Editor = () => {
             modules={modules}
             formats={formats}
             placeholder="Write something..."
-            style={customEditorStyles}
           />
+          <input type="file" onChange={handleFileChange} />
         </EditorPaper>
       </EditorContainer>
       {displayShareForm && (
         <Overlay>
-          <ShareWithForm documentType={documentTitle} />
+          <ShareWithForm
+            documentType={documentTitle}
+            formData={editorHtml.replace(/(<([^>]+)>)/gi, "")}
+            documentFile={documentFile}
+          />
         </Overlay>
       )}
     </>

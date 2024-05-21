@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import UserListHeader from "./UserListHeader";
-// import usersList from "../data/usersList";
 import { Box } from "@mui/material";
 import UserListRow from "./UserListRow";
-import { useUserList } from "./UserListContext";
 import Pagination from "./Pagination";
+import { useGetUsersQuery } from "../state/api";
+
 const AdminListView = () => {
-  const { usersList } = useUserList();
-  const adminList = usersList.filter((user) => user.role == "Admin");
+  const { data: users } = useGetUsersQuery();
+
+  const adminList = users?.filter((user) => user.role === "admin") || [];
   const [checked, setChecked] = React.useState(false);
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -26,9 +27,9 @@ const AdminListView = () => {
   return (
     <Box sx={{ bgcolor: "white", padding: "48px 20px", borderRadius: "6px" }}>
       <UserListHeader checked={checked} handleChange={handleChange} />
-      {currentItems.map((user, staffId) => (
-        <Box key={staffId}>
-          <UserListRow {...user} checked={checked} />
+      {currentItems.map((user) => (
+        <Box key={user.user_id}>
+          <UserListRow user={user} checked={checked} />
         </Box>
       ))}
       <Pagination
