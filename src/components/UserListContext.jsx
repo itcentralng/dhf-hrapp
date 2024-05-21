@@ -39,18 +39,18 @@ export const UserListProvider = ({ children }) => {
   };
 
   const editUser = (staffId) => {
-    const userToEdit = usersList.find((user) => user.staffId == staffId);
+    const userToEdit = usersList?.find((user) => user.user_id == staffId);
     console.log(userToEdit);
     setFormData({
-      name: userToEdit.name,
-      department: userToEdit.department,
-      title: userToEdit.title,
-      phoneNumber: userToEdit.phoneNumber,
-      role: userToEdit.role,
-      email: userToEdit.email,
-      clockIn: userToEdit.clockIn,
-      clockOut: userToEdit.clockOut,
-      gender: userToEdit.gender,
+      name: userToEdit?.name || "",
+      department: userToEdit?.department || "",
+      title: userToEdit?.title || "",
+      phoneNumber: userToEdit?.phoneNumber || "",
+      role: userToEdit?.role || "",
+      email: userToEdit?.email || "",
+      clockIn: userToEdit?.clockIn || "",
+      clockOut: userToEdit?.clockOut || "",
+      gender: userToEdit?.gender || "",
       /**issue: HTML specs in this case passport, resume, and signature,
        * won't allow you to set a value on file inputs.
        * Only the user can select a file to upload by clicking on
@@ -60,19 +60,19 @@ export const UserListProvider = ({ children }) => {
       passport: null,
       resume: null,
       signature: null,
-      homeAddress: userToEdit.homeAddress,
-      additionalNotes: userToEdit.additionalNotes,
-      staffId: userToEdit.staffId,
+      homeAddress: userToEdit?.homeAddress || "",
+      additionalNotes: userToEdit?.additionalNotes || "",
+      staffId: userToEdit?.staffId || "",
     });
     setEditStaffForm(true);
   };
 
   const deleteUser = (staffId) => {
-    setUsersList(usersList.filter((item) => item.staffId !== staffId));
+    setUsersList(usersList?.filter((item) => item.user_id !== staffId));
     setShowDeleteConfirmation(true);
   };
   const removeUserForEdit = (staffId) => {
-    setUsersList(usersList.filter((item) => item.staffId !== staffId));
+    setUsersList(usersList?.filter((item) => item.user_id !== staffId));
   };
 
   return (

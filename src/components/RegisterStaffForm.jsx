@@ -10,6 +10,7 @@ import {
   TextareaAutosize,
   styled,
   Stack,
+  CircularProgress,
 } from "@mui/material";
 import { useState } from "react";
 import {
@@ -22,7 +23,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // import usersList from "../data/usersList";
 import { useUserList } from "./UserListContext";
 import CloseIcon from "@mui/icons-material/Close";
-import { RegisterStaff } from "../state/RegisterStaff";
+import { useRegisterStaffMutation } from "../state/api";
 const FileUploadContainer = styled(Box)({
   display: "flex",
   flexDirection: "row",
@@ -58,6 +59,7 @@ const RegisterStaffForm = ({
   const [passport, setPassport] = useState();
   const [resume, setResume] = useState();
   const [signature, setSignature] = useState();
+  const [loading, setLoading] = useState(false);
 
   function generateRandomID() {
     const numbers = "1234567890";
@@ -96,7 +98,9 @@ const RegisterStaffForm = ({
     }
   };
 
-  const handleSubmit = (event) => {
+  const [registerStaffMutation] = useRegisterStaffMutation();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const newStaff = {
       ...formData,
@@ -105,11 +109,36 @@ const RegisterStaffForm = ({
       resume: resume,
       signature: signature,
     };
-    console.log("Submitting form with data:", newStaff); // For debugging
-    RegisterStaff(newStaff);
-    setFormData({}); // Clear the form
-    setShowRegConfirmation(true);
-    setRegisterStaff(false);
+    const fullName = newStaff.name ? newStaff.name.split(" ") : ["", ""];
+    const firstName = fullName[0];
+    const lastName = fullName.slice(1).join(" ");
+
+    const formDataItem = {
+      first_name: firstName,
+      last_name: lastName,
+      email: newStaff.email,
+      phone: newStaff.phoneNumber,
+      role: newStaff.role,
+      password: newStaff.password,
+      resumption_time: newStaff.clockIn,
+      closing_time: newStaff.clockOut,
+    };
+    setLoading(true);
+    try {
+      const response = await registerStaffMutation(formDataItem);
+      if (!response.data) {
+        console.log("User was not created");
+      } else {
+        setShowRegConfirmation(true);
+        setRegisterStaff(false);
+        console.log("user has been created successfully");
+      }
+    } catch (error) {
+      console.error("There was an error creating the user!", error);
+      alert("Failed to register user! Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleEdit = (event) => {
@@ -217,13 +246,13 @@ const RegisterStaffForm = ({
               variant="outlined"
               placeholder="Role"
               name="role"
-              value={formData.role || ""}
+              value={formData.role}
               onChange={handleChange}
             >
               <MenuItem value="staff">Staff</MenuItem>
               <MenuItem value="admin">Admin</MenuItem>
               <MenuItem value="hos">Head Of Section</MenuItem>
-              <MenuItem value="hr">Head Of Section</MenuItem>
+              <MenuItem value="hr">Human Resource</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={6}>
@@ -307,7 +336,18 @@ const RegisterStaffForm = ({
             </IconButton>
           </Grid>
           <Grid item>
-            <Typography variant="subtitle1">Additional Information</Typography>
+            <Typography variant="subtitle1">
+              Additional Information{" "}
+              <span
+                style={{
+                  fontWeight: 400,
+                  fontSize: "12px",
+                  color: "rgba(85, 85, 85, 0.5)",
+                }}
+              >
+                (optional)
+              </span>
+            </Typography>
           </Grid>
         </Grid>
         {expanded && (
@@ -335,7 +375,18 @@ const RegisterStaffForm = ({
               />
             </Grid>
             <Grid item xs={6} sx={{ padding: "10px" }}>
-              <InputLabel>Passport</InputLabel>
+              <InputLabel>
+                Passport{" "}
+                <span
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "12px",
+                    color: "rgba(85, 85, 85, 0.5)",
+                  }}
+                >
+                  (optional)
+                </span>
+              </InputLabel>
               <FileUploadContainer>
                 <input
                   type="file"
@@ -358,7 +409,18 @@ const RegisterStaffForm = ({
               </FileUploadContainer>
             </Grid>
             <Grid item xs={6} sx={{ padding: "10px" }}>
-              <InputLabel>Resume</InputLabel>
+              <InputLabel>
+                Resume{" "}
+                <span
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "12px",
+                    color: "rgba(85, 85, 85, 0.5)",
+                  }}
+                >
+                  (optional)
+                </span>
+              </InputLabel>
               <FileUploadContainer>
                 <input
                   type="file"
@@ -381,7 +443,18 @@ const RegisterStaffForm = ({
               </FileUploadContainer>
             </Grid>
             <Grid item xs={6} sx={{ padding: "10px" }}>
-              <InputLabel>Signature</InputLabel>
+              <InputLabel>
+                Signature{" "}
+                <span
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "12px",
+                    color: "rgba(85, 85, 85, 0.5)",
+                  }}
+                >
+                  (optional)
+                </span>
+              </InputLabel>
               <FileUploadContainer>
                 <input
                   type="file"
@@ -438,9 +511,10 @@ const RegisterStaffForm = ({
           <FilledButton
             type="submit"
             onClick={handleSubmit}
+            disabled={loading}
             sx={{ width: "163px", height: "45px", mx: "auto", mt: "5px" }}
           >
-            Register Staff
+            {loading ? <CircularProgress size={22} /> : "Register Staff"}
           </FilledButton>
         ) : (
           <FilledButton

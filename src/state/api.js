@@ -28,7 +28,7 @@ export const api = createApi({
     getOutbox: build.query({
       query: () => "messages/outbox/",
     }),
-    registerStaff: build.query({
+    registerStaff: build.mutation({
       query: (newStaff) => ({
         url: "user/signup/",
         method: "POST",
@@ -38,4 +38,9 @@ export const api = createApi({
   }),
 });
 
-export const { useGetUsersQuery, useGetInboxQuery, useGetOutboxQuery } = api;
+export const {
+  useGetUsersQuery,
+  useGetInboxQuery,
+  useGetOutboxQuery,
+  useRegisterStaffMutation,
+} = api;
