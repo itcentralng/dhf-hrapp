@@ -33,6 +33,7 @@ const ViewMessage = () => {
 
       const message = mailInfo.find((item) => item.message_id === pathId);
       setCurrentMessage(message);
+      console.log(currentMessage);
     }
   }, [location.pathname, mailInfo]);
 
@@ -236,6 +237,39 @@ const ViewMessage = () => {
             file={currentMessage?.document}
             sender={currentMessage?.sender}
           />
+          {currentMessage?.comments.map((comment) => (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "end",
+                justifyContent: "space-between",
+                padding: "2em",
+                borderRadius: "12px",
+                border: "#CCCCCC 0.5px solid",
+                bgcolor: "white",
+              }}
+              key={comment.comments_id}
+            >
+              <Typography
+                variant="body2"
+                sx={{ fontSize: "1rem", width: "75%" }}
+              >
+                {comment.text}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: ".8rem",
+                  color: "#2586F8",
+                  fontFamily: "DM Sans",
+                  width: "23%",
+                  textAlign: "right",
+                }}
+              >
+                From {comment.sender}
+              </Typography>
+            </Box>
+          ))}
           <CommentsArea comments={currentMessage?.comments} />
         </Stack>
       </Box>

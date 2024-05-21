@@ -1,15 +1,23 @@
-import { Box, Paper, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { CircularProgress, Paper, TextField, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Stack } from "@mui/material";
 import { FilledShadowButton } from "../styled-components/styledButtons";
 import TurnLeftIcon from "@mui/icons-material/TurnLeft";
 import AddIcon from "@mui/icons-material/Add";
 import ConfirmationPopup from "./ConfirmationPopup";
+import { useLocation } from "react-router-dom";
+
+const accessToken = localStorage.getItem("userState")
+  ? JSON.parse(localStorage.getItem("userState")).token
+  : null;
 
 const CommentsArea = () => {
   const [addCommentClicked, setAddCommentClicked] = useState(false);
   const [commentData, setCommentData] = useState("");
   const [showSuccessPopUp, setShowSuccessPopUp] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const location = useLocation();
 
   useEffect(() => {
     const interval = setInterval(() => setShowSuccessPopUp(false), 2000);
@@ -19,17 +27,49 @@ const CommentsArea = () => {
   const handleChange = (event) => {
     setCommentData(event.target.value);
   };
-  const handleCommentReply = (event) => {
+  const handleCommentReply = async (event) => {
     event.preventDefault();
+    setLoading(true);
+    const url = location.pathname;
+    const parts = url.split("/");
+    const messageId = parts[parts.length - 1];
+    const intMessageId = messageId;
+
     try {
       if (commentData == "") {
         throw new Error("Please type a reply.");
       }
+      const commentItems = {
+        text: commentData,
+        message_id: 5,
+        type: "message",
+      };
+      const response = await fetch(
+        `${import.meta.env.VITE_APP_API_URL}/messages/comment/`,
+        {
+          method: "POST",
+          body: JSON.stringify(commentItems),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(response);
+
+      if (!response.ok) {
+        alert("Failed to send comment! Please try again");
+        console.log(JSON.stringify(commentItems));
+        throw new Error("failed to send comment");
+      }
       setShowSuccessPopUp(true);
-    } catch (err) {
-      alert(err);
+      setCommentData("");
+    } catch (error) {
+      console.error("Error: ", error);
+      alert("Failed to send comment! Please try again");
+    } finally {
+      setLoading(false);
     }
-    setCommentData("");
   };
 
   return (
@@ -86,11 +126,12 @@ const CommentsArea = () => {
             fontWeight: 500,
             fontSize: "16px",
           }}
+          disabled={loading}
         >
           <TurnLeftIcon
             sx={{ width: "35px", height: "25px", ml: "-30px", mb: "3px" }}
           />
-          Reply
+          {loading ? <CircularProgress size={22} /> : "Reply"}
         </FilledShadowButton>
         {!addCommentClicked && (
           <FilledShadowButton
