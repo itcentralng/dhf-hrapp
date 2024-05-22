@@ -2,7 +2,7 @@ const accessToken = localStorage.getItem("userState")
   ? JSON.parse(localStorage.getItem("userState")).token
   : null;
 
-export const PerformEvaluation = async (formData, setLoading) => {
+export const SubmitEarlyClosure = async (formData, setLoading) => {
   console.log(formData);
   // setLoading(true);
   // const applicantData = {

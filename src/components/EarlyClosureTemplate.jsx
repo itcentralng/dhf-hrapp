@@ -281,7 +281,7 @@ const EarlyClosureTemplate = () => {
       </Container>
       {displayShareForm && (
         <Overlay>
-          <ShareWithForm documentType={documentTitle} />
+          <ShareWithForm documentType={documentTitle} formData={formData} />
         </Overlay>
       )}
     </>
