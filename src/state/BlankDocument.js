@@ -9,7 +9,7 @@ export const SubmitBlankDocument = async (formData, setLoading) => {
   formDataObj.append("text", formData.text);
   formDataObj.append("title", formData.title);
   formDataObj.append("recipients", formData.recipients.join(","));
-  formDataObj.append("label", formData.text);
+  formDataObj.append("label", formData.title);
   formDataObj.append("document", formData.document);
   try {
     const response = await fetch(

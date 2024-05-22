@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 import { useGetUsersQuery } from "../state/api";
 const UserListContext = createContext();
@@ -10,7 +10,7 @@ export const UserListProvider = ({ children }) => {
 
   const [usersList, setUsersList] = useState(users);
   //we defined registerStaff here cos we need to display the form when editUser is triggered from UserListRow
-  const [openEdit, setOpenEdit] = React.useState(false);
+  const [openEdit, setOpenEdit] = React.useState(true);
   const handleEditOpen = () => setOpenEdit(true);
   const handleEditClose = () => setOpenEdit(false);
   // const [passport, setPassport] = useState();
@@ -65,7 +65,7 @@ export const UserListProvider = ({ children }) => {
       additionalNotes: userToEdit?.additionalNotes || "",
       staffId: userToEdit?.staffId || "",
     });
-    setEditStaffForm(true);
+    handleEditOpen();
   };
 
   const deleteUser = (staffId) => {
@@ -94,8 +94,8 @@ export const UserListProvider = ({ children }) => {
         showDeleteConfirmation,
         setShowDeleteConfirmation,
         removeUserForEdit,
-        handleEditOpen,
-        handleEditClose,
+        openEdit,
+        setOpenEdit,
       }}
     >
       {children}

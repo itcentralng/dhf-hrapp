@@ -12,6 +12,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DeleteOutline } from "@mui/icons-material";
 import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
 import { useUserList } from "./UserListContext";
+import { useGetUsersQuery } from "../state/api";
 
 const TableBodyText = styled(Typography)({
   fontFamily: "inter",

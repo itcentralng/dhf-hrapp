@@ -111,6 +111,25 @@ const ViewMessage = () => {
     return null; // or a loading spinner/message
   }
 
+  const creationDate = currentMessage.created_at;
+  const date = new Date(creationDate);
+
+  const dateOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const timeOptions = {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true,
+  };
+
+  const formattedDate = date.toLocaleDateString("en-US", dateOptions);
+  const formattedTime = date.toLocaleTimeString("en-US", timeOptions);
+  const finalFormattedDateTime = `${formattedDate} ${formattedTime}`;
+
   return (
     <>
       <Box sx={{ minHeight: "75vh" }}>
@@ -201,7 +220,7 @@ const ViewMessage = () => {
                         ? `${user.first_name} ${user.last_name}`
                         : currentMessage.sender}
                     </Typography>
-                    <EmailLabel emailType={currentMessage.label} />
+                    <EmailLabel emailType={currentMessage.title} />
                   </Box>
                   <Typography
                     variant="body2"
@@ -213,7 +232,7 @@ const ViewMessage = () => {
                       alignItems: "center",
                     }}
                   >
-                    {isInbox ? "to me" : "to Admin Office"}{" "}
+                    {isInbox ? "to me" : `to ${currentMessage.recipients}`}{" "}
                     <KeyboardArrowRight sx={{ fontSize: ".7rem" }} />
                   </Typography>
                 </Box>
@@ -227,7 +246,7 @@ const ViewMessage = () => {
                     fontFamily: "DM Sans",
                   }}
                 >
-                  Tue, May 12, 9:14 AM (8 days ago)
+                  {finalFormattedDateTime}
                 </Typography>
               </Box>
             </Box>

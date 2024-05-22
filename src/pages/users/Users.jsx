@@ -18,8 +18,8 @@ const Users = () => {
     editStaffForm,
     showDeleteConfirmation,
     setShowDeleteConfirmation,
-    handleEditClose,
     openEdit,
+    setOpenEdit,
   } = useUserList();
   const [showRegConfirmation, setShowRegConfirmation] = useState(false);
   const [showEditConfirmation, setShowEditConfirmation] = useState(false);
@@ -53,12 +53,12 @@ const Users = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    let interval = setInterval(() => {
-      setShowOfficeConf(false);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   let interval = setInterval(() => {
+  //     setShowOfficeConf(false);
+  //   }, 4000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const handleClick = () => {
     setFormData({});
@@ -159,7 +159,7 @@ const Users = () => {
       {editStaffForm && (
         <Modal
           open={openEdit}
-          onClose={handleEditClose}
+          onClose={() => setOpenEdit(false)}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
           sx={{
@@ -170,7 +170,6 @@ const Users = () => {
         >
           <RegisterStaffForm
             formType="edit user"
-            onClose={handleEditClose}
             setRegisterStaff={setRegisterStaff}
             setShowRegConfirmation={setShowRegConfirmation}
             setShowEditConfirmation={setShowEditConfirmation}
@@ -199,11 +198,11 @@ const Users = () => {
       {showDeleteConfirmation && (
         <ConfirmationPopup text={"You have successfully Deleted a staff."} />
       )}
-      {showOfficeConf && (
+      {/* {showOfficeConf && (
         <ConfirmationPopup
           text={"You have successfully registered an office."}
         />
-      )}
+      )} */}
     </>
   );
 };

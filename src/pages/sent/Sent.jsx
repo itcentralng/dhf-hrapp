@@ -37,6 +37,7 @@ const Sent = () => {
             title={item.title}
             text={item.text}
             id={item.message_id}
+            created_at={item.created_at}
             type="sent"
           />
         </Box>

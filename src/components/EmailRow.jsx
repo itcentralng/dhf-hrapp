@@ -10,12 +10,30 @@ const StyledText = styled(Typography)({
   fontWeight: 400,
 });
 
-const EmailRow = ({ recipient, label, title, text, id, type }) => {
+const EmailRow = ({ recipient, label, title, text, id, type, created_at }) => {
   const [substring, setSubstring] = useState("");
   const [currentTime, setCurrentTime] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
   const navigate = useNavigate();
+  const creationDate = created_at;
+  const date = new Date(creationDate);
+
+  const dateOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const timeOptions = {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true,
+  };
+
+  const formattedDate = date.toLocaleDateString("en-US", dateOptions);
+  const formattedTime = date.toLocaleTimeString("en-US", timeOptions);
+  const finalFormattedDateTime = `${formattedDate} ${formattedTime}`;
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
@@ -68,17 +86,17 @@ const EmailRow = ({ recipient, label, title, text, id, type }) => {
         backgroundColor: isChecked ? "#DFECEB" : "white",
       }}
     >
-      <input
+      {/* <input
         type="checkbox"
         checked={isChecked}
         onChange={handleCheckboxChange}
         style={{ width: "16.5px", height: "16.5px" }}
-      />
+      /> */}
       <Box
         sx={{
           width: "100%",
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "space-between",
           alignItems: "center",
           cursor: "pointer",
         }}
@@ -87,30 +105,34 @@ const EmailRow = ({ recipient, label, title, text, id, type }) => {
         <Typography
           sx={{ fontWeight: 400, ml: "1%", mr: "5%", minWidth: "10%" }}
         >
-          {recipient}
+          {`To: ${recipient.substring(0, 10)}...`}
         </Typography>
-        <EmailLabel emailType={label} />
+        <EmailLabel emailType={`${title.substring(0, 10)}...`} />
         <Typography
           sx={{
             fontWeight: 500,
             fontSize: "14px",
             color: "#202124",
             ml: "0.5%",
+            padding: "1em",
           }}
         >
-          {title}
+          {`${label.substring(0, 10)}...`}
         </Typography>
         <StyledText
           sx={{
             color: "rgba(0, 0, 0, 0.54)",
           }}
         >
-          {`- ${substring}...`}
+          {/* {`- ${substring}...`} */}
+          {`${text.substring(0, 10)}...`}
         </StyledText>
         <AttachmentIcon
           sx={{ color: "rgba(0, 0, 0, 0.54)", mx: "3%", cursor: "pointer" }}
         />
-        <StyledText sx={{ fontFamily: "DM sans" }}>{currentTime}</StyledText>
+        <StyledText sx={{ fontFamily: "DM sans" }}>
+          {finalFormattedDateTime}
+        </StyledText>
       </Box>
     </Stack>
   );

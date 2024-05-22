@@ -38,7 +38,7 @@ const RegisterOfficeForm = ({ setShowOfficeConf, setRegisterOffice }) => {
     };
     console.log(newOffice);
     setRegisterOffice(false);
-    setShowOfficeConf(true);
+    // setShowOfficeConf(true);
   };
 
   return (

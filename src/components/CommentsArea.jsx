@@ -41,7 +41,7 @@ const CommentsArea = () => {
       }
       const commentItems = {
         text: commentData,
-        message_id: 5,
+        message_id: intMessageId,
         type: "message",
       };
       const response = await fetch(

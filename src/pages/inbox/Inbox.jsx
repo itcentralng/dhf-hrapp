@@ -36,6 +36,7 @@ const Inbox = () => {
               title={item.title}
               text={item.text}
               id={item.message_id}
+              created_at={item.created_at}
               type="inbox"
             />
           </Box>
