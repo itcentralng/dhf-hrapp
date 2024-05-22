@@ -15,7 +15,7 @@ import DownloadDocumentArea from "./DownloadDocumentArea";
 import CommentsArea from "./CommentsArea";
 import ConfirmationPopup from "./ConfirmationPopup";
 import { Overlay } from "../styled-components/styledBox";
-import { useGetInboxQuery } from "../state/api";
+import { useGetInboxQuery, useGetOutboxQuery } from "../state/api";
 
 const ViewMessage = () => {
   const navigate = useNavigate();
@@ -23,32 +23,49 @@ const ViewMessage = () => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [currentMessage, setCurrentMessage] = useState(null);
 
-  // const user = useSelector((state) => state.user.user);
-  const { data: mailInfo, isLoading, isError } = useGetInboxQuery();
+  const user = useSelector((state) => state.user.user);
+  const {
+    data: inboxData,
+    isLoading: inboxLoading,
+    error: inboxError,
+  } = useGetInboxQuery();
+  const {
+    data: outboxData,
+    isLoading: outboxLoading,
+    error: outboxError,
+  } = useGetOutboxQuery();
 
   const pathParts = location.pathname.split("/");
   const pathId = parseInt(pathParts[pathParts.length - 1], 10);
+  const isInbox = location.pathname.includes("/inbox");
 
   useEffect(() => {
-    if (mailInfo && mailInfo.messages) {
-      const message = mailInfo.messages.find(
-        (item) => item.message_id === pathId
-      );
-      setCurrentMessage(message);
-    }
-  }, [location.pathname, mailInfo]);
+    const fetchMessage = () => {
+      if (isInbox && inboxData && inboxData.messages) {
+        const message = inboxData.messages.find(
+          (item) => item.message_id === pathId
+        );
+        setCurrentMessage(message);
+      } else if (!isInbox && outboxData && outboxData.messages) {
+        const message = outboxData.messages.find(
+          (item) => item.message_id === pathId
+        );
+        setCurrentMessage(message);
+      }
+    };
+    fetchMessage();
+  }, [location.pathname, inboxData, outboxData, isInbox]);
 
   useEffect(() => {
-    let interval = setInterval(() => {
+    const interval = setInterval(() => {
       setShowDeletePopup(false);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
 
   const handleNextMessage = (id) => {
-    const currentIndex = mailInfo.messages.findIndex(
-      (item) => item.message_id === id
-    );
+    const messages = isInbox ? inboxData.messages : outboxData.messages;
+    const currentIndex = messages.findIndex((item) => item.message_id === id);
 
     if (currentIndex === -1) {
       alert("Page does not exist");
@@ -56,8 +73,8 @@ const ViewMessage = () => {
     }
 
     const nextIndex = currentIndex + 1;
-    if (nextIndex < mailInfo.messages.length) {
-      const nextMessage = mailInfo.messages[nextIndex];
+    if (nextIndex < messages.length) {
+      const nextMessage = messages[nextIndex];
       navigate(`/message/${nextMessage.message_id}`);
     } else {
       alert("No more messages available");
@@ -65,9 +82,8 @@ const ViewMessage = () => {
   };
 
   const handlePrevMessage = (id) => {
-    const currentIndex = mailInfo.messages.findIndex(
-      (item) => item.message_id === id
-    );
+    const messages = isInbox ? inboxData.messages : outboxData.messages;
+    const currentIndex = messages.findIndex((item) => item.message_id === id);
 
     if (currentIndex === -1) {
       alert("Page does not exist");
@@ -76,23 +92,23 @@ const ViewMessage = () => {
 
     const prevIndex = currentIndex - 1;
     if (prevIndex >= 0) {
-      const prevMessage = mailInfo.messages[prevIndex];
+      const prevMessage = messages[prevIndex];
       navigate(`/message/${prevMessage.message_id}`);
     } else {
       alert("No previous messages available");
     }
   };
 
-  if (isLoading) {
+  if (inboxLoading || outboxLoading) {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
+  if (inboxError || outboxError) {
     return <div>Error loading messages.</div>;
   }
 
   if (!currentMessage) {
-    return <div>Message not found</div>;
+    return null; // or a loading spinner/message
   }
 
   return (
@@ -181,7 +197,9 @@ const ViewMessage = () => {
                         fontWeight: 500,
                       }}
                     >
-                      {currentMessage.sender}
+                      {currentMessage.type === "sent"
+                        ? `${user.first_name} ${user.last_name}`
+                        : currentMessage.sender}
                     </Typography>
                     <EmailLabel emailType={currentMessage.label} />
                   </Box>
@@ -195,9 +213,7 @@ const ViewMessage = () => {
                       alignItems: "center",
                     }}
                   >
-                    {location.pathname.includes("inbox")
-                      ? "to me"
-                      : "to Admin Office"}{" "}
+                    {isInbox ? "to me" : "to Admin Office"}{" "}
                     <KeyboardArrowRight sx={{ fontSize: ".7rem" }} />
                   </Typography>
                 </Box>
