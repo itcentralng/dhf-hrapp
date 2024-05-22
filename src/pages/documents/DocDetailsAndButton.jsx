@@ -9,6 +9,7 @@ import {
 import { useShareForm } from "../../components/context/ShareFormContext";
 const DocDetailsAndButton = ({ documentTitle, setDocumentTitle }) => {
   const { setDisplayShareForm } = useShareForm();
+  const currentDate = new Date().toDateString();
   const changeHandler = (event) => {
     setDocumentTitle(event.target.value);
   };
@@ -47,7 +48,7 @@ const DocDetailsAndButton = ({ documentTitle, setDocumentTitle }) => {
               width: "500px",
             }}
           />
-          <SubHeadingText>created 08/05/23</SubHeadingText>
+          <SubHeadingText>{`created on ${currentDate}`}</SubHeadingText>
         </Stack>
       </Stack>
       <FilledButton
