@@ -37,6 +37,13 @@ const DocDetailsAndButton = ({ documentTitle, setDocumentTitle }) => {
             type="text"
             onChange={changeHandler}
             value={documentTitle}
+            disabled={
+              documentTitle == "Study Leave" ||
+              documentTitle == "Evaluation Form" ||
+              documentTitle == "Early Closure"
+                ? true
+                : false
+            }
             style={{
               border: "none",
               backgroundColor: "white",
