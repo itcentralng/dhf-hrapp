@@ -5,20 +5,20 @@ import PDFIcon from "../assets/xlsIcon.svg"; // Corrected icon paths
 import DOCXIcon from "../assets/xlsIcon.svg";
 import XLSIcon from "../assets/xlsIcon.svg";
 
-const DownloadDocumentArea = ({ file, sender }) => {
+const DownloadDocumentArea = ({ file, sender, handleTemplateOpen }) => {
   if (!file) {
     return <Typography>No document available for download.</Typography>;
   }
 
-  const handleDownload = () => {
-    // const downloadLink = document.createElement("a");
-    // downloadLink.href = file;
-    // downloadLink.setAttribute("download", file.name);
-    // document.body.appendChild(downloadLink);
-    // downloadLink.click();
-    // document.body.removeChild(downloadLink);
-    console.log(file);
-  };
+  // const handleDownload = () => {
+  //   const downloadLink = document.createElement("a");
+  //   downloadLink.href = file;
+  //   downloadLink.setAttribute("download", file.name);
+  //   document.body.appendChild(downloadLink);
+  //   downloadLink.click();
+  //   document.body.removeChild(downloadLink);
+  //   console.log(file);
+  // };
 
   const renderFileIcon = () => {
     switch (file.type) {
@@ -84,7 +84,7 @@ const DownloadDocumentArea = ({ file, sender }) => {
           mb: "20px",
         }}
         variant="standard"
-        onClick={handleDownload}
+        onClick={handleTemplateOpen}
       >
         Download
       </Button>

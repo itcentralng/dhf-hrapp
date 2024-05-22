@@ -26,6 +26,11 @@ const TableBodyText = styled(Typography)({
 const UserListRow = ({ user, checked }) => {
   const { editUser, deleteUser } = useUserList();
   const [singleChecked, setSingleChecked] = React.useState(checked);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleDelete = () => {
+    deleteUser(user.user_id);
+  };
 
   const handleChange = (event) => {
     setSingleChecked(event.target.checked);
@@ -77,7 +82,7 @@ const UserListRow = ({ user, checked }) => {
         <IconButton onClick={() => editUser(user.user_id)}>
           <EditOutlinedIcon sx={{ color: "rgba(85, 85, 85, 0.6)" }} />
         </IconButton>
-        <IconButton onClick={() => deleteUser(user.user_id)}>
+        <IconButton disabled={loading} onClick={handleDelete}>
           <DeleteOutline sx={{ color: "rgba(85, 85, 85, 0.6)" }} />
         </IconButton>
       </Stack>

@@ -18,4 +18,15 @@ const Overlay = styled(Box)({
   alignItems: "center",
 });
 
-export { CenteredBox, Overlay };
+const TemplateContainer = styled(Box)({
+  // display: "flex",
+  // alignItems: "center",
+  // justifyContent: "center",
+  // bgcolor: "white",
+  // width: "90%",
+  // top: 0,
+  // // height: "100%",
+  // // overflowY: "scroll",
+});
+
+export { CenteredBox, Overlay, TemplateContainer };

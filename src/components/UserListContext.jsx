@@ -1,18 +1,22 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 import { useGetUsersQuery } from "../state/api";
+import { DeleteUserRequest } from "../state/DeleteUser";
 const UserListContext = createContext();
 
 export const useUserList = () => useContext(UserListContext);
 
 export const UserListProvider = ({ children }) => {
   const { data: users, error, isLoading } = useGetUsersQuery();
+  // console.log(users?.find((user) => user.user_id == 1).user_id);
 
   const [usersList, setUsersList] = useState(users);
   //we defined registerStaff here cos we need to display the form when editUser is triggered from UserListRow
   const [openEdit, setOpenEdit] = React.useState(false);
   const handleEditOpen = () => setOpenEdit(true);
   const handleEditClose = () => setOpenEdit(false);
+  const [loading, setLoading] = useState(false);
+
   // const [passport, setPassport] = useState();
   // const [resume, setResume] = useState();
   // const [signature, setSignature] = useState();
@@ -40,8 +44,8 @@ export const UserListProvider = ({ children }) => {
   };
 
   const editUser = (staffId) => {
-    const userToEdit = usersList?.find((user) => user.user_id == staffId);
-    console.log(userToEdit);
+    const userToEdit = usersList?.find((user) => user.user_id === staffId);
+    console.log(userToEdit.phone);
     setFormData({
       name: `${userToEdit?.first_name} ${userToEdit?.last_name}` || "",
       department: userToEdit?.department || "",
@@ -69,9 +73,12 @@ export const UserListProvider = ({ children }) => {
   };
 
   const deleteUser = (staffId) => {
-    setUsersList(usersList?.filter((item) => item.user_id !== staffId));
-    setShowDeleteConfirmation(true);
+    const userToDelete = usersList?.find(
+      (user) => user.user_id === staffId
+    ).user_id;
+    DeleteUserRequest(userToDelete, setLoading, setShowDeleteConfirmation);
   };
+
   const removeUserForEdit = (staffId) => {
     setUsersList(usersList?.filter((item) => item.user_id !== staffId));
   };

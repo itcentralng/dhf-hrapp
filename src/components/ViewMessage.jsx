@@ -7,21 +7,25 @@ import {
   MoreVert,
   Person,
 } from "@mui/icons-material";
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Modal, Stack, Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import EmailLabel from "./EmailLabel";
 import DownloadDocumentArea from "./DownloadDocumentArea";
 import CommentsArea from "./CommentsArea";
 import ConfirmationPopup from "./ConfirmationPopup";
-import { Overlay } from "../styled-components/styledBox";
+import { Overlay, TemplateContainer } from "../styled-components/styledBox";
 import { useGetInboxQuery, useGetOutboxQuery } from "../state/api";
+import StudyLeave from "../pages/documents/StudyLeave";
 
 const ViewMessage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [currentMessage, setCurrentMessage] = useState(null);
+  const [openTemplate, setOpenTemplate] = React.useState(false);
+  const handleTemplateOpen = () => setOpenTemplate(true);
+  const handleTemplateClose = () => setOpenTemplate(false);
 
   const user = useSelector((state) => state.user.user);
   const {
@@ -274,6 +278,7 @@ const ViewMessage = () => {
           <DownloadDocumentArea
             file={currentMessage.document}
             sender={currentMessage.sender}
+            handleTemplateOpen={handleTemplateOpen}
           />
           {currentMessage.comments.map((comment) => (
             <Box
@@ -316,6 +321,24 @@ const ViewMessage = () => {
           <ConfirmationPopup text={"Message has successfully been deleted."} />
         </Overlay>
       )}
+      <Modal
+        open={openTemplate}
+        onClose={handleTemplateClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          overflowY: "scroll",
+          height: "100%",
+          position: "absolute",
+        }}
+      >
+        <Box sx={{ height: "100%", width: "80%" }}>
+          <StudyLeave sx={{ mt: "100px" }} />
+        </Box>
+      </Modal>
     </>
   );
 };
