@@ -16,6 +16,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { SubmitStudyLeave } from "../state/studyLeaveRequests";
 import { SubmitBlankDocument } from "../state/BlankDocument";
 import { useShareForm } from "./context/ShareFormContext";
+import { PerformEvaluation } from "../state/EvaluationTemplateRequest";
+import { SubmitEarlyClosure } from "../state/EarlyClosureRequest";
 
 const Text = styled(Typography)({
   fontFamily: "DM Sans",
@@ -25,7 +27,12 @@ const Text = styled(Typography)({
   margin: "10px 0px 10px 0px",
 });
 
-const ShareWithForm = ({ documentType, formData, documentFile }) => {
+const ShareWithForm = ({
+  documentType,
+  formData,
+  documentFile,
+  selectedRating,
+}) => {
   const { setDisplayShareForm } = useShareForm();
   const [loading, setLoading] = React.useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -40,8 +47,34 @@ const ShareWithForm = ({ documentType, formData, documentFile }) => {
       label: additionalInfo, // Replace with actual text if needed
     };
 
+    const sendEvaluationData = {
+      recipients: selectedUsers.map((user) => user.email),
+      title: documentType,
+      evaluationItems: formData,
+      label: additionalInfo,
+      ratings: selectedRating,
+    };
+
+    const sendStudyLeaveData = {
+      recipients: selectedUsers.map((user) => user.email),
+      title: documentType,
+      studyLeaveData: formData,
+      label: additionalInfo,
+    };
+
+    const sendEarlyClosure = {
+      recipients: selectedUsers.map((user) => user.email),
+      title: documentType,
+      earlyClosureData: formData,
+      label: additionalInfo,
+    };
+
     if (documentType === "Study Leave") {
-      await SubmitStudyLeave(sendFormData, setLoading);
+      await SubmitStudyLeave(sendStudyLeaveData, setLoading);
+    } else if (documentType === "Evaluation Form") {
+      await PerformEvaluation(sendEvaluationData, setLoading);
+    } else if (documentType === "Early Closure") {
+      await SubmitEarlyClosure(sendEarlyClosure, setLoading);
     } else {
       await SubmitBlankDocument(sendFormData, setLoading);
     }

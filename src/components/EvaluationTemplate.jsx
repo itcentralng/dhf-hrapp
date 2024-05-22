@@ -68,11 +68,11 @@ const EvaluationTemplate = ({ data }) => {
   const [documentTitle, setDocumentTitle] = useState("Evaluation Form");
   const [formData, dispatch] = useReducer(reducer, initialState);
   const { displayShareForm } = useShareForm();
-  const handleRatingChange = (event, id, rating) => {
+  const handleRatingChange = (event, description, rating) => {
     console.log(selectedRating);
     setSelectedRating((prevSelected) => ({
       ...prevSelected,
-      [id]: rating,
+      [description]: rating,
     }));
   };
   const handleInputChange = (e) => {
@@ -214,37 +214,49 @@ const EvaluationTemplate = ({ data }) => {
                   <StyledTableCell align="center">
                     <Radio
                       checked={selectedRating[item.id] === "5"}
-                      onChange={(e) => handleRatingChange(e, item.id, "5")}
+                      onChange={(e) =>
+                        handleRatingChange(e, item.description, "5")
+                      }
                     />
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <Radio
                       checked={selectedRating[item.id] === "4"}
-                      onChange={(e) => handleRatingChange(e, item.id, "4")}
+                      onChange={(e) =>
+                        handleRatingChange(e, item.description, "4")
+                      }
                     />
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <Radio
                       checked={selectedRating[item.id] === "3"}
-                      onChange={(e) => handleRatingChange(e, item.id, "3")}
+                      onChange={(e) =>
+                        handleRatingChange(e, item.description, "3")
+                      }
                     />
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <Radio
                       checked={selectedRating[item.id] === "2"}
-                      onChange={(e) => handleRatingChange(e, item.id, "2")}
+                      onChange={(e) =>
+                        handleRatingChange(e, item.description, "2")
+                      }
                     />
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <Radio
                       checked={selectedRating[item.id] === "1"}
-                      onChange={(e) => handleRatingChange(e, item.id, "1")}
+                      onChange={(e) =>
+                        handleRatingChange(e, item.description, "1")
+                      }
                     />
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <Radio
                       checked={selectedRating[item.id] === "na"}
-                      onChange={(e) => handleRatingChange(e, item.id, "na")}
+                      onChange={(e) =>
+                        handleRatingChange(e, item.description, "na")
+                      }
                     />
                   </StyledTableCell>
                   <StyledTableCell>
@@ -339,7 +351,11 @@ const EvaluationTemplate = ({ data }) => {
       </Container>
       {displayShareForm && (
         <Overlay>
-          <ShareWithForm documentType={documentTitle} />
+          <ShareWithForm
+            documentType={documentTitle}
+            formData={formData}
+            selectedRating={selectedRating}
+          />
         </Overlay>
       )}
     </>
