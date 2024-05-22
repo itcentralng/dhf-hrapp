@@ -34,7 +34,7 @@ const routes = [
     element: <Sent />,
   },
   {
-    path: "/sent/messages/:id",
+    path: "/sent/message/:id",
     element: <ViewMessage />,
   },
   {

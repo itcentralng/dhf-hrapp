@@ -1,4 +1,4 @@
-// Sent.jsx
+import React from "react";
 import { Box } from "@mui/material";
 import EmailRow from "../../components/EmailRow";
 import { useSelector } from "react-redux";
@@ -23,24 +23,24 @@ const Sent = () => {
     }
   }
 
+  const sentMessages = mailInfo[messageType].filter(
+    (item) => item.sender === `${user.first_name} ${user.last_name}`
+  );
+
   return (
     <Box>
-      {mailInfo[messageType]
-        .filter(
-          (item) => `${user.first_name} ${user.last_name}` === item.sender
-        )
-        .map((item) => (
-          <Box key={item.message_id}>
-            <EmailRow
-              recipient={item.recipients.join(", ")}
-              label={item.label}
-              title={item.title}
-              text={item.text}
-              id={item.message_id}
-              type="sent"
-            />
-          </Box>
-        ))}
+      {sentMessages.map((item) => (
+        <Box key={item.message_id}>
+          <EmailRow
+            recipient={item.recipients.join(", ")}
+            label={item.label}
+            title={item.title}
+            text={item.text}
+            id={item.message_id}
+            type="sent"
+          />
+        </Box>
+      ))}
     </Box>
   );
 };
