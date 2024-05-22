@@ -32,8 +32,8 @@ const ViewMessage = () => {
       const pathId = parseInt(pathParts[pathParts.length - 1], 10);
 
       const message = mailInfo.find((item) => item.message_id === pathId);
-      setCurrentMessage(message);
       console.log(currentMessage);
+      setCurrentMessage(message);
     }
   }, [location.pathname, mailInfo]);
 
