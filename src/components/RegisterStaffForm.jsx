@@ -47,6 +47,7 @@ const RegisterStaffForm = ({
   setRegisterStaff,
   setShowRegConfirmation,
   setShowEditConfirmation,
+  handleModalClose,
 }) => {
   const {
     updateUsersList,
@@ -129,8 +130,9 @@ const RegisterStaffForm = ({
       if (!response.data) {
         console.log("User was not created");
       } else {
+        handleModalClose();
         setShowRegConfirmation(true);
-        setRegisterStaff(false);
+
         console.log("user has been created successfully");
       }
     } catch (error) {
@@ -169,20 +171,14 @@ const RegisterStaffForm = ({
         padding: "15px 30px",
         fontFamily: "DM sans",
         bgcolor: "white",
-        ml: "-300px",
-        mt: expanded ? "-300px" : "100px",
       }}
     >
-      <Stack direction="row" sx={{ justifyContent: "space-between" }}>
-        <HeadingText>
-          {formType === "register staff"
-            ? "Register New Staff"
-            : "Edit Existing Staff"}
-        </HeadingText>
-        <IconButton onClick={closeForm}>
-          <CloseIcon />
-        </IconButton>
-      </Stack>
+      <HeadingText>
+        {formType === "register staff"
+          ? "Register New Staff"
+          : "Edit Existing Staff"}
+      </HeadingText>
+
       <br />
       <SubHeadingText sx={{ mt: "-25px" }}>
         {formType === "register staff"
@@ -198,6 +194,9 @@ const RegisterStaffForm = ({
           "& .MuiSelect-icon": {
             color: "primary.main",
           },
+          height: "400px",
+          overflowX: "hidden",
+          overflowY: "scroll",
         }}
       >
         <Grid container spacing={1} sx={{ mt: "0px" }}>

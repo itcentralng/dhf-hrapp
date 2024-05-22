@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, Menu, MenuItem, Stack, Typography, styled } from "@mui/material";
 import { FilledButton } from "../../styled-components/styledButtons";
 import RegisterStaffForm from "../../components/RegisterStaffForm";
@@ -9,7 +10,7 @@ import { useUserList } from "../../components/UserListContext";
 import ConfirmationPopup from "../../components/ConfirmationPopup";
 import { Overlay } from "../../styled-components/styledBox";
 import RegisterOfficeForm from "../../components/RegisterOfficeForm";
-
+import Modal from "@mui/material/modal";
 const Users = () => {
   // const [registerStaff, setRegisterStaff] = useState(false);
   const {
@@ -25,7 +26,12 @@ const Users = () => {
   const [showOfficeConf, setShowOfficeConf] = useState(false);
   const [registerOffice, setRegisterOffice] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const options = ["New Staff", "New Office"];
+  //modal
+  const [open, setOpen] = React.useState(false);
+  const handleModalOpen = () => setOpen(true);
+  const handleModalClose = () => setOpen(false);
+
+  // const options = ["New Staff", "New Office"];
   useEffect(() => {
     let interval = setInterval(() => {
       setShowRegConfirmation(false);
@@ -54,12 +60,13 @@ const Users = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleClickr = () => {
+  const handleClick = () => {
     setFormData({});
-    setRegisterStaff(true);
+    handleModalOpen();
+    // setRegisterStaff(true);
   };
 
-  const handleClick = (event) => {
+  const handleClickr = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -67,17 +74,17 @@ const Users = () => {
     setAnchorEl(null);
   };
 
-  const handleSelect = (option) => {
-    handleClose();
-    switch (option) {
-      case "New Staff":
-        setFormData({});
-        setRegisterStaff(true);
-        break;
-      case "New Office":
-        setRegisterOffice(true);
-    }
-  };
+  // const handleSelect = (option) => {
+  //   handleClose();
+  //   switch (option) {
+  //     case "New Staff":
+  //       setFormData({});
+  //       setRegisterStaff(true);
+  //       break;
+  //     case "New Office":
+  //       setRegisterOffice(true);
+  //   }
+  // };
 
   return (
     <>
@@ -98,7 +105,7 @@ const Users = () => {
           </Typography>
           <FilledButton onClick={handleClick}>Register</FilledButton>
         </Stack>
-        <Menu
+        {/* <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={handleClose}
@@ -108,7 +115,7 @@ const Users = () => {
               {option}
             </MenuItem>
           ))}
-        </Menu>
+        </Menu> */}
         <StaffListView />
         <Typography
           sx={{
@@ -135,16 +142,21 @@ const Users = () => {
         </Typography>
         <HOSListView />
       </Box>
-      {registerStaff && (
-        <Overlay>
-          <RegisterStaffForm
-            formType="register staff"
-            setRegisterStaff={setRegisterStaff}
-            setShowRegConfirmation={setShowRegConfirmation}
-            setShowEditConfirmation={setShowEditConfirmation}
-          />
-        </Overlay>
-      )}
+      <Modal
+        open={open}
+        onClose={handleModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <RegisterStaffForm
+          formType="register staff"
+          setRegisterStaff={setRegisterStaff}
+          setShowRegConfirmation={setShowRegConfirmation}
+          setShowEditConfirmation={setShowEditConfirmation}
+          handleModalClose={handleModalClose}
+        />
+      </Modal>
       {editStaffForm && (
         <Overlay>
           <RegisterStaffForm

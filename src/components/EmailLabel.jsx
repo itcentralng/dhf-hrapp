@@ -21,6 +21,7 @@ const EmailLabel = ({ emailType }) => {
           fontWeight: 500,
           fontSize: "14px",
           lineHeight: "11px",
+          textAlign: "center",
         }}
       >
         {emailType}

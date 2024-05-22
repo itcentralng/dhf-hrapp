@@ -68,7 +68,12 @@ const Reports = () => {
             Select a report from the list below to view or download.
           </SubHeadingText>
         </Stack>
-        <FilledButton onClick={handleClick}>Generate Report</FilledButton>
+        <FilledButton
+          onClick={handleClick}
+          sx={{ height: "40px", width: "auto", px: "10px" }}
+        >
+          Generate Report
+        </FilledButton>
       </Stack>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         {options.map((option, index) => (
