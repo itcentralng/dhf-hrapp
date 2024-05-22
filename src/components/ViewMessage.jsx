@@ -23,16 +23,17 @@ const ViewMessage = () => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [currentMessage, setCurrentMessage] = useState(null);
 
-  const user = useSelector((state) => state.user.user);
-  const { data: mailInfo, isLoading, error } = useGetInboxQuery();
+  // const user = useSelector((state) => state.user.user);
+  const { data: mailInfo, isLoading, isError } = useGetInboxQuery();
+
+  const pathParts = location.pathname.split("/");
+  const pathId = parseInt(pathParts[pathParts.length - 1], 10);
 
   useEffect(() => {
-    if (mailInfo && Array.isArray(mailInfo)) {
-      const pathParts = location.pathname.split("/");
-      const pathId = parseInt(pathParts[pathParts.length - 1], 10);
-
-      const message = mailInfo.find((item) => item.message_id === pathId);
-      console.log(currentMessage);
+    if (mailInfo && mailInfo.messages) {
+      const message = mailInfo.messages.find(
+        (item) => item.message_id === pathId
+      );
       setCurrentMessage(message);
     }
   }, [location.pathname, mailInfo]);
@@ -45,7 +46,9 @@ const ViewMessage = () => {
   }, []);
 
   const handleNextMessage = (id) => {
-    const currentIndex = mailInfo.findIndex((item) => item.message_id === id);
+    const currentIndex = mailInfo.messages.findIndex(
+      (item) => item.message_id === id
+    );
 
     if (currentIndex === -1) {
       alert("Page does not exist");
@@ -53,8 +56,8 @@ const ViewMessage = () => {
     }
 
     const nextIndex = currentIndex + 1;
-    if (nextIndex < mailInfo.length) {
-      const nextMessage = mailInfo[nextIndex];
+    if (nextIndex < mailInfo.messages.length) {
+      const nextMessage = mailInfo.messages[nextIndex];
       navigate(`/message/${nextMessage.message_id}`);
     } else {
       alert("No more messages available");
@@ -62,7 +65,9 @@ const ViewMessage = () => {
   };
 
   const handlePrevMessage = (id) => {
-    const currentIndex = mailInfo.findIndex((item) => item.message_id === id);
+    const currentIndex = mailInfo.messages.findIndex(
+      (item) => item.message_id === id
+    );
 
     if (currentIndex === -1) {
       alert("Page does not exist");
@@ -71,7 +76,7 @@ const ViewMessage = () => {
 
     const prevIndex = currentIndex - 1;
     if (prevIndex >= 0) {
-      const prevMessage = mailInfo[prevIndex];
+      const prevMessage = mailInfo.messages[prevIndex];
       navigate(`/message/${prevMessage.message_id}`);
     } else {
       alert("No previous messages available");
@@ -82,12 +87,12 @@ const ViewMessage = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
+  if (isError) {
     return <div>Error loading messages.</div>;
   }
 
   if (!currentMessage) {
-    return null; // or a loading spinner/message
+    return <div>Message not found</div>;
   }
 
   return (
@@ -176,9 +181,7 @@ const ViewMessage = () => {
                         fontWeight: 500,
                       }}
                     >
-                      {currentMessage.type === "sent"
-                        ? `${user.first_name} ${user.last_name}`
-                        : currentMessage.sender}
+                      {currentMessage.sender}
                     </Typography>
                     <EmailLabel emailType={currentMessage.label} />
                   </Box>
@@ -234,10 +237,10 @@ const ViewMessage = () => {
           sx={{ padding: "55px 75px", width: "70%" }}
         >
           <DownloadDocumentArea
-            file={currentMessage?.document}
-            sender={currentMessage?.sender}
+            file={currentMessage.document}
+            sender={currentMessage.sender}
           />
-          {currentMessage?.comments.map((comment) => (
+          {currentMessage.comments.map((comment) => (
             <Box
               sx={{
                 display: "flex",
@@ -270,7 +273,7 @@ const ViewMessage = () => {
               </Typography>
             </Box>
           ))}
-          <CommentsArea comments={currentMessage?.comments} />
+          <CommentsArea comments={currentMessage.comments} />
         </Stack>
       </Box>
       {showDeletePopup && (

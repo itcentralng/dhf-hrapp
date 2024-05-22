@@ -11,12 +11,21 @@ const Sent = () => {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching sent data</div>;
 
-  // Check if mailInfo is an object and has messages array
-  const messages = Array.isArray(mailInfo?.messages) ? mailInfo.messages : [];
+  let messageType = "messages";
+
+  if (mailInfo) {
+    if (mailInfo.study_leaves && mailInfo.study_leaves.length > 0) {
+      messageType = "study_leaves";
+    } else if (mailInfo.early_closures && mailInfo.early_closures.length > 0) {
+      messageType = "early_closures";
+    } else if (mailInfo.evaluations && mailInfo.evaluations.length > 0) {
+      messageType = "evaluations";
+    }
+  }
 
   return (
     <Box>
-      {messages
+      {mailInfo[messageType]
         .filter(
           (item) => `${user.first_name} ${user.last_name}` === item.sender
         )
