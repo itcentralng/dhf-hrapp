@@ -65,7 +65,7 @@ export const UserListProvider = ({ children }) => {
       additionalNotes: userToEdit?.additionalNotes || "",
       staffId: userToEdit?.staffId || "",
     });
-    setEditStaffForm(true);
+    handleEditOpen();
   };
 
   const deleteUser = (staffId) => {
@@ -96,6 +96,7 @@ export const UserListProvider = ({ children }) => {
         removeUserForEdit,
         handleEditOpen,
         handleEditClose,
+        openEdit,
       }}
     >
       {children}
