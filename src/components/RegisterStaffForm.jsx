@@ -44,7 +44,7 @@ const UploadButton = styled(Button)({
 
 const RegisterStaffForm = ({
   formType,
-  setRegisterStaff,
+
   setShowRegConfirmation,
   setShowEditConfirmation,
   handleModalClose,
@@ -54,7 +54,7 @@ const RegisterStaffForm = ({
     formData,
     setFormData,
     removeUserForEdit,
-    setEditStaffForm,
+    handleEditClose,
   } = useUserList();
   const [expanded, setExpanded] = useState(false);
   const [passport, setPassport] = useState();
@@ -149,13 +149,8 @@ const RegisterStaffForm = ({
     removeUserForEdit(editedUser.staffId);
     updateUsersList((prevList) => [...prevList, editedUser]);
     setFormData({});
+    handleEditClose();
     setShowEditConfirmation(true);
-    setEditStaffForm(false);
-  };
-
-  const closeForm = () => {
-    setRegisterStaff(false);
-    setEditStaffForm(false);
   };
 
   const handleToggleExpand = () => {

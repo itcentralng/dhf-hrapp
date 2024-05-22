@@ -10,8 +10,9 @@ export const UserListProvider = ({ children }) => {
 
   const [usersList, setUsersList] = useState(users);
   //we defined registerStaff here cos we need to display the form when editUser is triggered from UserListRow
-  const [registerStaff, setRegisterStaff] = useState(false);
-  const [editStaffForm, setEditStaffForm] = useState(false);
+  const [openEdit, setOpenEdit] = React.useState(false);
+  const handleEditOpen = () => setOpenEdit(true);
+  const handleEditClose = () => setOpenEdit(false);
   // const [passport, setPassport] = useState();
   // const [resume, setResume] = useState();
   // const [signature, setSignature] = useState();
@@ -82,8 +83,6 @@ export const UserListProvider = ({ children }) => {
         updateUsersList,
         editUser,
         deleteUser,
-        registerStaff,
-        setRegisterStaff,
         formData,
         setFormData,
         // passport,
@@ -92,11 +91,11 @@ export const UserListProvider = ({ children }) => {
         // setResume,
         // signature,
         // setSignature,
-        editStaffForm,
-        setEditStaffForm,
         showDeleteConfirmation,
         setShowDeleteConfirmation,
         removeUserForEdit,
+        handleEditOpen,
+        handleEditClose,
       }}
     >
       {children}

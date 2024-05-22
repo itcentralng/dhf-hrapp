@@ -14,17 +14,17 @@ import Modal from "@mui/material/modal";
 const Users = () => {
   // const [registerStaff, setRegisterStaff] = useState(false);
   const {
-    registerStaff,
-    setRegisterStaff,
     setFormData,
     editStaffForm,
     showDeleteConfirmation,
     setShowDeleteConfirmation,
+    handleEditClose,
+    openEdit,
   } = useUserList();
   const [showRegConfirmation, setShowRegConfirmation] = useState(false);
   const [showEditConfirmation, setShowEditConfirmation] = useState(false);
-  const [showOfficeConf, setShowOfficeConf] = useState(false);
-  const [registerOffice, setRegisterOffice] = useState(false);
+  // const [showOfficeConf, setShowOfficeConf] = useState(false);
+  // const [registerOffice, setRegisterOffice] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   //modal
   const [open, setOpen] = React.useState(false);
@@ -151,23 +151,33 @@ const Users = () => {
       >
         <RegisterStaffForm
           formType="register staff"
-          setRegisterStaff={setRegisterStaff}
           setShowRegConfirmation={setShowRegConfirmation}
           setShowEditConfirmation={setShowEditConfirmation}
           handleModalClose={handleModalClose}
         />
       </Modal>
       {editStaffForm && (
-        <Overlay>
+        <Modal
+          open={openEdit}
+          onClose={handleEditClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <RegisterStaffForm
             formType="edit user"
+            onClose={handleEditClose}
             setRegisterStaff={setRegisterStaff}
             setShowRegConfirmation={setShowRegConfirmation}
             setShowEditConfirmation={setShowEditConfirmation}
           />
-        </Overlay>
+        </Modal>
       )}
-      {registerOffice && (
+      {/* {registerOffice && (
         <Overlay>
           <RegisterOfficeForm
             setShowEditConfirmation={setShowEditConfirmation}
@@ -175,7 +185,7 @@ const Users = () => {
             setRegisterOffice={setRegisterOffice}
           />
         </Overlay>
-      )}
+      )} */}
       {showRegConfirmation && (
         <ConfirmationPopup
           text={
