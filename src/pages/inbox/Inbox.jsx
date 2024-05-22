@@ -10,9 +10,21 @@ const Inbox = () => {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching inbox data</div>;
 
+  let messageType = "messages";
+
+  if (mailInfo) {
+    if (mailInfo.study_leaves && mailInfo.study_leaves.length > 0) {
+      messageType = "study_leaves";
+    } else if (mailInfo.early_closures && mailInfo.early_closures.length > 0) {
+      messageType = "early_closures";
+    } else if (mailInfo.evaluations && mailInfo.evaluations.length > 0) {
+      messageType = "evaluations";
+    }
+  }
+
   return (
     <Box>
-      {mailInfo.messages
+      {mailInfo[messageType]
         ?.filter(
           (item) => `${user.first_name} ${user.last_name}` !== item.sender
         )
