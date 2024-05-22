@@ -10,7 +10,7 @@ export const UserListProvider = ({ children }) => {
 
   const [usersList, setUsersList] = useState(users);
   //we defined registerStaff here cos we need to display the form when editUser is triggered from UserListRow
-  const [openEdit, setOpenEdit] = React.useState(true);
+  const [openEdit, setOpenEdit] = React.useState(false);
   const handleEditOpen = () => setOpenEdit(true);
   const handleEditClose = () => setOpenEdit(false);
   // const [passport, setPassport] = useState();
@@ -43,10 +43,10 @@ export const UserListProvider = ({ children }) => {
     const userToEdit = usersList?.find((user) => user.user_id == staffId);
     console.log(userToEdit);
     setFormData({
-      name: userToEdit?.name || "",
+      name: `${userToEdit?.first_name} ${userToEdit?.last_name}` || "",
       department: userToEdit?.department || "",
       title: userToEdit?.title || "",
-      phoneNumber: userToEdit?.phoneNumber || "",
+      phoneNumber: userToEdit?.phone || "",
       role: userToEdit?.role || "",
       email: userToEdit?.email || "",
       clockIn: userToEdit?.clockIn || "",
@@ -94,8 +94,9 @@ export const UserListProvider = ({ children }) => {
         showDeleteConfirmation,
         setShowDeleteConfirmation,
         removeUserForEdit,
+        handleEditOpen,
+        handleEditClose,
         openEdit,
-        setOpenEdit,
       }}
     >
       {children}

@@ -8,8 +8,8 @@ import HOSListView from "../../components/HOSListView";
 import StaffListView from "../../components/StaffListView";
 import { useUserList } from "../../components/UserListContext";
 import ConfirmationPopup from "../../components/ConfirmationPopup";
-import { Overlay } from "../../styled-components/styledBox";
-import RegisterOfficeForm from "../../components/RegisterOfficeForm";
+// import { Overlay } from "../../styled-components/styledBox";
+// import RegisterOfficeForm from "../../components/RegisterOfficeForm";
 import Modal from "@mui/material/modal";
 const Users = () => {
   // const [registerStaff, setRegisterStaff] = useState(false);
@@ -20,6 +20,7 @@ const Users = () => {
     setShowDeleteConfirmation,
     openEdit,
     setOpenEdit,
+    handleEditClose,
   } = useUserList();
   const [showRegConfirmation, setShowRegConfirmation] = useState(false);
   const [showEditConfirmation, setShowEditConfirmation] = useState(false);
@@ -156,26 +157,25 @@ const Users = () => {
           handleModalClose={handleModalClose}
         />
       </Modal>
-      {editStaffForm && (
-        <Modal
-          open={openEdit}
-          onClose={() => setOpenEdit(false)}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <RegisterStaffForm
-            formType="edit user"
-            setRegisterStaff={setRegisterStaff}
-            setShowRegConfirmation={setShowRegConfirmation}
-            setShowEditConfirmation={setShowEditConfirmation}
-          />
-        </Modal>
-      )}
+
+      <Modal
+        open={openEdit}
+        onClose={handleEditClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <RegisterStaffForm
+          formType="edit user"
+          setShowRegConfirmation={setShowRegConfirmation}
+          setShowEditConfirmation={setShowEditConfirmation}
+        />
+      </Modal>
+
       {/* {registerOffice && (
         <Overlay>
           <RegisterOfficeForm
