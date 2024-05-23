@@ -1,4 +1,12 @@
-import { Box, Menu, MenuItem, Stack, Typography, styled } from "@mui/material";
+import {
+  Box,
+  Menu,
+  MenuItem,
+  Modal,
+  Stack,
+  Typography,
+  styled,
+} from "@mui/material";
 import { FilledButton } from "../../styled-components/styledButtons";
 import { useState } from "react";
 import {
@@ -7,20 +15,11 @@ import {
 } from "../../styled-components/StyledText";
 import GenerateReportCalendar from "../../components/GenerateReportCalender";
 import ReportListItem from "../../components/ReportListItem";
-const Overlay = styled(Box)({
-  zIndex: 10,
-  position: "fixed",
-  top: 0,
-  backgroundColor: "rgba(0, 0, 0, 0.25)",
-  width: "100%",
-  height: "100vh",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-});
 
 const Reports = () => {
-  const [showCalendar, setShowCalendar] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleModalOpen = () => setOpen(true);
+  const handleModalClose = () => setOpen(false);
   const [calendarTitle, setCalendarTitle] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
   const options = [
@@ -54,7 +53,7 @@ const Reports = () => {
         setCalendarTitle("Movement");
         break;
     }
-    setShowCalendar(true);
+    handleModalOpen();
   };
   return (
     <>
@@ -83,14 +82,17 @@ const Reports = () => {
         ))}
       </Menu>
       <ReportListItem />
-      {showCalendar && (
-        <Overlay>
-          <GenerateReportCalendar
-            setShowCalendar={setShowCalendar}
-            title={calendarTitle}
-          />
-        </Overlay>
-      )}
+      <Modal
+        open={open}
+        onClose={handleModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <GenerateReportCalendar
+          title={calendarTitle}
+          handleModalClose={handleModalClose}
+        />
+      </Modal>
     </>
   );
 };
