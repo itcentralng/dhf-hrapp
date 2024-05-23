@@ -582,7 +582,7 @@ const StudyLeave = () => {
                 >
                   <InputLabel id="lastStudyPeriod" sx={{ fontWeight: 800 }}>
                     When was your last period of Study (If any) and what was
-                    achieved? (Please attach a copy of your last result.)
+                    achieved?
                   </InputLabel>
                   <textarea
                     id="lastStudyPeriod"

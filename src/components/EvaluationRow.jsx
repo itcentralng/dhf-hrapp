@@ -10,7 +10,15 @@ const StyledText = styled(Typography)({
   fontWeight: 400,
 });
 
-const EmailRow = ({ recipient, label, title, text, id, type, created_at }) => {
+const EvaluationRow = ({
+  recipient,
+  label,
+  title,
+  text,
+  id,
+  type,
+  created_at,
+}) => {
   const [substring, setSubstring] = useState("");
   const [currentTime, setCurrentTime] = useState("");
   const [isChecked, setIsChecked] = useState(false);
@@ -101,7 +109,7 @@ const EmailRow = ({ recipient, label, title, text, id, type, created_at }) => {
           alignItems: "center",
           cursor: "pointer",
         }}
-        onClick={() => navigate(`/${type}/message/${id}`)}
+        onClick={() => navigate(`/${type}/study_leave/${id}`)}
       >
         <Typography
           sx={{ fontWeight: 400, ml: "1%", mr: "5%", minWidth: "10%" }}
@@ -141,4 +149,4 @@ const EmailRow = ({ recipient, label, title, text, id, type, created_at }) => {
   );
 };
 
-export default EmailRow;
+export default EvaluationRow;

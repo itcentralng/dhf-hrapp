@@ -5,20 +5,25 @@ import PDFIcon from "../assets/xlsIcon.svg"; // Corrected icon paths
 import DOCXIcon from "../assets/xlsIcon.svg";
 import XLSIcon from "../assets/xlsIcon.svg";
 
-const DownloadDocumentArea = ({ file, sender, handleTemplateOpen }) => {
+const DownloadDocumentArea = ({
+  file,
+  sender,
+  handleTemplateOpen,
+  messageType,
+}) => {
   if (!file) {
     return <Typography>No document available for download.</Typography>;
   }
 
-  // const handleDownload = () => {
-  //   const downloadLink = document.createElement("a");
-  //   downloadLink.href = file;
-  //   downloadLink.setAttribute("download", file.name);
-  //   document.body.appendChild(downloadLink);
-  //   downloadLink.click();
-  //   document.body.removeChild(downloadLink);
-  //   console.log(file);
-  // };
+  const handleDownload = () => {
+    const downloadLink = document.createElement("a");
+    downloadLink.href = file;
+    downloadLink.setAttribute("download", file.name);
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    console.log(file);
+  };
 
   const renderFileIcon = () => {
     switch (file.type) {
@@ -84,9 +89,17 @@ const DownloadDocumentArea = ({ file, sender, handleTemplateOpen }) => {
           mb: "20px",
         }}
         variant="standard"
-        onClick={handleTemplateOpen}
+        onClick={
+          messageType === "study_leave" ||
+          messageType === "evaluations" ||
+          messageType === "early_closures"
+            ? handleTemplateOpen
+            : handleDownload
+        }
       >
-        Download
+        {messageType === "study_leave" || messageType === "evaluations"
+          ? "Open"
+          : "Download"}
       </Button>
     </Box>
   );
@@ -100,6 +113,8 @@ DownloadDocumentArea.propTypes = {
     size: PropTypes.string.isRequired,
   }),
   sender: PropTypes.string.isRequired,
+  handleTemplateOpen: PropTypes.func.isRequired,
+  messageType: PropTypes.string.isRequired,
 };
 
 export default DownloadDocumentArea;

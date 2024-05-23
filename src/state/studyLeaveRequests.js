@@ -23,30 +23,30 @@ export const SubmitStudyLeave = async (formData, setLoading) => {
     applicant_signature: formData.studyLeaveData.applicantSign,
   };
   console.log(applicantData);
-  // try {
-  //   const response = await fetch(
-  //     `${import.meta.env.VITE_APP_API_URL}/messages/submit-study-leave`,
-  //     {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //       body: JSON.stringify(applicantData),
-  //     }
-  //   );
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_API_URL}/messages/submit-study-leave`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(applicantData),
+      }
+    );
 
-  //   if (!response.ok) {
-  //     alert("Failed to submit study leave! Please try again.");
-  //     throw new Error("Failed to submit study leave");
-  //   }
+    if (!response.ok) {
+      alert("Failed to submit study leave! Please try again.");
+      throw new Error("Failed to submit study leave");
+    }
 
-  //   console.log("Study leave sent successfully");
-  // } catch (error) {
-  //   console.error("Error sending study leave: ", error.message);
-  // } finally {
-  //   setLoading(false);
-  // }
+    console.log("Study leave sent successfully");
+  } catch (error) {
+    console.error("Error sending study leave: ", error.message);
+  } finally {
+    setLoading(false);
+  }
 };
 
 export const HosRespondStudyLeave = async (formData, setLoading) => {

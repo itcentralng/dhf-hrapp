@@ -15,6 +15,9 @@ import { ShareFormProvider } from "./components/context/ShareFormContext";
 import EvaluationTemplate from "./components/EvaluationTemplate";
 import EarlyClosureTemplate from "./components/EarlyClosureTemplate";
 import StudyLeave from "./pages/documents/StudyLeave";
+import ViewStudyLeave from "./components/ViewStudyLeave";
+import ViewEvaluations from "./components/ViewStaffEvaluation";
+import ViewClosures from "./components/ViewEarlyClosure";
 
 const routes = [
   {
@@ -28,6 +31,18 @@ const routes = [
   {
     path: "/inbox/message/:id",
     element: <ViewMessage />,
+  },
+  {
+    path: "/inbox/study_leave/:id",
+    element: <ViewStudyLeave />,
+  },
+  {
+    path: "/inbox/evaluations/:id",
+    element: <ViewEvaluations />,
+  },
+  {
+    path: "/inbox/early_closures/:id",
+    element: <ViewClosures />,
   },
   {
     path: "/sent",
