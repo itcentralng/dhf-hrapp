@@ -63,7 +63,7 @@ const reducer = (state, action) => {
   }
 };
 
-const EvaluationTemplate = ({ data }) => {
+const EvaluationTemplate = ({ currentMessage }) => {
   const [selectedRating, setSelectedRating] = useState({});
   const [documentTitle, setDocumentTitle] = useState("Evaluation Form");
   const [formData, dispatch] = useReducer(reducer, initialState);

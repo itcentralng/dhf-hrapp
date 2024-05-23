@@ -13,11 +13,22 @@ import {
 import { HeadingText, SubHeadingText } from "../styled-components/StyledText";
 import { FilledButton } from "../styled-components/styledButtons";
 import CloseIcon from "@mui/icons-material/Close";
-import { SubmitStudyLeave } from "../state/studyLeaveRequests";
+import {
+  SubmitStudyLeave,
+  HosRespondStudyLeave,
+  AdminRespondStudyLeave,
+  HrRespondStudyLeave,
+} from "../state/studyLeaveRequests";
 import { SubmitBlankDocument } from "../state/BlankDocument";
 import { useShareForm } from "./context/ShareFormContext";
 import { PerformEvaluation } from "../state/EvaluationTemplateRequest";
-import { SubmitEarlyClosure } from "../state/EarlyClosureRequest";
+import {
+  AdminSubmitEarlyClosure,
+  HosSubmitEarlyClosure,
+  HrsSubmitEarlyClosure,
+  SubmitEarlyClosure,
+} from "../state/EarlyClosureRequest";
+import { useSelector } from "react-redux";
 
 const Text = styled(Typography)({
   fontFamily: "DM Sans",
@@ -37,6 +48,9 @@ const ShareWithForm = ({
   const [loading, setLoading] = React.useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [additionalInfo, setAdditionalInfo] = React.useState("");
+  const user = useSelector((state) => state.user.user);
+  const pathParts = location.pathname.split("/");
+  const pathId = parseInt(pathParts[pathParts.length - 1], 10);
 
   const handleSubmit = async () => {
     const sendFormData = {
@@ -70,11 +84,31 @@ const ShareWithForm = ({
     };
 
     if (documentType === "Study Leave") {
-      await SubmitStudyLeave(sendStudyLeaveData, setLoading);
+      if (user.role === "staff") {
+        await SubmitStudyLeave(sendStudyLeaveData, setLoading);
+      } else if (user.role === "hos") {
+        await HosRespondStudyLeave(sendStudyLeaveData, setLoading);
+      } else if (user.role === "admin") {
+        await AdminRespondStudyLeave(sendStudyLeaveData, setLoading);
+      } else if (user.role === "hr") {
+        await HrRespondStudyLeave(sendStudyLeaveData, setLoading);
+      } else {
+        alert("Role does not exist");
+      }
     } else if (documentType === "Evaluation Form") {
       await PerformEvaluation(sendEvaluationData, setLoading);
     } else if (documentType === "Early Closure") {
-      await SubmitEarlyClosure(sendEarlyClosure, setLoading);
+      if (user.role === "staff") {
+        await SubmitEarlyClosure(sendEarlyClosure, setLoading);
+      } else if (user.role === "hos") {
+        await HosSubmitEarlyClosure(sendEarlyClosure, setLoading);
+      } else if (user.role === "hr") {
+        await HrsSubmitEarlyClosure(sendEarlyClosure, setLoading);
+      } else if (user.role === "admin") {
+        await AdminSubmitEarlyClosure(sendEarlyClosure, setLoading);
+      } else {
+        alert("Role does not exist");
+      }
     } else {
       await SubmitBlankDocument(sendFormData, setLoading);
     }

@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable react/no-unescaped-entities */
 import {
   Container,
   Paper,
@@ -9,10 +9,10 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import DocDetailsAndButton from "../pages/documents/DocDetailsAndButton";
-import { Overlay } from "../styled-components/styledBox";
-import ShareWithForm from "./ShareWithForm";
-import { useShareForm } from "./context/ShareFormContext";
+import { Overlay } from "../../styled-components/styledBox";
+import ShareWithForm from "../../components/ShareWithForm";
+import DocDetailsAndButton from "./DocDetailsAndButton";
+import { useShareForm } from "../../components/context/ShareFormContext";
 
 const P = styled("p")({
   marginTop: "auto",
@@ -21,91 +21,32 @@ const P = styled("p")({
 const CustomInput = styled(TextField)({
   padding: "5px 5px 0px 10px",
 });
-const EarlyClosureTemplate = ({ currentMessage }) => {
+const CreateEarlyClosure = () => {
   const user = useSelector((state) => state.user.user);
   const [documentTitle, setDocumentTitle] = useState("Early Closure");
   const { displayShareForm } = useShareForm();
 
   const [formData, setFormData] = useState({
-    time: "",
-    teacher:
-      currentMessage?.teacher === "no response"
-        ? ""
-        : currentMessage?.teacher || "",
-    class:
-      currentMessage?.clas === "no response" ? "" : currentMessage?.clas || "",
-    section:
-      currentMessage?.section === "no response"
-        ? ""
-        : currentMessage?.section || "",
-    permission:
-      currentMessage?.permission === "no response"
-        ? ""
-        : currentMessage?.permission || "",
-    period:
-      currentMessage?.period === "no response"
-        ? ""
-        : currentMessage?.period || "",
-    reason:
-      currentMessage?.reason === "no response"
-        ? ""
-        : currentMessage?.reason || "",
-    date:
-      currentMessage?.teacher_date === "no response"
-        ? ""
-        : currentMessage?.teacher_date || "",
-    signature:
-      currentMessage?.teacher_signature === "no response"
-        ? ""
-        : currentMessage?.teacher_signature || "",
-    headsComment:
-      currentMessage?.head_comment === "no response"
-        ? ""
-        : currentMessage?.head_comment || "",
-    headsDate:
-      currentMessage?.head_date === "no response"
-        ? ""
-        : currentMessage?.head_date || "",
-    headsSignature:
-      currentMessage?.head_signature === "no response"
-        ? ""
-        : currentMessage?.head_signature || "",
-    appraiserName:
-      currentMessage?.appraiser_name === "no response"
-        ? ""
-        : currentMessage?.appraiser_name || "",
-    post:
-      currentMessage?.appraiser_post === "no response"
-        ? ""
-        : currentMessage?.appraiser_post || "",
-    hroComment:
-      currentMessage?.hro_comment === "no response"
-        ? ""
-        : currentMessage?.hro_comment || "",
-    hroDate:
-      currentMessage?.hro_date === "no response"
-        ? ""
-        : currentMessage?.hro_date || "",
-    hroSignature:
-      currentMessage?.hro_signature === "no response"
-        ? ""
-        : currentMessage?.hro_signature || "",
-    directorsComment:
-      currentMessage?.director_comment === "no response"
-        ? ""
-        : currentMessage?.director_comment || "",
-    directorsDate:
-      currentMessage?.director_date === "no response"
-        ? ""
-        : currentMessage?.director_date || "",
-    directorsSignature:
-      currentMessage?.director_signature === "no response"
-        ? ""
-        : currentMessage?.director_signature || "",
-    schoolStamp:
-      currentMessage?.school_stamp === "no response"
-        ? ""
-        : currentMessage?.school_stamp || "",
+    teacher: "",
+    class: "",
+    section: "",
+    permission: "",
+    period: "",
+    reason: "",
+    date: "",
+    signature: "",
+    headsComment: "",
+    headsDate: "",
+    headsSignature: "",
+    appraiserName: "",
+    post: "",
+    hroComment: "",
+    hroDate: "",
+    hroSignature: "",
+    directorsComment: "",
+    directorsDate: "",
+    directorsSignature: "",
+    schoolStamp: "",
   });
 
   const handleChange = (e) => {
@@ -124,20 +65,10 @@ const EarlyClosureTemplate = ({ currentMessage }) => {
       <Container sx={{ my: "20px" }}>
         <Paper elevation={2}>
           <Stack gap={2} sx={{ padding: "50px" }}>
-            <Stack direction="row" justifyContent={"space-between"}>
+            <Stack direction="row" justifyContent={"center"}>
               <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                 EARLY CLOSURE/MOVEMENT/LATE ARRIVAL
               </Typography>
-              <Stack direction="row">
-                <P style={{ marginTop: "auto" }}>Time:</P>
-                <CustomInput
-                  disabled={user.role != "staff"}
-                  variant="standard"
-                  name="time"
-                  value={formData.time}
-                  onChange={handleChange}
-                />
-              </Stack>
             </Stack>
 
             <Stack direction="row">
@@ -359,4 +290,4 @@ const EarlyClosureTemplate = ({ currentMessage }) => {
   );
 };
 
-export default EarlyClosureTemplate;
+export default CreateEarlyClosure;

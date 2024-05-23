@@ -8,7 +8,7 @@ export const useUserList = () => useContext(UserListContext);
 
 export const UserListProvider = ({ children }) => {
   const { data: users, error, isLoading } = useGetUsersQuery();
-  // console.log(users?.find((user) => user.user_id == 1).user_id);
+  // console.log(users?.find((user) => user.id == 1).id);
 
   const [usersList, setUsersList] = useState(users);
   //we defined registerStaff here cos we need to display the form when editUser is triggered from UserListRow
@@ -39,13 +39,12 @@ export const UserListProvider = ({ children }) => {
     staffId: "",
   });
 
-  const updateUsersList = (newList) => {
-    setUsersList(newList);
-  };
+  // const updateUsersList = (newList) => {
+  //   setUsersList(newList);
+  // };
 
   const editUser = (staffId) => {
-    const userToEdit = usersList?.find((user) => user.user_id === staffId);
-    console.log(userToEdit.phone);
+    const userToEdit = users?.find((user) => user.id === staffId);
     setFormData({
       name: `${userToEdit?.first_name} ${userToEdit?.last_name}` || "",
       department: userToEdit?.department || "",
@@ -53,8 +52,8 @@ export const UserListProvider = ({ children }) => {
       phoneNumber: userToEdit?.phone || "",
       role: userToEdit?.role || "",
       email: userToEdit?.email || "",
-      clockIn: userToEdit?.clockIn || "",
-      clockOut: userToEdit?.clockOut || "",
+      clockIn: userToEdit?.resumption_time || "",
+      clockOut: userToEdit?.closing_time || "",
       gender: userToEdit?.gender || "",
       /**issue: HTML specs in this case passport, resume, and signature,
        * won't allow you to set a value on file inputs.
@@ -68,26 +67,25 @@ export const UserListProvider = ({ children }) => {
       homeAddress: userToEdit?.homeAddress || "",
       additionalNotes: userToEdit?.additionalNotes || "",
       staffId: userToEdit?.staffId || "",
+      user_id: userToEdit?.id,
     });
     handleEditOpen();
   };
 
   const deleteUser = (staffId) => {
-    const userToDelete = usersList?.find(
-      (user) => user.user_id === staffId
-    ).user_id;
+    const userToDelete = users?.find((user) => user.id === staffId).id;
     DeleteUserRequest(userToDelete, setLoading, setShowDeleteConfirmation);
   };
 
   const removeUserForEdit = (staffId) => {
-    setUsersList(usersList?.filter((item) => item.user_id !== staffId));
+    setUsersList(usersList?.filter((item) => item.id !== staffId));
   };
 
   return (
     <UserListContext.Provider
       value={{
         usersList,
-        updateUsersList,
+        // updateUsersList,
         editUser,
         deleteUser,
         formData,

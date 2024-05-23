@@ -405,10 +405,9 @@ const Layout = () => {
           }}
         >
           <FilledShadowButton
-            sx={{ gap: 1 }}
+            sx={{ gap: 1, display: user.role === "hr" ? "none" : "block" }}
             onClick={() => navigate("/createdocument")}
           >
-            {/* Will navigate it later on to the create templates page */}
             <CreateOutlined />
             Create
           </FilledShadowButton>
@@ -434,7 +433,7 @@ const navItems = [
     name: "Inbox",
     link: "/inbox",
     icon: <FolderOutlined />,
-    newNotification: 4,
+    // newNotification: 4,
     role: "admin, hr, hos, staff",
   },
   {

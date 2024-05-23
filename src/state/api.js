@@ -17,6 +17,7 @@ const baseQuery = fetchBaseQuery({
 
 export const api = createApi({
   baseQuery,
+  refetchOnReconnect: true,
   reducerPath: "hrApi",
   endpoints: (build) => ({
     getUsers: build.query({

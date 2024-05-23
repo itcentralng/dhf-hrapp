@@ -29,7 +29,7 @@ const UserListRow = ({ user, checked }) => {
   const [loading, setLoading] = React.useState(false);
 
   const handleDelete = () => {
-    deleteUser(user.user_id);
+    deleteUser(user.id);
   };
 
   const handleChange = (event) => {
@@ -61,13 +61,18 @@ const UserListRow = ({ user, checked }) => {
         <Box
           onClick={() => {
             alert("ID copied to clipboard");
-            navigator.clipboard.writeText(user.user_id);
+            navigator.clipboard.writeText(user.id);
           }}
-          sx={{ cursor: "pointer" }}
+          sx={{
+            cursor: "pointer",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          <TableBodyText sx={{ width: "40px" }}>{user.user_id}</TableBodyText>
+          <TableBodyText sx={{ width: "40px" }}>{user.id}</TableBodyText>
           <ContentCopyRoundedIcon
-            sx={{ width: "12px", height: "12px", color: "#6E7079", ml: "10px" }}
+            sx={{ width: "12px", height: "12px", color: "#6E7079" }}
           />
         </Box>
       </Stack>
@@ -79,7 +84,7 @@ const UserListRow = ({ user, checked }) => {
           alignItems: "center",
         }}
       >
-        <IconButton onClick={() => editUser(user.user_id)}>
+        <IconButton onClick={() => editUser(user.id)}>
           <EditOutlinedIcon sx={{ color: "rgba(85, 85, 85, 0.6)" }} />
         </IconButton>
         <IconButton disabled={loading} onClick={handleDelete}>

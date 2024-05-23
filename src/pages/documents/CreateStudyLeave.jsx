@@ -1,14 +1,13 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 import { Box, Grid, InputLabel, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import DocDetailsAndButton from "./DocDetailsAndButton";
-import { Overlay } from "../../styled-components/styledBox";
-import ShareWithForm from "../../components/ShareWithForm";
 import { useShareForm } from "../../components/context/ShareFormContext";
+import ShareWithForm from "../../components/ShareWithForm";
+import { Overlay } from "../../styled-components/styledBox";
+import DocDetailsAndButton from "./DocDetailsAndButton";
 
 const validationSchema = yup.object({
   // part a
@@ -60,7 +59,7 @@ const validationSchema = yup.object({
   directorsDate: yup.string().required("Required"),
 });
 
-const StudyLeave = ({ currentMessage }) => {
+const CreateStudyLeave = () => {
   const user = useSelector((state) => state.user.user);
   const [documentTitle, setDocumentTitle] = useState("Study Leave");
   const { displayShareForm } = useShareForm();
@@ -68,184 +67,55 @@ const StudyLeave = ({ currentMessage }) => {
   const formik = useFormik({
     initialValues: {
       // part a
-      fullname:
-        currentMessage?.applicant_name === "no response"
-          ? ""
-          : currentMessage?.applicant_name || "",
-      designation:
-        currentMessage?.designation === "no response"
-          ? ""
-          : currentMessage?.designation || "",
+      fullname: "",
+      designation: "",
       appointmentDate: "",
-      yearsServed:
-        currentMessage?.years_served === "no response"
-          ? ""
-          : currentMessage?.years_served || "",
-      instituteOfStudy:
-        currentMessage?.institute_of_study === "no response"
-          ? ""
-          : currentMessage?.institute_of_study || "",
-      courseOfStudy:
-        currentMessage?.course_of_study === "no response"
-          ? ""
-          : currentMessage?.course_of_study || "",
-      areaOfStudy:
-        currentMessage?.area_of_study === "no response"
-          ? ""
-          : currentMessage?.area_of_study || "Diploma",
-      durationOfStudy:
-        currentMessage?.duration_of_study === "no response"
-          ? ""
-          : currentMessage?.duration_of_study || "",
-      startDate:
-        currentMessage?.start_date === "no response"
-          ? ""
-          : currentMessage?.start_date || "",
-      endDate:
-        currentMessage?.end_date === "no response"
-          ? ""
-          : currentMessage?.end_date || "",
-      educationStatus:
-        currentMessage?.education_status === "no response"
-          ? ""
-          : currentMessage?.education_status || "",
-      yearObtained:
-        currentMessage?.year_obtained === "no response"
-          ? ""
-          : currentMessage?.year_obtained || "",
-      purpose:
-        currentMessage?.purpose_of_study === "no response"
-          ? ""
-          : currentMessage?.purpose_of_study || "",
-      lastStudyPeriod:
-        currentMessage?.last_study_period === "no response"
-          ? ""
-          : currentMessage?.last_study_period || "",
-      pursureIndication:
-        currentMessage?.pursue_indication === "no response"
-          ? ""
-          : currentMessage?.pursue_indication || "",
-      applicantSign:
-        currentMessage?.applicant_signature === "no response"
-          ? ""
-          : currentMessage?.applicant_signature || "",
-      date:
-        currentMessage?.applicant_date === "no response"
-          ? ""
-          : currentMessage?.applicant_date || "",
+      yearsServed: "",
+      instituteOfStudy: "",
+      courseOfStudy: "",
+      areaOfStudy: "Diploma",
+      durationOfStudy: "",
+      startDate: "",
+      endDate: "",
+      educationStatus: "",
+      yearObtained: "",
+      purpose: "",
+      lastStudyPeriod: "",
+      pursureIndication: "",
+      applicantSign: "",
+      date: "",
       //   part b
-      relevance:
-        currentMessage?.study_relevance === "no response"
-          ? ""
-          : currentMessage?.study_relevance || "",
-      applicantJobDesc:
-        currentMessage?.applicant_job_desc === "no response"
-          ? ""
-          : currentMessage?.applicant_job_desc || "",
-      dutiesToCover:
-        currentMessage?.duties_to_cover === "no response"
-          ? ""
-          : currentMessage?.duties_to_cover || "",
-      remarks:
-        currentMessage?.remark === "no response"
-          ? ""
-          : currentMessage?.remark || "",
-      headTeacherName:
-        currentMessage?.head_name === "no response"
-          ? ""
-          : currentMessage?.head_name || "",
-      headPost:
-        currentMessage?.head_post === "no response"
-          ? ""
-          : currentMessage?.head_post || "",
-      headSign:
-        currentMessage?.head_signature === "no response"
-          ? ""
-          : currentMessage?.head_signature || "",
-      headDate:
-        currentMessage?.head_date === "no response"
-          ? ""
-          : currentMessage?.head_date || "",
+      relevance: "",
+      applicantJobDesc: "",
+      dutiesToCover: "",
+      remarks: "",
+      headTeacherName: "",
+      headPost: "",
+      headSign: "",
+      headDate: "",
       //   part c
-      salaryCost:
-        currentMessage?.salary_cost === "no response"
-          ? ""
-          : currentMessage?.salary_cost || "",
-      accountantName:
-        currentMessage?.accountant_name === "no response"
-          ? ""
-          : currentMessage?.accountant_name || "",
-      accountantPost:
-        currentMessage?.accountant_post === "no response"
-          ? ""
-          : currentMessage?.accountant_post || "",
-      accountantSign:
-        currentMessage?.accountant_signature === "no response"
-          ? ""
-          : currentMessage?.accountant_signature || "",
-      accountantDate:
-        currentMessage?.account_date === "no response"
-          ? ""
-          : currentMessage?.account_date || "",
+      salaryCost: "",
+      accountantName: "",
+      accountantPost: "",
+      accountantSign: "",
+      accountantDate: "",
       //   part d
-      approvalGrant:
-        currentMessage?.approval_grant === "no response"
-          ? ""
-          : currentMessage?.approval_grant || "",
-      grantWithPay:
-        currentMessage?.grant_with_pay === "no response"
-          ? ""
-          : currentMessage?.grant_with_pay || "",
-      grantedProgram:
-        currentMessage?.granted_program === "no response"
-          ? ""
-          : currentMessage?.granted_program || "",
-      yearsAfterResumption:
-        currentMessage?.years_after_resumption === "no response"
-          ? ""
-          : currentMessage?.years_after_resumption || "",
-      certificateUpgrade:
-        currentMessage?.certificate_upgrade === "no response"
-          ? ""
-          : currentMessage?.certificate_upgrade || "",
+      approvalGrant: "",
+      grantWithPay: "",
+      grantedProgram: "",
+      yearsAfterResumption: "",
+      certificateUpgrade: "",
       grantConfirmation: "",
-      beneficiaryNumber:
-        currentMessage?.beneficiary_number === "no response"
-          ? ""
-          : currentMessage?.beneficiary_number || "",
-      applicantNotSupported:
-        currentMessage?.applicant_not_supported === "no response"
-          ? ""
-          : currentMessage?.applicant_not_supported || "",
-      hrName:
-        currentMessage?.hr_name === "no response"
-          ? ""
-          : currentMessage?.hr_name || "",
-      hrPost:
-        currentMessage?.hr_post === "no response"
-          ? ""
-          : currentMessage?.hr_post || "",
-      hrSign:
-        currentMessage?.hr_signature === "no response"
-          ? ""
-          : currentMessage?.hr_signature || "",
-      hrDate:
-        currentMessage?.hr_date === "no response"
-          ? ""
-          : currentMessage?.hr_date || "",
+      beneficiaryNumber: "",
+      applicantNotSupported: "",
+      hrName: "",
+      hrPost: "",
+      hrSign: "",
+      hrDate: "",
       //   part e
-      approvalStatus:
-        currentMessage?.approval_status === "no response"
-          ? ""
-          : currentMessage?.approval_status || "",
-      directorsSign:
-        currentMessage?.director_signature === "no response"
-          ? ""
-          : currentMessage?.director_signature || "",
-      directorsDate:
-        currentMessage?.director_date === "no response"
-          ? ""
-          : currentMessage?.director_date || "",
+      approvalStatus: "",
+      directorsSign: "",
+      directorsDate: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -1402,4 +1272,4 @@ const StudyLeave = ({ currentMessage }) => {
   );
 };
 
-export default StudyLeave;
+export default CreateStudyLeave;

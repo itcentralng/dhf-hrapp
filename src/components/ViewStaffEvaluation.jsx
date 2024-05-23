@@ -226,7 +226,7 @@ const ViewEvaluations = () => {
                       ? `${user.first_name} ${user.last_name}`
                       : currentMessage.applicant_name}
                   </Typography>
-                  <EmailLabel emailType="Study Leave" />
+                  <EmailLabel emailType="Staff Evaluation" />
                 </Box>
                 <Typography
                   variant="body2"
@@ -238,7 +238,7 @@ const ViewEvaluations = () => {
                     alignItems: "center",
                   }}
                 >
-                  {isInbox ? "to me >" : `to ${currentMessage.applicant_name}`}{" "}
+                  {isInbox ? "to me >" : `to next office >`}{" "}
                 </Typography>
               </Box>
               <Typography
@@ -281,7 +281,6 @@ const ViewEvaluations = () => {
               handleTemplateOpen={handleTemplateOpen}
               messageType="evaluations" // Set messageType to "evaluations"
             />
-            <Typography>Hello</Typography>
           </Box>
 
           {currentMessage.comments.map((comment) => (
@@ -340,7 +339,10 @@ const ViewEvaluations = () => {
         }}
       >
         <Box sx={{ height: "100%", width: "80%" }}>
-          <EvaluationTemplate sx={{ mt: "100px" }} />
+          <EvaluationTemplate
+            sx={{ mt: "100px" }}
+            currentMessage={currentMessage}
+          />
         </Box>
       </Modal>
     </>

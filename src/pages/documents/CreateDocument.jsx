@@ -102,14 +102,14 @@ const CreateDocument = () => {
                 >
                   {template.name}
                 </Typography>
-                <Typography
+                {/* <Typography
                   sx={{
                     color: "#5A626C",
                     fontFamily: "urbanist",
                     fontWeight: 300,
                     fontSize: "8.5px",
                   }}
-                >{`Last edited ${template.lastEditedDate}`}</Typography>
+                >{`Last edited ${template.lastEditedDate}`}</Typography> */}
               </Stack>
             </Stack>
           </Box>

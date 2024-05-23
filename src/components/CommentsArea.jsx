@@ -19,6 +19,10 @@ const CommentsArea = () => {
 
   const location = useLocation();
 
+  const url = location.pathname;
+  const parts = url.split("/");
+  const messageType = parts[2];
+
   useEffect(() => {
     const interval = setInterval(() => setShowSuccessPopUp(false), 2000);
     return () => clearInterval(interval);
@@ -42,7 +46,7 @@ const CommentsArea = () => {
       const commentItems = {
         text: commentData,
         message_id: intMessageId,
-        type: "message",
+        type: messageType,
       };
       const response = await fetch(
         `${import.meta.env.VITE_APP_API_URL}/messages/comment/`,
@@ -68,6 +72,7 @@ const CommentsArea = () => {
       console.error("Error: ", error);
       alert("Failed to send comment! Please try again");
     } finally {
+      console.log(accessToken);
       setLoading(false);
     }
   };
@@ -110,7 +115,7 @@ const CommentsArea = () => {
               fullWidth
               multiline
               minRows={9}
-              placeholder="Your Leave request has been approved"
+              placeholder="Type in your comment"
               onChange={handleChange}
               value={commentData}
             />

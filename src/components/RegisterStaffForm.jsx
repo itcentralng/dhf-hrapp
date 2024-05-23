@@ -23,7 +23,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // import usersList from "../data/usersList";
 import { useUserList } from "./UserListContext";
 import CloseIcon from "@mui/icons-material/Close";
-import { useRegisterStaffMutation } from "../state/api";
+import { useGetUsersQuery, useRegisterStaffMutation } from "../state/api";
+import { editUserRequest } from "../state/editUser";
 const FileUploadContainer = styled(Box)({
   display: "flex",
   flexDirection: "row",
@@ -44,13 +45,12 @@ const UploadButton = styled(Button)({
 
 const RegisterStaffForm = ({
   formType,
-
   setShowRegConfirmation,
   setShowEditConfirmation,
   handleModalClose,
 }) => {
   const {
-    updateUsersList,
+    // updateUsersList,
     formData,
     setFormData,
     removeUserForEdit,
@@ -143,14 +143,29 @@ const RegisterStaffForm = ({
     }
   };
 
-  const handleEdit = (event) => {
+  const handleEdit = async (event) => {
     event.preventDefault();
-    const editedUser = { ...formData };
-    removeUserForEdit(editedUser.staffId);
-    updateUsersList((prevList) => [...prevList, editedUser]);
-    setFormData({});
-    handleEditClose();
-    setShowEditConfirmation(true);
+
+    const newStaff = {
+      ...formData,
+      staffId: generateRandomID(),
+      passport: passport,
+      resume: resume,
+      signature: signature,
+    };
+    const fullName = newStaff.name ? newStaff.name.split(" ") : ["", ""];
+    const firstName = fullName[0];
+    const lastName = fullName.slice(1).join(" ");
+
+    const formDataItem = {
+      first_name: firstName,
+      last_name: lastName,
+      email: newStaff.email,
+      phone: newStaff.phoneNumber,
+      role: newStaff.role,
+      user_id: formData.user_id,
+    };
+    editUserRequest(formDataItem, setLoading);
   };
 
   const handleToggleExpand = () => {
@@ -261,7 +276,14 @@ const RegisterStaffForm = ({
               onChange={handleChange}
             />
           </Grid>
-          <Grid item xs={6} sx={{ padding: "10px" }}>
+          <Grid
+            item
+            xs={6}
+            sx={{
+              padding: "10px",
+              display: formType === "register staff" ? "block" : "none",
+            }}
+          >
             <InputLabel>Password </InputLabel>
             <TextField
               fullWidth
@@ -516,7 +538,7 @@ const RegisterStaffForm = ({
             onClick={handleEdit}
             sx={{ width: "163px", height: "45px", mx: "auto", mt: "5px" }}
           >
-            Edit Staff
+            {loading ? <CircularProgress size={22} /> : "Edit Staff"}
           </FilledButton>
         )}
       </FormControl>

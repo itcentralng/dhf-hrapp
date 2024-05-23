@@ -17,6 +17,7 @@ import { Overlay } from "../styled-components/styledBox";
 import { useGetInboxQuery, useGetOutboxQuery } from "../state/api";
 import StudyLeave from "../pages/documents/StudyLeave";
 import EmailLabel from "./EmailLabel";
+import EarlyClosureTemplate from "./EarlyClosureTemplate";
 
 const ViewClosures = () => {
   const navigate = useNavigate();
@@ -223,11 +224,11 @@ const ViewClosures = () => {
                   >
                     {currentMessage.type === "sent"
                       ? `${user.first_name} ${user.last_name}`
-                      : currentMessage.applicant_name}
+                      : currentMessage?.teacher}
                   </Typography>
-                  <EmailLabel emailType="Study Leave" />
+                  <EmailLabel emailType="Early Closure" />
                 </Box>
-                <Typography
+                {/* <Typography
                   variant="body2"
                   sx={{
                     fontFamily: "DM Sans",
@@ -236,9 +237,9 @@ const ViewClosures = () => {
                     display: "flex",
                     alignItems: "center",
                   }}
-                >
-                  {isInbox ? "to me >" : `to ${currentMessage.applicant_name}`}{" "}
-                </Typography>
+                  >
+                  {isInbox ? "to me >" : `to ${currentMessage.recipient_hos}`}{" "}
+                  </Typography> */}
               </Box>
               <Typography
                 variant="body2"
@@ -276,11 +277,10 @@ const ViewClosures = () => {
           <Box>
             <DownloadDocumentArea
               file={currentMessage} // Pass study leave details as file prop
-              sender={currentMessage.applicant_name} // Use applicant name as sender
+              sender={currentMessage?.teacher || ""} // Use applicant name as sender
               handleTemplateOpen={handleTemplateOpen}
               messageType="early_closures" // Set messageType to "early_closures"
             />
-            <Typography>Hello</Typography>
           </Box>
 
           {currentMessage.comments.map((comment) => (
@@ -339,7 +339,10 @@ const ViewClosures = () => {
         }}
       >
         <Box sx={{ height: "100%", width: "80%" }}>
-          <StudyLeave sx={{ mt: "100px" }} />
+          <EarlyClosureTemplate
+            sx={{ mt: "100px" }}
+            currentMessage={currentMessage}
+          />
         </Box>
       </Modal>
     </>

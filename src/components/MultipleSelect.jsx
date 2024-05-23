@@ -26,7 +26,7 @@ const UserSelect = ({ onUserSelect }) => {
           <div style={{ display: "flex", flexWrap: "wrap" }}>
             {selected.map((user) => (
               <Chip
-                key={user.user_id} // Ensure correct key
+                key={user.id} // Ensure correct key
                 label={`${user.first_name} ${user.last_name}`}
                 style={{ marginRight: 5 }}
               />
@@ -35,7 +35,7 @@ const UserSelect = ({ onUserSelect }) => {
         )}
       >
         {users?.map((user) => (
-          <MenuItem key={user.user_id} value={user}>
+          <MenuItem key={user.id} value={user}>
             {user.first_name} {user.last_name}
           </MenuItem>
         ))}

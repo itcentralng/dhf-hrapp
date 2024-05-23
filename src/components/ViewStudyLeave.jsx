@@ -280,7 +280,6 @@ const ViewStudyLeave = () => {
               handleTemplateOpen={handleTemplateOpen}
               messageType="study_leave" // Set messageType to "study_leave"
             />
-            <Typography>Hello</Typography>
           </Box>
 
           {currentMessage.comments.map((comment) => (
@@ -294,6 +293,7 @@ const ViewStudyLeave = () => {
                 borderRadius: "12px",
                 border: "#CCCCCC 0.5px solid",
                 bgcolor: "white",
+                margin: "2em 0",
               }}
             >
               <Typography
@@ -339,7 +339,7 @@ const ViewStudyLeave = () => {
         }}
       >
         <Box sx={{ height: "100%", width: "80%" }}>
-          <StudyLeave sx={{ mt: "100px" }} />
+          <StudyLeave sx={{ mt: "100px" }} currentMessage={currentMessage} />
         </Box>
       </Modal>
     </>

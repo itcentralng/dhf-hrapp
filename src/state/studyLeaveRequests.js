@@ -2,6 +2,9 @@ const accessToken = localStorage.getItem("userState")
   ? JSON.parse(localStorage.getItem("userState")).token
   : null;
 
+const pathParts = location.pathname.split("/");
+const pathId = parseInt(pathParts[pathParts.length - 1], 10);
+
 export const SubmitStudyLeave = async (formData, setLoading) => {
   // setLoading(true);
   const applicantData = {
@@ -41,7 +44,7 @@ export const SubmitStudyLeave = async (formData, setLoading) => {
       throw new Error("Failed to submit study leave");
     }
 
-    console.log("Study leave sent successfully");
+    alert("Study leave sent successfully");
   } catch (error) {
     console.error("Error sending study leave: ", error.message);
   } finally {
@@ -52,22 +55,23 @@ export const SubmitStudyLeave = async (formData, setLoading) => {
 export const HosRespondStudyLeave = async (formData, setLoading) => {
   setLoading(true);
   const hosData = {
-    study_relevance: formData.relevance,
-    applicant_job_desc: formData.applicantJobDesc,
-    duties_to_cover: formData.dutiesToCover,
-    remark: formData.remarks,
-    head_name: formData.headTeacherName,
-    head_post: formData.headPost,
-    head_date: formData.headDate,
-    head_signature: formData.headSign,
+    study_relevance: formData.studyLeaveData.relevance,
+    applicant_job_desc: formData.studyLeaveData.applicantJobDesc,
+    duties_to_cover: formData.studyLeaveData.dutiesToCover,
+    remark: formData.studyLeaveData.remarks,
+    head_name: formData.studyLeaveData.headTeacherName,
+    head_post: formData.studyLeaveData.headPost,
+    head_date: formData.studyLeaveData.headDate,
+    head_signature: formData.studyLeaveData.headSign,
+    recipient_hr: formData.recipients[0],
   };
   try {
     const response = await fetch(
       `${
         import.meta.env.VITE_APP_API_URL
-      }/respond-study-leave/{study_leave_id}/hos`,
+      }/messages/respond-study-leave/${pathId}/hos`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -77,15 +81,97 @@ export const HosRespondStudyLeave = async (formData, setLoading) => {
     );
 
     if (!response.ok) {
-      console.log(accessToken);
       alert("Failed to submit study leave! Please try again.");
       throw new Error("Failed to submit study leave");
     }
 
-    console.log("Study leave sent successfully");
+    alert("Study leave sent successfully");
   } catch (error) {
     console.error("Error sending study leave: ", error.message);
   } finally {
     setLoading(false);
   }
+};
+
+export const AdminRespondStudyLeave = async (formData, setLoading) => {
+  setLoading(true);
+  const accountantData = {
+    salary_cost: formData.studyLeaveData.relevance,
+    accountant_name: formData.studyLeaveData.applicantJobDesc,
+    accountant_post: formData.studyLeaveData.dutiesToCover,
+    account_date: formData.studyLeaveData.remarks,
+    accountant_signature: formData.studyLeaveData.headTeacherName,
+  };
+  try {
+    const response = await fetch(
+      `${
+        import.meta.env.VITE_APP_API_URL
+      }/messages/respond-study-leave/${pathId}/accountant`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(accountantData),
+      }
+    );
+
+    if (!response.ok) {
+      alert("Failed to submit study leave! Please try again.");
+      throw new Error("Failed to submit study leave");
+    }
+
+    alert("Study leave sent successfully");
+  } catch (error) {
+    console.error("Error sending study leave: ", error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+export const HrRespondStudyLeave = async (formData, setLoading) => {
+  setLoading(true);
+  const hrData = {
+    approval_grant: formData.studyLeaveData.approvalGrant,
+    grant_with_pay: formData.studyLeaveData.grantWithPay,
+    granted_program: formData.studyLeaveData.grantedProgram,
+    years_after_resumption: formData.studyLeaveData.yearsAfterResumption,
+    certificate_upgrade: formData.studyLeaveData.certificateUpgrade,
+    beneficiary_number: formData.studyLeaveData.beneficiaryNumber,
+    applicant_not_supported: formData.studyLeaveData.applicantNotSupported,
+    hr_name: formData.studyLeaveData.hrName,
+    hr_post: formData.studyLeaveData.hrPost,
+    hr_date: formData.studyLeaveData.hrDate,
+    hr_signature: formData.studyLeaveData.hrSign,
+    recipient_accountant: formData.recipients[0],
+    recipient_director: formData.recipients[0],
+  };
+  try {
+    const response = await fetch(
+      `${
+        import.meta.env.VITE_APP_API_URL
+      }/messages/respond-study-leave/${pathId}/hr`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(hrData),
+      }
+    );
+
+    if (!response.ok) {
+      alert("Failed to submit study leave! Please try again.");
+      throw new Error("Failed to submit study leave");
+    }
+
+    alert("Study leave sent successfully");
+  } catch (error) {
+    console.error("Error sending study leave: ", error.message);
+  } finally {
+    setLoading(false);
+  }
+  console.log(formData);
 };

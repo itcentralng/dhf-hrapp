@@ -109,7 +109,7 @@ const EarlyClosureRow = ({
           alignItems: "center",
           cursor: "pointer",
         }}
-        onClick={() => navigate(`/${type}/study_leave/${id}`)}
+        onClick={() => navigate(`/${type}/early_closures/${id}`)}
       >
         <Typography
           sx={{ fontWeight: 400, ml: "1%", mr: "5%", minWidth: "10%" }}

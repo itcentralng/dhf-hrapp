@@ -25,19 +25,6 @@ const DownloadDocumentArea = ({
     console.log(file);
   };
 
-  const renderFileIcon = () => {
-    switch (file.type) {
-      case "pdf":
-        return <img src={PDFIcon} alt="PDF Icon" />;
-      case "docx":
-        return <img src={DOCXIcon} alt="DOCX Icon" />;
-      case "xls":
-        return <img src={XLSIcon} alt="XLS Icon" />;
-      default:
-        return <img src={PDFIcon} alt="PDF Icon" />;
-    }
-  };
-
   return (
     <Box
       sx={{
@@ -52,7 +39,7 @@ const DownloadDocumentArea = ({
         bgcolor: "white",
       }}
     >
-      <div>{renderFileIcon()}</div>
+      {/* <div>{renderFileIcon()}</div> */}
       <Stack direction="column">
         <Typography
           sx={{
@@ -97,7 +84,9 @@ const DownloadDocumentArea = ({
             : handleDownload
         }
       >
-        {messageType === "study_leave" || messageType === "evaluations"
+        {messageType === "study_leave" ||
+        messageType === "evaluations" ||
+        messageType === "early_closures"
           ? "Open"
           : "Download"}
       </Button>

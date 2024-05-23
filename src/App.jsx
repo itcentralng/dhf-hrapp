@@ -13,11 +13,12 @@ import CreateDocument from "./pages/documents/CreateDocument";
 import BlankDocument from "./pages/documents/BlankDocument";
 import { ShareFormProvider } from "./components/context/ShareFormContext";
 import EvaluationTemplate from "./components/EvaluationTemplate";
-import EarlyClosureTemplate from "./components/EarlyClosureTemplate";
-import StudyLeave from "./pages/documents/StudyLeave";
+
 import ViewStudyLeave from "./components/ViewStudyLeave";
 import ViewEvaluations from "./components/ViewStaffEvaluation";
 import ViewClosures from "./components/ViewEarlyClosure";
+import CreateStudyLeave from "./pages/documents/CreateStudyLeave";
+import CreateEarlyClosure from "./pages/documents/CreateEarlyClosure";
 
 const routes = [
   {
@@ -53,6 +54,18 @@ const routes = [
     element: <ViewMessage />,
   },
   {
+    path: "/sent/study_leave/:id",
+    element: <ViewStudyLeave />,
+  },
+  {
+    path: "/sent/evaluations/:id",
+    element: <ViewEvaluations />,
+  },
+  {
+    path: "/sent/early_closures/:id",
+    element: <ViewClosures />,
+  },
+  {
     path: "/users",
     element: <Users />,
   },
@@ -78,11 +91,11 @@ const routes = [
   },
   {
     path: "/createdocument/earlyclosuretemplate",
-    element: <EarlyClosureTemplate />,
+    element: <CreateEarlyClosure />,
   },
   {
     path: "/createdocument/studyleave",
-    element: <StudyLeave />,
+    element: <CreateStudyLeave />,
   },
 ];
 

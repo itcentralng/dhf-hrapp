@@ -28,7 +28,7 @@ const AdminListView = () => {
     <Box sx={{ bgcolor: "white", padding: "48px 20px", borderRadius: "6px" }}>
       <UserListHeader checked={checked} handleChange={handleChange} />
       {currentItems.map((user) => (
-        <Box key={user.user_id}>
+        <Box key={user.id}>
           <UserListRow user={user} checked={checked} />
         </Box>
       ))}
