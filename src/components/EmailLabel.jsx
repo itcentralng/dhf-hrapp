@@ -12,6 +12,7 @@ const EmailLabel = ({ emailType }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        padding: ".2em .5em",
       }}
     >
       <Typography

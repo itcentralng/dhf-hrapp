@@ -10,7 +10,16 @@ const StyledText = styled(Typography)({
   fontWeight: 400,
 });
 
-const EmailRow = ({ recipient, label, title, text, id, type, created_at }) => {
+const EmailRow = ({
+  recipient,
+  label,
+  title,
+  text,
+  id,
+  type,
+  created_at,
+  sender,
+}) => {
   const [substring, setSubstring] = useState("");
   const [currentTime, setCurrentTime] = useState("");
   const [isChecked, setIsChecked] = useState(false);
@@ -40,12 +49,12 @@ const EmailRow = ({ recipient, label, title, text, id, type, created_at }) => {
   //   setIsChecked(e.target.checked);
   // };
 
-  // const calculateSubstring = () => {
-  //   const windowWidth = window.innerWidth;
-  //   let substringLength = Math.floor(windowWidth / 20);
-  //   substringLength = Math.min(substringLength, text.length); // Ensure substring length doesn't exceed text length
-  //   setSubstring(text.substring(0, substringLength));
-  // };
+  const calculateSubstring = () => {
+    const windowWidth = window.innerWidth;
+    let substringLength = Math.floor(windowWidth / 20);
+    substringLength = Math.min(substringLength, text.length); // Ensure substring length doesn't exceed text length
+    setSubstring(text.substring(0, substringLength));
+  };
 
   const updateTimeOnMount = () => {
     const date = new Date();
@@ -60,15 +69,15 @@ const EmailRow = ({ recipient, label, title, text, id, type, created_at }) => {
     setCurrentTime(`${formattedHours}:${formattedMinutes} ${ampm}`);
   };
 
-  // useEffect(() => {
-  //   calculateSubstring();
+  useEffect(() => {
+    calculateSubstring();
 
-  //   window.addEventListener("resize", calculateSubstring);
+    window.addEventListener("resize", calculateSubstring);
 
-  //   return () => {
-  //     window.removeEventListener("resize", calculateSubstring);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener("resize", calculateSubstring);
+    };
+  }, []);
 
   useState(() => {
     updateTimeOnMount();
@@ -104,13 +113,23 @@ const EmailRow = ({ recipient, label, title, text, id, type, created_at }) => {
         onClick={() => navigate(`/${type}/message/${id}`)}
       >
         <Typography
-          sx={{ fontWeight: 400, ml: "1%", mr: "5%", minWidth: "10%" }}
+          sx={{
+            fontWeight: 400,
+            ml: "1%",
+            mr: "5%",
+            width: "140px",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            overflowY: "clip",
+          }}
         >
           {`${
-            location.pathname === "/inbox" ? "From: " : "To: "
-          } ${recipient}...`}
+            location.pathname === "/inbox"
+              ? `From: ${recipient.substring(0, 10)}...`
+              : `To: ${recipient}`
+          } `}
         </Typography>
-        <EmailLabel emailType={`${title}...`} />
+        <EmailLabel emailType={`${title.substring(0, 10)}...`} />
         <Typography
           sx={{
             fontWeight: 500,
@@ -120,7 +139,7 @@ const EmailRow = ({ recipient, label, title, text, id, type, created_at }) => {
             padding: "1em",
           }}
         >
-          {`${label}...`}
+          {`${label.substring(0, 10)}...`}
         </Typography>
         <StyledText
           sx={{
@@ -128,7 +147,7 @@ const EmailRow = ({ recipient, label, title, text, id, type, created_at }) => {
           }}
         >
           {/* {`- $}...`} */}
-          {`${text}...`}
+          {`${text.substring(0, 10)}...`}
         </StyledText>
         <AttachmentIcon
           sx={{ color: "rgba(0, 0, 0, 0.54)", mx: "3%", cursor: "pointer" }}

@@ -48,12 +48,12 @@ const EvaluationRow = ({
   //   setIsChecked(e.target.checked);
   // };
 
-  // const calculateSubstring = () => {
-  //   const windowWidth = window.innerWidth;
-  //   let substringLength = Math.floor(windowWidth / 20);
-  //   substringLength = Math.min(substringLength, text.length); // Ensure substring length doesn't exceed text length
-  //   setSubstring(text.substring(0, substringLength));
-  // };
+  const calculateSubstring = () => {
+    const windowWidth = window.innerWidth;
+    let substringLength = Math.floor(windowWidth / 20);
+    substringLength = Math.min(substringLength, text.length); // Ensure substring length doesn't exceed text length
+    setSubstring(text.substring(0, substringLength));
+  };
 
   const updateTimeOnMount = () => {
     const date = new Date();
@@ -68,15 +68,15 @@ const EvaluationRow = ({
     setCurrentTime(`${formattedHours}:${formattedMinutes} ${ampm}`);
   };
 
-  // useEffect(() => {
-  //   calculateSubstring();
+  useEffect(() => {
+    calculateSubstring();
 
-  //   window.addEventListener("resize", calculateSubstring);
+    window.addEventListener("resize", calculateSubstring);
 
-  //   return () => {
-  //     window.removeEventListener("resize", calculateSubstring);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener("resize", calculateSubstring);
+    };
+  }, []);
 
   useState(() => {
     updateTimeOnMount();
@@ -118,7 +118,7 @@ const EvaluationRow = ({
             location.pathname === "/inbox" ? "From: " : "To: "
           } ${recipient}...`}
         </Typography>
-        <EmailLabel emailType={`${title}...`} />
+        <EmailLabel emailType={`${title.substring(0, 10)}...`} />
         <Typography
           sx={{
             fontWeight: 500,
@@ -128,7 +128,7 @@ const EvaluationRow = ({
             padding: "1em",
           }}
         >
-          {`${label}...`}
+          {`${label.substring(0, 10)}...`}
         </Typography>
         <StyledText
           sx={{
@@ -136,7 +136,7 @@ const EvaluationRow = ({
           }}
         >
           {/* {`- $}...`} */}
-          {`${text}...`}
+          {`${text.substring(0, 10)}...`}
         </StyledText>
         <AttachmentIcon
           sx={{ color: "rgba(0, 0, 0, 0.54)", mx: "3%", cursor: "pointer" }}

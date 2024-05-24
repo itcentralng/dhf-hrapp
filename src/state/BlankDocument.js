@@ -24,43 +24,13 @@ export const SubmitBlankDocument = async (formData, setLoading) => {
     );
 
     if (!response.ok) {
-      const formDataToJson = (formData) => {
-        const jsonObject = {};
-        formData.forEach((value, key) => {
-          jsonObject[key] = value;
-        });
-        return JSON.stringify(jsonObject, null, 2);
-      };
-
-      // Usage
-      console.log(formDataToJson(formDataObj));
-      throw new Error(`Error: ${response.statusText}`);
+      console.log(response);
+      throw new Error(`Error sending message`);
     }
-
     const result = await response.json();
-    console.log(result);
-    const formDataToJson = (formData) => {
-      const jsonObject = {};
-      formData.forEach((value, key) => {
-        jsonObject[key] = value;
-      });
-      return JSON.stringify(jsonObject, null, 2);
-    };
-
-    // Usage
-    console.log(formDataToJson(formDataObj));
+    alert(result.message);
   } catch (error) {
-    console.error("There was an error uploading the document!", error);
-    const formDataToJson = (formData) => {
-      const jsonObject = {};
-      formData.forEach((value, key) => {
-        jsonObject[key] = value;
-      });
-      return JSON.stringify(jsonObject, null, 2);
-    };
-
-    // Usage
-    console.log(formDataToJson(formDataObj));
+    console.error("There was an error sending", error);
   } finally {
     setLoading(false);
   }

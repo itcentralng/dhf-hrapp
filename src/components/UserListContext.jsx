@@ -79,18 +79,23 @@ export const UserListProvider = ({ children }) => {
       user_id: userToDelete,
     };
     setLoading(true);
-    try {
-      const response = await deleteUserMutation(deleteUserId);
-      if (!response.data) {
-        alert("User was not edited");
+    const proceed = `Are you sure you want to delete user with the staff ID: ${userToDelete}?`;
+    if (confirm(proceed)) {
+      try {
+        const response = await deleteUserMutation(deleteUserId);
+        if (!response.data) {
+          alert("User was not deleted");
+        }
+        alert(response.data.message);
+      } catch (error) {
+        alert("failed to delete user");
+        console.error(error.message);
+      } finally {
+        setLoading(false);
+        refetch();
       }
-      alert(response.data.message);
-    } catch (error) {
-      alert("failed to delete user");
-      console.error(error.message);
-    } finally {
-      setLoading(false);
-      refetch();
+    } else {
+      alert("Press Ok to continue");
     }
   };
 

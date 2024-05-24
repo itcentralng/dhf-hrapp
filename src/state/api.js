@@ -76,3 +76,5 @@ export const {
   useDeleteUserMutation,
   useAddCommentMutation,
 } = api;
+
+export const { invalidateTags } = api.util;

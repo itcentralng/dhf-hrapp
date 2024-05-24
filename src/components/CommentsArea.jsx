@@ -7,6 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ConfirmationPopup from "./ConfirmationPopup";
 import { useLocation } from "react-router-dom";
 import { useAddCommentMutation, invalidateTags } from "../state/api";
+import { useDispatch } from "react-redux";
 
 // const accessToken = localStorage.getItem("userState")
 //   ? JSON.parse(localStorage.getItem("userState")).token
@@ -19,6 +20,7 @@ const CommentsArea = () => {
   const [loading, setLoading] = useState(false);
 
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const url = location.pathname;
   const parts = url.split("/");
@@ -64,7 +66,7 @@ const CommentsArea = () => {
       }
       setShowSuccessPopUp(true);
       setCommentData("");
-      invalidateTags(["Comments"]);
+      dispatch(invalidateTags(["Comments", "Inbox", "Outbox"]));
     } catch (error) {
       console.error("Error: ", error);
       alert("Failed to send comment! Please try again");
