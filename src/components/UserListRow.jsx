@@ -12,7 +12,6 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { DeleteOutline } from "@mui/icons-material";
 import ContentCopyRoundedIcon from "@mui/icons-material/ContentCopyRounded";
 import { useUserList } from "./UserListContext";
-import { useGetUsersQuery } from "../state/api";
 
 const TableBodyText = styled(Typography)({
   fontFamily: "inter",
@@ -29,7 +28,7 @@ const UserListRow = ({ user, checked }) => {
   const [loading, setLoading] = React.useState(false);
 
   const handleDelete = () => {
-    deleteUser(user.id);
+    deleteUser(user.id, setLoading);
   };
 
   const handleChange = (event) => {

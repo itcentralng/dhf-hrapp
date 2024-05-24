@@ -6,10 +6,11 @@ import TurnLeftIcon from "@mui/icons-material/TurnLeft";
 import AddIcon from "@mui/icons-material/Add";
 import ConfirmationPopup from "./ConfirmationPopup";
 import { useLocation } from "react-router-dom";
+import { useAddCommentMutation, invalidateTags } from "../state/api";
 
-const accessToken = localStorage.getItem("userState")
-  ? JSON.parse(localStorage.getItem("userState")).token
-  : null;
+// const accessToken = localStorage.getItem("userState")
+//   ? JSON.parse(localStorage.getItem("userState")).token
+//   : null;
 
 const CommentsArea = () => {
   const [addCommentClicked, setAddCommentClicked] = useState(false);
@@ -31,6 +32,8 @@ const CommentsArea = () => {
   const handleChange = (event) => {
     setCommentData(event.target.value);
   };
+  const [addComment, { isLoading }] = useAddCommentMutation();
+
   const handleCommentReply = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -46,33 +49,26 @@ const CommentsArea = () => {
       const commentItems = {
         text: commentData,
         message_id: intMessageId,
-        type: messageType,
+        type: messageType.includes("message")
+          ? "message"
+          : messageType.includes("study")
+          ? "study leave"
+          : messageType.includes("early")
+          ? "early closure"
+          : "evaluation",
       };
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_URL}/messages/comment/`,
-        {
-          method: "POST",
-          body: JSON.stringify(commentItems),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response);
 
-      if (!response.ok) {
-        alert("Failed to send comment! Please try again");
-        console.log(JSON.stringify(commentItems));
-        throw new Error("failed to send comment");
+      const response = await addComment(commentItems).unwrap();
+      if (!response.message) {
+        console.log(response);
       }
       setShowSuccessPopUp(true);
       setCommentData("");
+      invalidateTags(["Comments"]);
     } catch (error) {
       console.error("Error: ", error);
       alert("Failed to send comment! Please try again");
     } finally {
-      console.log(accessToken);
       setLoading(false);
     }
   };
@@ -156,7 +152,7 @@ const CommentsArea = () => {
         )}
       </Stack>
       {showSuccessPopUp && (
-        <ConfirmationPopup text={"Your message has been sent successfully."} />
+        <ConfirmationPopup text={"Your comment has been sent successfully."} />
       )}
     </>
   );

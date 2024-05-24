@@ -294,6 +294,7 @@ const ViewClosures = () => {
                 borderRadius: "12px",
                 border: "#CCCCCC 0.5px solid",
                 bgcolor: "white",
+                margin: "2em 0",
               }}
             >
               <Typography

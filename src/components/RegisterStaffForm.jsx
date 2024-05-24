@@ -23,7 +23,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // import usersList from "../data/usersList";
 import { useUserList } from "./UserListContext";
 import CloseIcon from "@mui/icons-material/Close";
-import { useGetUsersQuery, useRegisterStaffMutation } from "../state/api";
+import { useEditUserMutation, useRegisterStaffMutation } from "../state/api";
 import { editUserRequest } from "../state/editUser";
 const FileUploadContainer = styled(Box)({
   display: "flex",
@@ -100,6 +100,7 @@ const RegisterStaffForm = ({
   };
 
   const [registerStaffMutation] = useRegisterStaffMutation();
+  const [editUserMutation] = useEditUserMutation();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -165,7 +166,19 @@ const RegisterStaffForm = ({
       role: newStaff.role,
       user_id: formData.user_id,
     };
-    editUserRequest(formDataItem, setLoading);
+    setLoading(true);
+    try {
+      const response = await editUserMutation(formDataItem);
+      if (!response.data) {
+        alert("User was not edited");
+      }
+      alert(response.data.message);
+    } catch (error) {
+      console.error("There was an error editing the user!", error);
+      alert("Failed to edit user! Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleToggleExpand = () => {

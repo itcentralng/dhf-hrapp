@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-import { useGetUsersQuery } from "../state/api";
+import { useDeleteUserMutation, useGetUsersQuery } from "../state/api";
 import { DeleteUserRequest } from "../state/DeleteUser";
 const UserListContext = createContext();
 
 export const useUserList = () => useContext(UserListContext);
 
 export const UserListProvider = ({ children }) => {
-  const { data: users, error, isLoading } = useGetUsersQuery();
+  const { data: users, error, isLoading, refetch } = useGetUsersQuery();
   // console.log(users?.find((user) => user.id == 1).id);
 
   const [usersList, setUsersList] = useState(users);
@@ -16,6 +16,7 @@ export const UserListProvider = ({ children }) => {
   const handleEditOpen = () => setOpenEdit(true);
   const handleEditClose = () => setOpenEdit(false);
   const [loading, setLoading] = useState(false);
+  const [deleteUserMutation] = useDeleteUserMutation();
 
   // const [passport, setPassport] = useState();
   // const [resume, setResume] = useState();
@@ -72,9 +73,25 @@ export const UserListProvider = ({ children }) => {
     handleEditOpen();
   };
 
-  const deleteUser = (staffId) => {
-    const userToDelete = users?.find((user) => user.id === staffId).id;
-    DeleteUserRequest(userToDelete, setLoading, setShowDeleteConfirmation);
+  const deleteUser = async (user_id, setLoading) => {
+    const userToDelete = users?.find((user) => user.id === user_id).id;
+    const deleteUserId = {
+      user_id: userToDelete,
+    };
+    setLoading(true);
+    try {
+      const response = await deleteUserMutation(deleteUserId);
+      if (!response.data) {
+        alert("User was not edited");
+      }
+      alert(response.data.message);
+    } catch (error) {
+      alert("failed to delete user");
+      console.error(error.message);
+    } finally {
+      setLoading(false);
+      refetch();
+    }
   };
 
   const removeUserForEdit = (staffId) => {
