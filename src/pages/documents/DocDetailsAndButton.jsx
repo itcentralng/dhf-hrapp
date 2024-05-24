@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
 import React, { useState } from "react";
 import { FilledButton } from "../../styled-components/styledButtons";
 import fileIcon from "../../assets/fileIcon.svg";
@@ -7,12 +7,15 @@ import {
   SubHeadingText,
 } from "../../styled-components/StyledText";
 import { useShareForm } from "../../components/context/ShareFormContext";
+import { ArrowBack } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 const DocDetailsAndButton = ({ documentTitle, setDocumentTitle }) => {
   const { setDisplayShareForm } = useShareForm();
   const currentDate = new Date().toDateString();
   const changeHandler = (event) => {
     setDocumentTitle(event.target.value);
   };
+  const navigate = useNavigate();
 
   return (
     <Stack
@@ -24,9 +27,16 @@ const DocDetailsAndButton = ({ documentTitle, setDocumentTitle }) => {
         borderTop: " rgba(204, 204, 204, 0.5) 1px solid",
         borderBottom: "rgba(204, 204, 204, 0.5) 1px solid",
         bgcolor: "white",
+        alignItems: "center",
       }}
     >
-      <Stack direction="row">
+      <Stack
+        direction="row"
+        sx={{ display: "flex", alignItems: "center", gap: 1 }}
+      >
+        <IconButton onClick={() => navigate(-1)}>
+          <ArrowBack />
+        </IconButton>
         <img
           src={fileIcon}
           alt="file icon"

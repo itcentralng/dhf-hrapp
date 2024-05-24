@@ -365,7 +365,7 @@ const Layout = () => {
         >
           <Toolbar />
 
-          <Box
+          {/* <Box
             sx={{
               backgroundColor: "#FFFFFF",
               borderBottom: "1px solid #EDEFF1",
@@ -378,7 +378,6 @@ const Layout = () => {
             }}
           >
             <Box>
-              <Checkbox checked={checked} onChange={handleChange} />
               <IconButton
                 onClick={handleRefresh}
                 disabled={refreshLoading}
@@ -386,11 +385,8 @@ const Layout = () => {
               >
                 <RefreshOutlined />
               </IconButton>
-              <IconButton sx={{ marginLeft: ".2em" }}>
-                <MoreVertOutlined />
-              </IconButton>
             </Box>
-          </Box>
+          </Box> */}
           <Outlet />
         </Box>
         <Box
@@ -405,7 +401,7 @@ const Layout = () => {
           }}
         >
           <FilledShadowButton
-            sx={{ gap: 1, display: user.role === "hr" ? "none" : "block" }}
+            sx={{ gap: 1, display: user.role === "hr" ? "none" : "flex" }}
             onClick={() => navigate("/createdocument")}
           >
             <CreateOutlined />
@@ -443,13 +439,13 @@ const navItems = [
     icon: <PeopleAltOutlined />,
     role: "admin, hr",
   },
-  {
-    id: 4,
-    name: "Reports",
-    link: "/reports",
-    icon: <InsertDriveFileOutlined />,
-    role: " hr",
-  },
+  // {
+  //   id: 4,
+  //   name: "Reports",
+  //   link: "/reports",
+  //   icon: <InsertDriveFileOutlined />,
+  //   role: " hr",
+  // },
 ];
 
 export default Layout;

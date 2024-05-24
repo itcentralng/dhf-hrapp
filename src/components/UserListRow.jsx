@@ -51,7 +51,7 @@ const UserListRow = ({ user, checked }) => {
           alignItems: "center",
         }}
       >
-        <Checkbox checked={singleChecked} onChange={handleChange} />
+        {/* <Checkbox checked={singleChecked} onChange={handleChange} /> */}
         <TableBodyText>
           {user.first_name} {user.last_name}
         </TableBodyText>

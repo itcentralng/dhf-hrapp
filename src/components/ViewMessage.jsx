@@ -150,7 +150,7 @@ const ViewMessage = () => {
             <IconButton onClick={() => navigate(-1)}>
               <ArrowBack />
             </IconButton>
-            <Box>
+            {/* <Box>
               <IconButton>
                 <InboxOutlined sx={{ fontSize: "1.3rem", color: "#4D90F0" }} />
               </IconButton>
@@ -171,7 +171,7 @@ const ViewMessage = () => {
                   sx={{ fontSize: "1.3rem", color: "#4D90F0" }}
                 />
               </IconButton>
-            </Box>
+            </Box> */}
           </Box>
           <Box
             sx={{

@@ -29,7 +29,7 @@ const UserListHeader = ({ checked, handleChange }) => {
           alignItems: "center",
         }}
       >
-        <Checkbox checked={checked} onChange={handleChange} />
+        {/* <Checkbox checked={checked} onChange={handleChange} /> */}
         <Box sx={{ display: "flex", flexDirection: "row" }}>
           <TableHeadText>Staff Name </TableHeadText>
           <span>

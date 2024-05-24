@@ -5,8 +5,10 @@ import AddIcon from "@mui/icons-material/Add";
 import templatesData from "../../data/templatesData";
 import templateImage from "../../assets/templateImage.svg";
 import templateIcon from "../../assets/templateIcon.svg";
+import { useSelector } from "react-redux";
 const CreateDocument = () => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user);
 
   const handleNavigation = () => {
     navigate("blankdocument", { state: { from: "createdocument" } });
@@ -69,6 +71,7 @@ const CreateDocument = () => {
               mb: "50px",
               position: "relative",
               cursor: "pointer",
+              display: user.role === "staff" ? "block" : "none",
             }}
           >
             <Stack

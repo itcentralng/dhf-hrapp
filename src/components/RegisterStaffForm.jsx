@@ -358,7 +358,7 @@ const RegisterStaffForm = ({
             </TextField>
           </Grid> */}
         </Grid>
-        <Grid container alignItems="center" spacing={1} sx={{ marginTop: 2 }}>
+        {/* <Grid container alignItems="center" spacing={1} sx={{ marginTop: 2 }}>
           <Grid item>
             <IconButton onClick={handleToggleExpand}>
               <ExpandMoreIcon sx={{ color: "primary.main" }} />
@@ -535,7 +535,7 @@ const RegisterStaffForm = ({
               />
             </Grid>
           </Grid>
-        )}
+        )} */}
         {formType === "register staff" ? (
           <FilledButton
             type="submit"
