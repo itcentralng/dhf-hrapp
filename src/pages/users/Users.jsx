@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Menu, MenuItem, Stack, Typography, styled } from "@mui/material";
+import {
+  Box,
+  Menu,
+  MenuItem,
+  Modal,
+  Stack,
+  Typography,
+  styled,
+} from "@mui/material";
 import { FilledButton } from "../../styled-components/styledButtons";
 import RegisterStaffForm from "../../components/RegisterStaffForm";
 import { useEffect, useState } from "react";
@@ -10,7 +18,6 @@ import { useUserList } from "../../components/UserListContext";
 import ConfirmationPopup from "../../components/ConfirmationPopup";
 // import { Overlay } from "../../styled-components/styledBox";
 // import RegisterOfficeForm from "../../components/RegisterOfficeForm";
-import Modal from "@mui/material/modal";
 const Users = () => {
   // const [registerStaff, setRegisterStaff] = useState(false);
   const {
