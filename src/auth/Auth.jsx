@@ -6,7 +6,8 @@ const Auth = ({ children }) => {
   const isAuth = useSelector((state) => state.user.isAuth);
   const accessToken = useSelector((state) => state.user.token);
 
-  if (!isAuth & !accessToken) {
+  if (!isAuth & (accessToken === null)) {
+    alert("Please login to continue");
     return <Navigate to="/login" />;
   }
   return <>{children}</>;
