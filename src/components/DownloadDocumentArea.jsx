@@ -1,9 +1,6 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Box, Stack, Typography, Button } from "@mui/material";
-import PDFIcon from "../assets/xlsIcon.svg"; // Corrected icon paths
-import DOCXIcon from "../assets/xlsIcon.svg";
-import XLSIcon from "../assets/xlsIcon.svg";
 
 const DownloadDocumentArea = ({
   file,
@@ -11,18 +8,29 @@ const DownloadDocumentArea = ({
   handleTemplateOpen,
   messageType,
 }) => {
+  const [sentFileName, setSentFileName] = useState("");
+  const [fileLink, setFileLink] = useState("");
+
+  useEffect(() => {
+    if (file) {
+      setFileLink(file);
+      setSentFileName(file.substring(file.lastIndexOf("-") + 1));
+    }
+  }, [file]);
+
   if (!file) {
     return <Typography>No document available for download.</Typography>;
   }
 
   const handleDownload = () => {
     const downloadLink = document.createElement("a");
-    downloadLink.href = file;
-    downloadLink.setAttribute("download", file.name);
+    downloadLink.href = fileLink;
+    downloadLink.setAttribute("download", sentFileName);
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
-    console.log(file);
+    console.log(sentFileName);
+    console.log(fileLink);
   };
 
   return (
@@ -39,7 +47,6 @@ const DownloadDocumentArea = ({
         bgcolor: "white",
       }}
     >
-      {/* <div>{renderFileIcon()}</div> */}
       <Stack direction="column">
         <Typography
           sx={{
@@ -49,7 +56,7 @@ const DownloadDocumentArea = ({
             fontSize: "14px",
           }}
         >
-          {file.name}
+          {sentFileName}
         </Typography>
         <Typography
           sx={{
@@ -95,12 +102,7 @@ const DownloadDocumentArea = ({
 };
 
 DownloadDocumentArea.propTypes = {
-  file: PropTypes.shape({
-    type: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    size: PropTypes.string.isRequired,
-  }),
+  file: PropTypes.string.isRequired,
   sender: PropTypes.string.isRequired,
   handleTemplateOpen: PropTypes.func.isRequired,
   messageType: PropTypes.string.isRequired,

@@ -278,6 +278,7 @@ const ViewMessage = () => {
           <DownloadDocumentArea
             file={currentMessage.document}
             sender={currentMessage.sender}
+            messageType="messages"
             handleTemplateOpen={handleTemplateOpen}
           />
           {currentMessage.comments.map((comment) => (
