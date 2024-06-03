@@ -14,7 +14,7 @@ const DownloadDocumentArea = ({
   useEffect(() => {
     if (file != null) {
       setFileLink(file);
-      setSentFileName(file);
+      setSentFileName(file.substring(file.lastIndexOf("-") + 1));
     }
   }, [file]);
 
@@ -55,14 +55,7 @@ const DownloadDocumentArea = ({
             {sender}
           </Typography>
         </Stack>
-        <Typography
-          sx={{
-            fontWeight: 400,
-            fontSize: "12px",
-            color: "#121212",
-            mb: "19px",
-          }}
-        ></Typography>
+
         <Button
           sx={{
             textTransform: "none",
