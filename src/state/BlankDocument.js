@@ -36,5 +36,6 @@ export const SubmitBlankDocument = async (formData, setLoading) => {
     console.error("There was an error sending: ", error);
   } finally {
     setLoading(false);
+    console.log(accessToken);
   }
 };

@@ -11,15 +11,11 @@ const DownloadDocumentArea = ({
   const [sentFileName, setSentFileName] = useState("");
   const [fileLink, setFileLink] = useState("");
 
-  useEffect(() => {
-    if (file) {
-      setFileLink(file);
-      setSentFileName(file.substring(file.lastIndexOf("-") + 1));
-    }
-  }, [file]);
-
   if (!file) {
     return <Typography>No document available for download.</Typography>;
+  } else {
+    setFileLink(file);
+    setSentFileName(file.substring(file.lastIndexOf("-") + 1));
   }
 
   const handleDownload = () => {
