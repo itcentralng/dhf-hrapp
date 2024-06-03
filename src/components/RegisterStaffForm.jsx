@@ -313,7 +313,7 @@ const RegisterStaffForm = ({
               <Grid item xs={6}>
                 <TextField
                   variant="outlined"
-                  placeholder="Clock In"
+                  placeholder="format: 07:00"
                   fullWidth
                   required
                   name="clockIn"
@@ -324,7 +324,7 @@ const RegisterStaffForm = ({
               <Grid item xs={6}>
                 <TextField
                   variant="outlined"
-                  placeholder="Clock Out"
+                  placeholder="format: 07:00"
                   fullWidth
                   required
                   name="clockOut"
