@@ -276,7 +276,6 @@ const ViewEvaluations = () => {
         >
           <Box>
             <DownloadDocumentArea
-              file={currentMessage} // Pass study leave details as file prop
               sender={currentMessage.applicant_name} // Use applicant name as sender
               handleTemplateOpen={handleTemplateOpen}
               messageType="evaluations" // Set messageType to "evaluations"

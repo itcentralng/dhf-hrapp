@@ -11,11 +11,83 @@ const DownloadDocumentArea = ({
   const [sentFileName, setSentFileName] = useState("");
   const [fileLink, setFileLink] = useState("");
 
+  useEffect(() => {
+    if (file != null) {
+      setFileLink(file);
+      setSentFileName(file);
+    }
+  }, [file]);
+
   if (!file) {
-    return <Typography>No document available for download.</Typography>;
-  } else {
-    setFileLink(file);
-    setSentFileName(file.substring(file.lastIndexOf("-") + 1));
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: 2,
+          borderRadius: "12px",
+          border: "#CCCCCC 0.5px solid",
+          width: "350px",
+          height: "60px",
+          bgcolor: "white",
+        }}
+      >
+        <Stack direction="column">
+          <Typography
+            sx={{
+              marginRight: 2,
+              fontFamily: "DM sans",
+              fontWeight: 500,
+              fontSize: "14px",
+            }}
+          >
+            {sentFileName}
+          </Typography>
+          <Typography
+            sx={{
+              color: "#CCCCCC",
+              fontFamily: "DM sans",
+              fontWeight: 400,
+              fontSize: "11px",
+            }}
+          >
+            {sender}
+          </Typography>
+        </Stack>
+        <Typography
+          sx={{
+            fontWeight: 400,
+            fontSize: "12px",
+            color: "#121212",
+            mb: "19px",
+          }}
+        ></Typography>
+        <Button
+          sx={{
+            textTransform: "none",
+            color: "#7784EE",
+            fontWeight: 500,
+            fontSize: "12px",
+            mb: "20px",
+          }}
+          variant="standard"
+          onClick={
+            messageType === "study_leave" ||
+            messageType === "evaluations" ||
+            messageType === "early_closures"
+              ? handleTemplateOpen
+              : handleDownload
+          }
+        >
+          {messageType === "study_leave" ||
+          messageType === "evaluations" ||
+          messageType === "early_closures"
+            ? "Open"
+            : "Download"}
+        </Button>
+      </Box>
+    );
   }
 
   const handleDownload = () => {
@@ -98,7 +170,7 @@ const DownloadDocumentArea = ({
 };
 
 DownloadDocumentArea.propTypes = {
-  file: PropTypes.string.isRequired,
+  file: PropTypes.string,
   sender: PropTypes.string.isRequired,
   handleTemplateOpen: PropTypes.func.isRequired,
   messageType: PropTypes.string.isRequired,

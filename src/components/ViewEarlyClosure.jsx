@@ -276,7 +276,7 @@ const ViewClosures = () => {
         >
           <Box>
             <DownloadDocumentArea
-              file={currentMessage} // Pass study leave details as file prop
+              // file={currentMessage} // Pass study leave details as file prop
               sender={currentMessage?.teacher || ""} // Use applicant name as sender
               handleTemplateOpen={handleTemplateOpen}
               messageType="early_closures" // Set messageType to "early_closures"
