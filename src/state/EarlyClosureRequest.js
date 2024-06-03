@@ -33,6 +33,8 @@ export const SubmitEarlyClosure = async (formData, setLoading) => {
 
     if (!response.ok) {
       alert("Failed to submit study leave! Please try again.");
+      console.log(response);
+      console.log(staffInfo);
       throw new Error("Failed to submit study leave");
     }
     alert("Early closure sent successfully");
@@ -40,6 +42,7 @@ export const SubmitEarlyClosure = async (formData, setLoading) => {
     console.error("Error sending study leave: ", error.message);
   } finally {
     setLoading(false);
+    console.log(staffInfo);
   }
 };
 

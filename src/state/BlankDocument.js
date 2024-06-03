@@ -26,13 +26,14 @@ export const SubmitBlankDocument = async (formData, setLoading) => {
     if (!response.ok) {
       console.log(response);
       alert("Message was not sent! Please try again");
+      console.log(response);
       throw new Error(`Error sending message`);
     }
     const result = await response.json();
     alert(result.message);
   } catch (error) {
     alert("Message was not sent! Please try again");
-    console.error("There was an error sending", error);
+    console.error("There was an error sending: ", error);
   } finally {
     setLoading(false);
   }

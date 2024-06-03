@@ -6,7 +6,7 @@ const pathParts = location.pathname.split("/");
 const pathId = parseInt(pathParts[pathParts.length - 1], 10);
 
 export const SubmitStudyLeave = async (formData, setLoading) => {
-  // setLoading(true);
+  setLoading(true);
   const applicantData = {
     applicant_name: formData.studyLeaveData.fullname,
     designation: formData.studyLeaveData.designation,
@@ -24,6 +24,7 @@ export const SubmitStudyLeave = async (formData, setLoading) => {
     pursue_indication: formData.studyLeaveData.pursureIndication,
     applicant_date: formData.studyLeaveData.date,
     applicant_signature: formData.studyLeaveData.applicantSign,
+    recipient_hos: formData.recipients[0],
   };
   console.log(applicantData);
   try {
