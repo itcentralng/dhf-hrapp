@@ -53,7 +53,7 @@ const Sent = () => {
             return (
               <Box key={item.id}>
                 <StudyLeaveRow
-                  recipient={item.applicant_name}
+                  recipient="Next office"
                   label={item.designation}
                   title="Study Leave"
                   text="Study Leave application"
