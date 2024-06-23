@@ -236,8 +236,9 @@ const StudyLeave = ({ currentMessage }) => {
       //   part e
       approvalStatus:
         currentMessage?.approval_status === "no response"
-          ? ""
-          : currentMessage?.approval_status || "",
+          ? "Please approve/disapprove as a comment under the message"
+          : currentMessage?.approval_status ||
+            "Please approve/disapprove as a comment under the message",
       directorsSign:
         currentMessage?.director_signature === "no response"
           ? ""

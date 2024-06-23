@@ -83,6 +83,7 @@ export const HosRespondStudyLeave = async (formData, setLoading) => {
 
     if (!response.ok) {
       alert("Failed to submit study leave! Please try again.");
+      console.log(hosData);
       throw new Error("Failed to submit study leave");
     }
 
@@ -120,6 +121,7 @@ export const AdminRespondStudyLeave = async (formData, setLoading) => {
 
     if (!response.ok) {
       alert("Failed to submit study leave! Please try again.");
+      console.log(accountantData);
       throw new Error("Failed to submit study leave");
     }
 

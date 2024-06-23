@@ -1,10 +1,19 @@
 import { useState } from "react";
 import { Select, MenuItem, FormControl, Chip } from "@mui/material";
 import { useGetUsersQuery } from "../state/api";
+import { Close } from "@mui/icons-material";
 
 const UserSelect = ({ onUserSelect }) => {
   const { data: users, error, isLoading } = useGetUsersQuery();
   const [selectedUsers, setSelectedUsers] = useState([]);
+
+  const RemoveRecipient = (fullName) => {
+    const updatedUsers = selectedUsers.filter(
+      (user) => `${user.first_name} ${user.last_name}` !== fullName
+    );
+    setSelectedUsers(updatedUsers);
+    onUserSelect(updatedUsers); // Notify parent component of updated selected users
+  };
 
   const handleUserSelect = (event) => {
     const { value } = event.target;
@@ -28,6 +37,10 @@ const UserSelect = ({ onUserSelect }) => {
               <Chip
                 key={user.id} // Ensure correct key
                 label={`${user.first_name} ${user.last_name}`}
+                onDelete={() =>
+                  RemoveRecipient(`${user.first_name} ${user.last_name}`)
+                }
+                deleteIcon={<Close />}
                 style={{ marginRight: 5 }}
               />
             ))}

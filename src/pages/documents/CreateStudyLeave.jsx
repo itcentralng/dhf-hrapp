@@ -113,7 +113,8 @@ const CreateStudyLeave = () => {
       hrSign: "",
       hrDate: "",
       //   part e
-      approvalStatus: "",
+      approvalStatus:
+        "Please approve/disapprove as a comment under the message",
       directorsSign: "",
       directorsDate: "",
     },
