@@ -120,7 +120,7 @@ const ViewClosures = () => {
     return null; // or a loading spinner/message
   }
 
-  const creationDate = currentMessage.created_at;
+  const creationDate = currentMessage.updated_at;
   const date = new Date(creationDate);
 
   const dateOptions = {

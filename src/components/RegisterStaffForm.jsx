@@ -127,15 +127,10 @@ const RegisterStaffForm = ({
     };
     setLoading(true);
     try {
-      const response = await registerStaffMutation(formDataItem);
-      if (!response.data) {
-        console.log("User was not created");
-      } else {
-        handleModalClose();
-        setShowRegConfirmation(true);
-
-        console.log("user has been created successfully");
-      }
+      await registerStaffMutation(formDataItem).unwrap();
+      handleModalClose();
+      setShowRegConfirmation(true);
+      console.log("user has been created successfully");
     } catch (error) {
       console.error("There was an error creating the user!", error);
       alert("Failed to register user! Please try again.");

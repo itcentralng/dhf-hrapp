@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 import { useDeleteUserMutation, useGetUsersQuery } from "../state/api";
-import { DeleteUserRequest } from "../state/DeleteUser";
 const UserListContext = createContext();
 
 export const useUserList = () => useContext(UserListContext);

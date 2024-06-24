@@ -1,5 +1,5 @@
-const accessToken = localStorage.getItem("userState")
-  ? JSON.parse(localStorage.getItem("userState")).token
+const accessToken = sessionStorage.getItem("userState")
+  ? JSON.parse(sessionStorage.getItem("userState")).token
   : null;
 
 export const PerformEvaluation = async (formData, setLoading) => {

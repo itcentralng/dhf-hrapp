@@ -234,50 +234,6 @@ const CreateEarlyClosure = () => {
                 onChange={handleChange}
               />
             </Stack>
-            <Stack direction="row">
-              <P mt={"auto"} sx={{ fontWeight: "bold" }}>
-                Director's comment:
-              </P>
-              <CustomInput
-                disabled={user.role != "admin"}
-                variant="standard"
-                name="directorsComment"
-                value={formData.directorsComment}
-                onChange={handleChange}
-                sx={{ width: "80%" }}
-              />
-            </Stack>
-
-            <Stack direction="row">
-              <P mt={"auto"}>Date:</P>
-              <CustomInput
-                disabled={user.role != "admin"}
-                variant="standard"
-                name="directorsDate"
-                value={formData.directorsDate}
-                onChange={handleChange}
-              />
-              <P mt={"auto"}>Signature:</P>
-              <CustomInput
-                disabled={user.role != "admin"}
-                variant="standard"
-                name="directorsSignature"
-                value={formData.directorsSignature}
-                onChange={handleChange}
-              />
-            </Stack>
-            <Stack direction="row">
-              <P mt={"auto"} sx={{ fontWeight: "bold" }}>
-                School stamp:
-              </P>
-              <CustomInput
-                disabled={user.role != "admin"}
-                variant="standard"
-                name="schoolStamp"
-                value={formData.schoolStamp}
-                onChange={handleChange}
-              />
-            </Stack>
           </Stack>
         </Paper>
       </Container>

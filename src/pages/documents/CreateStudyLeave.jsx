@@ -597,9 +597,7 @@ const CreateStudyLeave = () => {
                   />
                 </Grid>
               </Grid>
-
               {/* part b */}
-
               <Typography
                 variant="body2"
                 sx={{ fontSize: "1.2rem", margin: "1em 0" }}
@@ -816,146 +814,12 @@ const CreateStudyLeave = () => {
                 </Grid>
               </Grid>
 
-              {/* part c */}
               <Typography
                 variant="body2"
                 sx={{ fontSize: "1.2rem", margin: "1em 0" }}
               >
-                Part C: To be completed by the accountant
+                Part C: To be completed by Human Resource Officer
               </Typography>
-              <Grid container gap={2}>
-                <Grid
-                  item
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    gap: 2,
-                    justifyContent: "space-between",
-                    flexDirection: "column",
-                  }}
-                >
-                  <InputLabel id="salaryCost" sx={{ fontWeight: 800 }}>
-                    What are the salary costs for this applicant for the
-                    duration of his/her study?
-                  </InputLabel>
-                  <textarea
-                    disabled={user.role != "admin"}
-                    id="salaryCost"
-                    name="salaryCost"
-                    value={formik.values.salaryCost}
-                    onChange={formik.handleChange}
-                    style={{
-                      padding: "1em",
-                      fontSize: "1rem",
-                      minHeight: "2rem",
-                      maxWidth: "100%",
-                    }}
-                  />
-                </Grid>
-
-                <Grid
-                  item
-                  sx={{
-                    width: "52%",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <InputLabel id="accountantName" sx={{ fontWeight: 800 }}>
-                    Name of Appraiser:
-                  </InputLabel>
-                  <TextField
-                    disabled={user.role != "admin"}
-                    variant="standard"
-                    id="accountantName"
-                    name="accountantName"
-                    value={formik.values.accountantName}
-                    onChange={formik.handleChange}
-                    sx={{ width: "62%" }}
-                  />
-                </Grid>
-
-                <Grid
-                  item
-                  sx={{
-                    width: "46%",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <InputLabel id="accountantPost" sx={{ fontWeight: 800 }}>
-                    Post:
-                  </InputLabel>
-                  <TextField
-                    disabled={user.role != "admin"}
-                    variant="standard"
-                    id="accountantPost"
-                    name="accountantPost"
-                    value={formik.values.accountantPost}
-                    onChange={formik.handleChange}
-                    sx={{ width: "85%" }}
-                  />
-                </Grid>
-
-                <Grid
-                  item
-                  sx={{
-                    width: "60%",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                  }}
-                >
-                  <InputLabel id="accountantSign" sx={{ fontWeight: 800 }}>
-                    Signature:
-                  </InputLabel>
-                  <TextField
-                    disabled={user.role != "admin"}
-                    variant="standard"
-                    id="accountantSign"
-                    name="accountantSign"
-                    value={formik.values.accountantSign}
-                    onChange={formik.handleChange}
-                    sx={{ width: "85%" }}
-                  />
-                </Grid>
-
-                <Grid
-                  item
-                  sx={{
-                    width: "38%",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <InputLabel id="accountantDate" sx={{ fontWeight: 800 }}>
-                    Date:
-                  </InputLabel>
-                  <TextField
-                    disabled={user.role != "admin"}
-                    variant="standard"
-                    id="accountantDate"
-                    name="accountantDate"
-                    value={formik.values.accountantDate}
-                    onChange={formik.handleChange}
-                    sx={{ width: "80%" }}
-                  />
-                </Grid>
-              </Grid>
-
-              <Typography
-                variant="body2"
-                sx={{ fontSize: "1.2rem", margin: "1em 0" }}
-              >
-                Part D: To be completed by Human Resource Officer
-              </Typography>
-
               <Grid container gap={2}>
                 <Grid
                   item
@@ -1166,92 +1030,6 @@ const CreateStudyLeave = () => {
                     id="hrDate"
                     name="hrDate"
                     value={formik.values.hrDate}
-                    onChange={formik.handleChange}
-                    sx={{ width: "80%" }}
-                  />
-                </Grid>
-              </Grid>
-
-              {/* part e */}
-
-              <Typography
-                variant="body2"
-                sx={{ fontSize: "1.2rem", margin: "1em 0" }}
-              >
-                Part E: Director's Recommendation
-              </Typography>
-
-              <Grid container gap={2}>
-                <Grid
-                  item
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    gap: 2,
-                    justifyContent: "space-between",
-                    flexDirection: "column",
-                  }}
-                >
-                  <InputLabel id="approvalStatus" sx={{ fontWeight: 800 }}>
-                    Approved / Not Approved; If Approved State conditions:
-                  </InputLabel>
-                  <textarea
-                    disabled={user.role != "admin"}
-                    id="approvalStatus"
-                    name="approvalStatus"
-                    value={formik.values.approvalStatus}
-                    onChange={formik.handleChange}
-                    style={{
-                      padding: "1em",
-                      fontSize: "1rem",
-                      minHeight: "2rem",
-                      maxWidth: "100%",
-                    }}
-                  />
-                </Grid>
-
-                <Grid
-                  item
-                  sx={{
-                    width: "60%",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                  }}
-                >
-                  <InputLabel id="directorsSign" sx={{ fontWeight: 800 }}>
-                    Signature/Stamp:
-                  </InputLabel>
-                  <TextField
-                    disabled={user.role != "admin"}
-                    variant="standard"
-                    id="directorsSign"
-                    name="directorsSign"
-                    value={formik.values.directorsSign}
-                    onChange={formik.handleChange}
-                    sx={{ width: "80%" }}
-                  />
-                </Grid>
-
-                <Grid
-                  item
-                  sx={{
-                    width: "38%",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 2,
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <InputLabel id="directorsDate" sx={{ fontWeight: 800 }}>
-                    Date:
-                  </InputLabel>
-                  <TextField
-                    disabled={user.role != "admin"}
-                    variant="standard"
-                    id="directorsDate"
-                    name="directorsDate"
-                    value={formik.values.directorsDate}
                     onChange={formik.handleChange}
                     sx={{ width: "80%" }}
                   />

@@ -9,8 +9,8 @@ import { useLocation } from "react-router-dom";
 import { useAddCommentMutation, invalidateTags } from "../state/api";
 import { useDispatch } from "react-redux";
 
-// const accessToken = localStorage.getItem("userState")
-//   ? JSON.parse(localStorage.getItem("userState")).token
+// const accessToken = sessionStorage.getItem("userState")
+//   ? JSON.parse(sessionStorage.getItem("userState")).token
 //   : null;
 
 const CommentsArea = () => {

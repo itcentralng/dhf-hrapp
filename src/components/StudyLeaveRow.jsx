@@ -17,7 +17,7 @@ const StudyLeaveRow = ({
   text,
   id,
   type,
-  created_at,
+  updated_at,
 }) => {
   const [substring, setSubstring] = useState("");
   const [currentTime, setCurrentTime] = useState("");
@@ -25,7 +25,7 @@ const StudyLeaveRow = ({
   // console.log(substring)
 
   const navigate = useNavigate();
-  const creationDate = created_at;
+  const creationDate = updated_at;
   const date = new Date(creationDate);
 
   const dateOptions = {

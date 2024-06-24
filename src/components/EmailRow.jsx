@@ -17,7 +17,7 @@ const EmailRow = ({
   text,
   id,
   type,
-  created_at,
+  updated_at,
   sender,
 }) => {
   const [substring, setSubstring] = useState("");
@@ -26,7 +26,7 @@ const EmailRow = ({
   // console.log(substring)
 
   const navigate = useNavigate();
-  const creationDate = created_at;
+  const creationDate = updated_at;
   const date = new Date(creationDate);
 
   const dateOptions = {
