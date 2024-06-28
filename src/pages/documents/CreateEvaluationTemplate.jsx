@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
-import { useEffect, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import {
   Table,
   TableHead,
@@ -14,12 +14,11 @@ import {
   Stack,
 } from "@mui/material";
 import { styled } from "@mui/system";
-// import evaluationFormDetails from "../data/evaluationFormData";
-import DocDetailsAndButton from "../pages/documents/DocDetailsAndButton";
-import { Overlay } from "../styled-components/styledBox";
-import ShareWithForm from "./ShareWithForm";
-import { useShareForm } from "./context/ShareFormContext";
-import { useSelector } from "react-redux";
+import evaluationFormDetails from "../../data/evaluationFormData";
+import DocDetailsAndButton from "./DocDetailsAndButton";
+import { Overlay } from "../../styled-components/styledBox";
+import ShareWithForm from "../../components/ShareWithForm";
+import { useShareForm } from "../../components/context/ShareFormContext";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   border: "1px solid #ddd",
@@ -61,87 +60,59 @@ const reducer = (state, action) => {
           [action.gradeKey]: action.value,
         },
       };
-    case "INITIALIZE_FROM_MESSAGE":
-      return {
-        ...state,
-        ...action.payload,
-      };
     default:
       return state;
   }
 };
-const EvaluationTemplate = ({ currentMessage }) => {
+const CreateEvaluationTemplate = () => {
   const [documentTitle, setDocumentTitle] = useState("Evaluation Form");
   const [formData, dispatch] = useReducer(reducer, initialState);
   const { displayShareForm } = useShareForm();
-  const user = useSelector((state) => state.user.user);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     dispatch({ type: "UPDATE_FIELD", field: name, value });
   };
 
-  // const handleGradeChange = (e, gradeKey) => {
-  //   const { value } = e.target;
-  //   dispatch({ type: "UPDATE_GRADE", gradeKey, value });
-  // };
-
-  useEffect(() => {
-    if (currentMessage && currentMessage.supervisor) {
-      // const { evaluationItems } = currentMessage;
-      const initialData = {
-        supervisorName: currentMessage?.supervisor || "",
-        post: currentMessage?.supervisor_post || "",
-        date: currentMessage?.date || "",
-        term: currentMessage?.term || "",
-        session: currentMessage?.session || "",
-        peerName: currentMessage?.peer || "",
-        peerPost: currentMessage?.peer_post || "",
-        supervisorComment: currentMessage?.supervisor_signature || "",
-        schoolAdminComment: currentMessage?.school_admin_signature || "",
-        headTeacherComment: currentMessage?.head_teacher_signature || "",
-        directorComment: currentMessage?.director_signature || "",
-        remark: currentMessage?.remark || "",
-        grades: currentMessage?.grade || {},
-      };
-      dispatch({ type: "INITIALIZE_FROM_MESSAGE", payload: initialData });
-    }
-  }, [currentMessage]);
-
-  const gradeKeys = {
-    1: "completes_task_on_time",
-    2: "attends_school_meetings_till_closure",
-    3: "makes_positive_contributions",
-    4: "handles_responsibilities_appropriately",
-    5: "displays_technical_competence",
-    6: "very_creative",
-    7: "easy_to_work_with",
-    8: "works_well_under_pressure",
-    9: "communicates_well_in_written_form",
-    10: "communicates_well_when_speaking",
-    11: "assists_other_teams_when_needed",
-    12: "demonstrates_good_problem_solving_skills",
-    13: "listens_well",
-    14: "works_well_with_parents",
-    15: "coaches_class_assistant_well",
-    16: "coaches_weak_students_well",
-    17: "learns_quickly",
-    18: "works_well_on_own",
-    19: "reliable",
-    20: "produces_high_quality_output",
-    21: "handles_pupils_conflicts_well",
-    22: "handles_cases_of_puppils_discipline_well",
-    23: "accepts_and_perfects_corrections_well",
-    24: "well_organized",
-    25: "look_forward_to_working_again",
-    26: "punctual_to_school",
-    27: "regular_in_school",
-    28: "does_well_on_duty",
-    29: "class_namagement",
-    30: "shows_concern_to_school_environment",
-    31: "enforces_school_rules_always",
+  const handleGradeChange = (e, gradeKey) => {
+    const { value } = e.target;
+    dispatch({ type: "UPDATE_GRADE", gradeKey, value });
   };
+
   const getFormattedData = () => {
+    const gradeKeys = {
+      1: "completes_task_on_time",
+      2: "attends_school_meetings_till_closure",
+      3: "makes_positive_contributions",
+      4: "handles_responsibilities_appropriately",
+      5: "displays_technical_competence",
+      6: "very_creative",
+      7: "easy_to_work_with",
+      8: "works_well_under_pressure",
+      9: "communicates_well_in_written_form",
+      10: "communicates_well_when_speaking",
+      11: "assists_other_teams_when_needed",
+      12: "demonstrates_good_problem_solving_skills",
+      13: "listens_well",
+      14: "works_well_with_parents",
+      15: "coaches_class_assistant_well",
+      16: "coaches_weak_students_well",
+      17: "learns_quickly",
+      18: "works_well_on_own",
+      19: "reliable",
+      20: "produces_high_quality_output",
+      21: "handles_pupils_conflicts_well",
+      22: "handles_cases_of_puppils_discipline_well",
+      23: "accepts_and_perfects_corrections_well",
+      24: "well_organized",
+      25: "look_forward_to_working_again",
+      26: "punctual_to_school",
+      27: "regular_in_school",
+      28: "does_well_on_duty",
+      29: "class_namagement",
+      30: "shows_concern_to_school_environment",
+      31: "enforces_school_rules_always",
+    };
+
     const formattedGrades = Object.entries(formData.grades).reduce(
       (acc, [key, value]) => {
         const formattedKey = gradeKeys[key] || key;
@@ -164,7 +135,7 @@ const EvaluationTemplate = ({ currentMessage }) => {
       school_admin_signature: formData.schoolAdminComment,
       head_teacher_signature: formData.headTeacherComment,
       director_signature: formData.directorComment,
-      // grades: formattedGrades,
+      grades: formattedGrades,
     };
   };
 
@@ -196,7 +167,6 @@ const EvaluationTemplate = ({ currentMessage }) => {
                     name="supervisorName"
                     value={formData.supervisorName}
                     onChange={handleInputChange}
-                    disabled={user.role != "admin"}
                   />
                 </Stack>
 
@@ -208,7 +178,6 @@ const EvaluationTemplate = ({ currentMessage }) => {
                     name="post"
                     value={formData.post}
                     onChange={handleInputChange}
-                    disabled={user.role != "admin"}
                   />
                 </Stack>
               </StyledTableCell>
@@ -222,7 +191,6 @@ const EvaluationTemplate = ({ currentMessage }) => {
                     name="date"
                     value={formData.date}
                     onChange={handleInputChange}
-                    disabled={user.role != "admin"}
                   />
                 </Stack>
                 <Stack direction="row">
@@ -233,7 +201,6 @@ const EvaluationTemplate = ({ currentMessage }) => {
                     name="term"
                     value={formData.term}
                     onChange={handleInputChange}
-                    disabled={user.role != "admin"}
                   />
                   <Typography sx={{ mt: "auto" }}>Session:</Typography>
                   <CustomTextField
@@ -242,7 +209,6 @@ const EvaluationTemplate = ({ currentMessage }) => {
                     name="session"
                     value={formData.session}
                     onChange={handleInputChange}
-                    disabled={user.role != "admin"}
                   />
                 </Stack>
               </StyledTableCell>
@@ -269,7 +235,6 @@ const EvaluationTemplate = ({ currentMessage }) => {
                       name="peerName"
                       value={formData.peerName}
                       onChange={handleInputChange}
-                      disabled={user.role != "admin"}
                     />
                   </Stack>
                   <Stack direction="row">
@@ -279,7 +244,6 @@ const EvaluationTemplate = ({ currentMessage }) => {
                       name="peerPost"
                       value={formData.peerPost}
                       onChange={handleInputChange}
-                      disabled={user.role != "admin"}
                     />
                   </Stack>
                 </Stack>
@@ -289,7 +253,7 @@ const EvaluationTemplate = ({ currentMessage }) => {
           <Table>
             <TableHead>
               <TableRow>
-                {/* <StyledTableCell>Item</StyledTableCell> */}
+                <StyledTableCell>Item</StyledTableCell>
                 <StyledTableCell>Description</StyledTableCell>
                 <StyledTableCell align="center">
                   Score between 0 to 5. 0 = N/A
@@ -297,11 +261,22 @@ const EvaluationTemplate = ({ currentMessage }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.entries(currentMessage?.grade).map(([key, value]) => (
-                <TableRow key={key}>
-                  {/* <StyledTableCell>{index}</StyledTableCell> */}
-                  <StyledTableCell>{key}</StyledTableCell>
-                  <StyledTableCell>{value}</StyledTableCell>
+              {evaluationFormDetails.map((item) => (
+                <TableRow key={item.id}>
+                  <StyledTableCell>{item.id}</StyledTableCell>
+                  <StyledTableCell>{item.description}</StyledTableCell>
+                  <StyledTableCell>
+                    <CustomTextField
+                      fullWidth
+                      variant="standard"
+                      type="number"
+                      // min={0}
+                      // max={5}
+                      name={`grade-${item.id}`}
+                      value={formData.grades[item.id] || ""}
+                      onChange={(e) => handleGradeChange(e, item.id)}
+                    />
+                  </StyledTableCell>
                 </TableRow>
               ))}
               <TableRow>
@@ -314,7 +289,6 @@ const EvaluationTemplate = ({ currentMessage }) => {
                       name="remark"
                       value={formData.remark}
                       onChange={handleInputChange}
-                      disabled={user.role != "admin"}
                       sx={{
                         width: "100%",
                         "& .MuiOutlinedInput-notchedOutline": {
@@ -345,4 +319,4 @@ const EvaluationTemplate = ({ currentMessage }) => {
   );
 };
 
-export default EvaluationTemplate;
+export default CreateEvaluationTemplate;

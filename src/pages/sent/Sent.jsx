@@ -84,7 +84,7 @@ const Sent = () => {
             return (
               <EvaluationRow
                 key={item.id}
-                recipient={item.supervisor}
+                recipient="Admin office"
                 label="Staff evaluation notification"
                 title="Staff Evaluation"
                 text="Staff evaluation notification"

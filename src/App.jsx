@@ -12,13 +12,14 @@ import Auth from "./auth/Auth";
 import CreateDocument from "./pages/documents/CreateDocument";
 import BlankDocument from "./pages/documents/BlankDocument";
 import { ShareFormProvider } from "./components/context/ShareFormContext";
-import EvaluationTemplate from "./components/EvaluationTemplate";
+// import EvaluationTemplate from "./components/EvaluationTemplate";
 
 import ViewStudyLeave from "./components/ViewStudyLeave";
 import ViewEvaluations from "./components/ViewStaffEvaluation";
 import ViewClosures from "./components/ViewEarlyClosure";
 import CreateStudyLeave from "./pages/documents/CreateStudyLeave";
 import CreateEarlyClosure from "./pages/documents/CreateEarlyClosure";
+import CreateEvaluationTemplate from "./pages/documents/CreateEvaluationTemplate";
 
 const routes = [
   {
@@ -87,7 +88,7 @@ const routes = [
   },
   {
     path: "/createdocument/evaluationtemplate",
-    element: <EvaluationTemplate />,
+    element: <CreateEvaluationTemplate />,
   },
   {
     path: "/createdocument/earlyclosuretemplate",

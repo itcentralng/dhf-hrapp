@@ -22,7 +22,7 @@ import {
 } from "../state/studyLeaveRequests";
 import { useSubmitMessageMutation } from "../state/BlankDocument";
 import { useShareForm } from "./context/ShareFormContext";
-import { PerformEvaluation } from "../state/EvaluationTemplateRequest";
+import { useSubmitEvaluationMutation } from "../state/EvaluationTemplateRequest";
 import {
   useAdminEarlyResponseMutation,
   useHosEarlyResponseMutation,
@@ -39,12 +39,7 @@ const Text = styled(Typography)({
   margin: "10px 0px 10px 0px",
 });
 
-const ShareWithForm = ({
-  documentType,
-  formData,
-  documentFile,
-  selectedRating,
-}) => {
+const ShareWithForm = ({ documentType, formData, documentFile }) => {
   const { setDisplayShareForm } = useShareForm();
   const [loading, setLoading] = React.useState(false);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -61,6 +56,7 @@ const ShareWithForm = ({
   const [hrEarlyResponse] = useHrEarlyResponseMutation();
   const [adminEarlyResponse] = useAdminEarlyResponseMutation();
   const [blankDocumentMessage] = useSubmitMessageMutation();
+  const [shareEvaluation] = useSubmitEvaluationMutation();
 
   const handleSubmit = async () => {
     const sendFormData = {
@@ -76,7 +72,7 @@ const ShareWithForm = ({
       title: documentType,
       evaluationItems: formData,
       label: additionalInfo,
-      ratings: selectedRating,
+      // ratings: selectedRating,
     };
 
     const sendStudyLeaveData = {
@@ -210,7 +206,26 @@ const ShareWithForm = ({
         alert("Role does not exist");
       }
     } else if (documentType === "Evaluation Form") {
-      await PerformEvaluation(sendEvaluationData, setLoading);
+      if (user.role === "admin") {
+        // await PerformEvaluation(sendEvaluationData, setLoading);
+        const evaluationItems = sendEvaluationData.evaluationItems;
+        evaluationItems.recipient_hos = sendEvaluationData.recipients[0];
+        // const evaluationData = {
+        //   evaluationItems,
+        // };
+        try {
+          setLoading(true);
+          await shareEvaluation(evaluationItems).unwrap();
+          alert("Message sent successfully");
+        } catch (error) {
+          console.log(evaluationItems);
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        alert("Role does not exist");
+      }
     } else if (documentType === "Early Closure") {
       if (user.role === "staff") {
         // await SubmitEarlyClosure(sendEarlyClosure, setLoading);

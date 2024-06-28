@@ -54,6 +54,16 @@ const DownloadDocumentArea = ({
           >
             {sender}
           </Typography>
+          <Typography
+            sx={{
+              color: "#CCCCCC",
+              fontFamily: "DM sans",
+              fontWeight: 400,
+              fontSize: "11px",
+            }}
+          >
+            {messageType}
+          </Typography>
         </Stack>
 
         <Button

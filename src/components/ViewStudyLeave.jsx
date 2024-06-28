@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IconButton, Box, Typography, Modal } from "@mui/material";
-import {
-  ArrowBack,
-  InboxOutlined,
-  KeyboardArrowLeft,
-  KeyboardArrowRight,
-  MoreVert,
-  Person,
-} from "@mui/icons-material";
+import { ArrowBack, Person } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import DownloadDocumentArea from "./DownloadDocumentArea";
@@ -24,7 +17,6 @@ const ViewStudyLeave = () => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [currentMessage, setCurrentMessage] = useState(null);
   const [openTemplate, setOpenTemplate] = React.useState(false);
-  const [studyLeaves, setStudyLeaves] = useState([]);
 
   const handleTemplateOpen = () => setOpenTemplate(true);
   const handleTemplateClose = () => setOpenTemplate(false);
@@ -60,7 +52,7 @@ const ViewStudyLeave = () => {
       }
     };
     fetchMessage();
-  }, [location.pathname, inboxData, outboxData, isInbox]);
+  }, [location.pathname, inboxData, outboxData, isInbox, pathId]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,43 +61,43 @@ const ViewStudyLeave = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleNextMessage = () => {
-    const data = isInbox ? inboxData : outboxData;
-    const messages = data ? data.study_leaves : [];
-    const currentIndex = messages.findIndex((item) => item.id === pathId);
+  // const handleNextMessage = () => {
+  //   const data = isInbox ? inboxData : outboxData;
+  //   const messages = data ? data.study_leaves : [];
+  //   const currentIndex = messages.findIndex((item) => item.id === pathId);
 
-    if (currentIndex === -1) {
-      alert("Page does not exist");
-      return;
-    }
+  //   if (currentIndex === -1) {
+  //     alert("Page does not exist");
+  //     return;
+  //   }
 
-    const nextIndex = currentIndex + 1;
-    if (nextIndex < messages.length) {
-      const nextMessage = messages[nextIndex];
-      navigate(`/study_leave/${nextMessage.id}`);
-    } else {
-      alert("No more messages available");
-    }
-  };
+  //   const nextIndex = currentIndex + 1;
+  //   if (nextIndex < messages.length) {
+  //     const nextMessage = messages[nextIndex];
+  //     navigate(`/study_leave/${nextMessage.id}`);
+  //   } else {
+  //     alert("No more messages available");
+  //   }
+  // };
 
-  const handlePrevMessage = () => {
-    const data = isInbox ? inboxData : outboxData;
-    const messages = data ? data.study_leaves : [];
-    const currentIndex = messages.findIndex((item) => item.id === pathId);
+  // const handlePrevMessage = () => {
+  //   const data = isInbox ? inboxData : outboxData;
+  //   const messages = data ? data.study_leaves : [];
+  //   const currentIndex = messages.findIndex((item) => item.id === pathId);
 
-    if (currentIndex === -1) {
-      alert("Page does not exist");
-      return;
-    }
+  //   if (currentIndex === -1) {
+  //     alert("Page does not exist");
+  //     return;
+  //   }
 
-    const prevIndex = currentIndex - 1;
-    if (prevIndex >= 0) {
-      const prevMessage = messages[prevIndex];
-      navigate(`/study_leave/${prevMessage.id}`);
-    } else {
-      alert("No previous messages available");
-    }
-  };
+  //   const prevIndex = currentIndex - 1;
+  //   if (prevIndex >= 0) {
+  //     const prevMessage = messages[prevIndex];
+  //     navigate(`/study_leave/${prevMessage.id}`);
+  //   } else {
+  //     alert("No previous messages available");
+  //   }
+  // };
 
   if (inboxLoading || outboxLoading) {
     return <div>Loading...</div>;

@@ -1,5 +1,4 @@
-import { Box, Container, Paper, Stack, Typography } from "@mui/material";
-import React from "react";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import templatesData from "../../data/templatesData";
@@ -71,7 +70,7 @@ const CreateDocument = () => {
               mb: "50px",
               position: "relative",
               cursor: "pointer",
-              display: user.role === "staff" ? "block" : "none",
+              display: user.role.includes(template.view) ? "block" : "none",
             }}
           >
             <Stack
