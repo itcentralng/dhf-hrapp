@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   FormControl,
   Paper,
@@ -9,19 +9,29 @@ import {
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import dayjs from "dayjs";
 
-function Calendar() {
+// eslint-disable-next-line react/prop-types
+function Calendar({ onDateRangeChange }) {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+  const formatDate = (date) => {
+    return date ? dayjs(date).format("YYYY-MM-DD") : "";
+  };
+
   const handleDateChange = (date) => {
+    const adjustedDate = dayjs(date);
     if (!startDate) {
-      setStartDate(date);
-    } else if (startDate && date > startDate) {
-      setEndDate(date);
+      setStartDate(adjustedDate);
+      onDateRangeChange(formatDate(adjustedDate), null);
+    } else if (startDate && adjustedDate.isAfter(startDate)) {
+      setEndDate(adjustedDate);
+      onDateRangeChange(formatDate(startDate), formatDate(adjustedDate));
     } else {
       setEndDate(null);
-      setStartDate(date);
+      setStartDate(adjustedDate);
+      onDateRangeChange(formatDate(adjustedDate), null);
     }
   };
 
@@ -63,8 +73,9 @@ function Calendar() {
               From
             </Typography>
             <TextField
-              value={startDate ? startDate.toISOString().slice(0, 10) : ""}
-              placeholder="Day / Month / Year"
+              value={formatDate(startDate)}
+              placeholder="YYYY-MM-DD"
+              inputProps={{ readOnly: true }}
             />
           </Stack>
           <Stack direction="row" gap={3} sx={{ pl: "25px" }}>
@@ -79,9 +90,9 @@ function Calendar() {
               To
             </Typography>
             <TextField
-              value={endDate ? endDate.toISOString().slice(0, 10) : ""}
-              InputProps={{}}
-              placeholder="Day / Month / Year"
+              value={formatDate(endDate)}
+              placeholder="YYYY-MM-DD"
+              inputProps={{ readOnly: true }}
             />
           </Stack>
           <LocalizationProvider dateAdapter={AdapterDayjs}>

@@ -24,7 +24,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useUserList } from "./UserListContext";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEditUserMutation, useRegisterStaffMutation } from "../state/api";
-import { editUserRequest } from "../state/editUser";
+// import { editUserRequest } from "../state/editUser";
 const FileUploadContainer = styled(Box)({
   display: "flex",
   flexDirection: "row",

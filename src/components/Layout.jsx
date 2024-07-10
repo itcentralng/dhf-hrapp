@@ -10,7 +10,7 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
-  Checkbox,
+  // Checkbox,
   Drawer,
   List,
   ListItem,
@@ -24,9 +24,9 @@ import {
   FolderOutlined,
   InsertDriveFileOutlined,
   LogoutOutlined,
-  MoreVertOutlined,
+  // MoreVertOutlined,
   PeopleAltOutlined,
-  RefreshOutlined,
+  // RefreshOutlined,
 } from "@mui/icons-material";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import CopyrightFooter from "./copyrightFooter";
@@ -42,8 +42,8 @@ const drawerWidth = 240;
 const Layout = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [checked, setChecked] = React.useState(false);
-  const [refreshLoading, setRefreshLoading] = React.useState(false);
+  // const [checked, setChecked] = React.useState(false);
+  // const [refreshLoading, setRefreshLoading] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
 
@@ -80,16 +80,16 @@ const Layout = () => {
     }
   };
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
+  // const handleChange = (event) => {
+  //   setChecked(event.target.checked);
+  // };
 
-  const handleRefresh = () => {
-    setRefreshLoading(true);
-    setTimeout(() => {
-      setRefreshLoading(false);
-    }, 2000);
-  };
+  // const handleRefresh = () => {
+  //   setRefreshLoading(true);
+  //   setTimeout(() => {
+  //     setRefreshLoading(false);
+  //   }, 2000);
+  // };
 
   const handleLogout = () => {
     dispatch(userActions.logout());
@@ -439,13 +439,13 @@ const navItems = [
     icon: <PeopleAltOutlined />,
     role: "admin, hr",
   },
-  // {
-  //   id: 4,
-  //   name: "Reports",
-  //   link: "/reports",
-  //   icon: <InsertDriveFileOutlined />,
-  //   role: " hr",
-  // },
+  {
+    id: 4,
+    name: "Reports",
+    link: "/reports",
+    icon: <InsertDriveFileOutlined />,
+    role: " hr",
+  },
 ];
 
 export default Layout;

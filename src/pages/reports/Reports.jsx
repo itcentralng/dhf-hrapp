@@ -1,14 +1,6 @@
-import {
-  Box,
-  Menu,
-  MenuItem,
-  Modal,
-  Stack,
-  Typography,
-  styled,
-} from "@mui/material";
+import { Menu, MenuItem, Modal, Stack } from "@mui/material";
 import { FilledButton } from "../../styled-components/styledButtons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   HeadingText,
   SubHeadingText,
@@ -20,14 +12,10 @@ const Reports = () => {
   const [open, setOpen] = useState(false);
   const handleModalOpen = () => setOpen(true);
   const handleModalClose = () => setOpen(false);
-  const [calendarTitle, setCalendarTitle] = useState();
+  const [calendarTitle, setCalendarTitle] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
-  const options = [
-    "Early closure",
-    "Late Arrivals",
-    "Leave of Absence",
-    "Movement",
-  ];
+  const options = ["Early Closures", "Study Leaves", "Evaluations"];
+  const [reports, setReports] = useState([]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -40,21 +28,31 @@ const Reports = () => {
   const handleSelect = (option) => {
     handleClose();
     switch (option) {
-      case "Early closure":
-        setCalendarTitle("Early closure");
+      case "Early Closures":
+        setCalendarTitle("Early Closures");
         break;
-      case "Late Arrivals":
-        setCalendarTitle("Late Arrivals");
+      case "Study Leaves":
+        setCalendarTitle("Study Leaves");
         break;
-      case "Leave of Absence":
-        setCalendarTitle("Leave of Absence");
-        break;
-      case "Movement":
-        setCalendarTitle("Movement");
+      case "Evaluations":
+        setCalendarTitle("Evaluations");
         break;
     }
     handleModalOpen();
   };
+
+  useEffect(() => {
+    const storedReports = Object.keys(sessionStorage)
+      .filter((key) => key.includes(`_report_`))
+      .map((key) => ({
+        key,
+        data: JSON.parse(sessionStorage.getItem(key)),
+        dateRange: key.split("_").pop().replace(":", " to "),
+        reportName: key.split("_").shift(),
+      }));
+    setReports(storedReports);
+  }, [open]);
+
   return (
     <>
       <Stack
@@ -64,7 +62,9 @@ const Reports = () => {
         <Stack direction="column">
           <HeadingText sx={{ fontFamily: "urbanist" }}>Reports</HeadingText>
           <SubHeadingText>
-            Select a report from the list below to view or download.
+            {reports.length <= 0
+              ? "Please generate a new report"
+              : "Select a report from the list below to view."}
           </SubHeadingText>
         </Stack>
         <FilledButton
@@ -81,15 +81,11 @@ const Reports = () => {
           </MenuItem>
         ))}
       </Menu>
-      <ReportListItem />
-      <Modal
-        open={open}
-        onClose={handleModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <ReportListItem reports={reports} />
+      <Modal open={open} onClose={handleModalClose}>
         <GenerateReportCalendar
           title={calendarTitle}
+          reports={reports}
           handleModalClose={handleModalClose}
         />
       </Modal>

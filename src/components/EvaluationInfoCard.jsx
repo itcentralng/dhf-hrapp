@@ -4,7 +4,7 @@ import { HeadingText } from "../styled-components/StyledText";
 import { FilledButton } from "../styled-components/styledButtons";
 import dayjs from "dayjs";
 
-const GeneratedReportInfoCard = ({
+const EvaluationInfoCard = ({
   handleCloseModal,
   reportData,
   title,
@@ -20,7 +20,7 @@ const GeneratedReportInfoCard = ({
         bgcolor: "#F9F9F9",
         borderRadius: "12px",
         maxHeight: "80vh",
-        width: "500px",
+        width: "600px",
         overflow: "hidden",
         overflowY: "auto",
         padding: "2.5em",
@@ -55,4 +55,4 @@ const GeneratedReportInfoCard = ({
   );
 };
 
-export default GeneratedReportInfoCard;
+export default EvaluationInfoCard;
