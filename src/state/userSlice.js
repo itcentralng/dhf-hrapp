@@ -21,7 +21,6 @@ export const userSlice = createSlice({
       state.isAuth = false;
       state.user = null;
       state.token = null; // Clear the token on logout
-      sessionStorage.removeItem("userState");
       sessionStorage.clear();
     },
   },
