@@ -54,6 +54,7 @@ const LoginForm = () => {
       navigate("/");
     } catch (error) {
       console.error("Error logging user in: ", error);
+      alert("Something went wrong! Please try again");
     }
   };
 
