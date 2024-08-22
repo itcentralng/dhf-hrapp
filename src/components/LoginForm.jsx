@@ -13,6 +13,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userActions } from "../state/userSlice";
+import { useLoginMutation } from "../state/api";
 
 const validationSchema = yup.object({
   email: yup
@@ -28,10 +29,9 @@ const validationSchema = yup.object({
 const LoginForm = () => {
   // const [userEmail, setUserEmail] = useState("");
   // const [userPassword, setUserPassword] = useState("");
-  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [loginUser, { isLoading }] = useLoginMutation();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -44,36 +44,16 @@ const LoginForm = () => {
   });
 
   const handleLogin = async (values) => {
-    setLoading(true);
     try {
       const formData = {
         email: values.email,
         password: values.password,
       };
-      const response = await fetch(
-        `${import.meta.env.VITE_APP_API_URL}/user/login/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      if (!response.ok) {
-        alert("Failed to Log in! Please try again.");
-        throw new Error("Failed to submit form");
-      }
-      const user = await response.json();
-      delete user.password;
-      console.log("Form submitted successfully");
-      dispatch(userActions.login(user));
+      const response = await loginUser(formData).unwrap();
+      dispatch(userActions.login(response));
       navigate("/");
     } catch (error) {
-      console.error("Error logging user in: ", error.message);
-    } finally {
-      setLoading(false);
+      console.error("Error logging user in: ", error);
     }
   };
 
@@ -158,7 +138,7 @@ const LoginForm = () => {
           type="submit"
           sx={{ width: "170px", height: "44px", mt: "0px" }}
         >
-          {loading ? <CircularProgress size={22} /> : "Log in"}
+          {isLoading ? <CircularProgress size={22} /> : "Log in"}
         </FilledButton>
       </FormControl>
     </Box>

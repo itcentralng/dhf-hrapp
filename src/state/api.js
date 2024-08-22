@@ -33,6 +33,14 @@ export const api = createApi({
       query: () => "messages/outbox/",
       providesTags: ["Outbox"],
     }),
+    login: build.mutation({
+      query: (values) => ({
+        url: "/user/login/",
+        method: "POST",
+        body: values,
+      }),
+      invalidatesTags: ["Users", "Inbox", "Outbox", "Comments"],
+    }),
     registerStaff: build.mutation({
       query: (newStaff) => ({
         url: "user/signup/",
@@ -72,6 +80,7 @@ export const {
   useGetInboxQuery,
   useGetOutboxQuery,
   useRegisterStaffMutation,
+  useLoginMutation,
   useEditUserMutation,
   useDeleteUserMutation,
   useAddCommentMutation,
